@@ -1,0 +1,32 @@
+cms-organize-plan {    
+    .NodeFTEPlan1 > td,
+    .NodeFTEPlan1 > td {
+        overflow: hidden !important;    
+        padding: 5px 5px 5px !important;
+    }
+    .NodeFTEPlan1:hover,
+    .NodeFTEPlan1:hover {
+        background-color: #c0e6f8 !important;
+    }
+    .NodeFTEPlan {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/ftePlan.gif") !important;
+        background-repeat: no-repeat !important;
+        background-position: left !important;
+    }    
+    .NodeFolder {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/folder.gif") !important;
+        background-repeat: no-repeat !important; 
+        background-position: left !important;
+    }
+    .NodeGroup {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/group.gif") !important;
+        background-repeat: no-repeat !important;
+        background-position: left !important;
+    }    
+}

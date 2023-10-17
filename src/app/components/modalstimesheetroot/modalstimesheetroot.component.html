@@ -1,0 +1,78 @@
+<div class="modal-timesheet">
+  <div class="modal-header-timesheet">
+    <div>
+      <p>Cập nhật chấm công gốc</p>
+    </div>
+    <div>
+
+      <span class="pl-2" (click)="close()"><i class="fa fa-times"
+          aria-hidden="true"></i></span>
+    </div>
+  </div>
+  <div class="modal-content-timesheet">
+    <form name="editForm" [formGroup]="editForm" novalidate>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group vertical">
+            <label class="e-float-text" for="employeeCode">Mã nhân
+              viên</label>
+            <input  class="form-control" type="text"
+              formControlName="employeeCode" [(ngModel)]="model.EMPLOYEE_CODE"
+              readonly>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group vertical">
+            <label class="e-float-text" for="employeeName">Tên nhân
+              viên</label>
+            <input  class="form-control" type="text"
+              formControlName="employeeName" [(ngModel)]="model.EMPLOYEE_NAME"
+              readonly>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group vertical">
+            <label class="e-float-text required">Ngày chấm công</label>
+            <ejs-datepicker id="workingDay" formControlName="workingDay"
+              format="dd/MM/yyyy" [(ngModel)]="model.WORKINGDAY"
+              (keydown)="changeDate('workingDay')"
+              (blur)="changeDate('workingDay')" placeholder=".../.../...">
+            </ejs-datepicker>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group vertical">
+            <label class="e-float-text required">Giờ</label>
+            <ejs-timepicker
+              formControlName="timeEdit" [(ngModel)]="model.TIME_EDIT"
+              [format]='formatString' >
+            </ejs-timepicker>
+            <span class="input-error"
+              *ngIf="editForm.get('timeEdit')!.hasError('required') && !editForm.get('timeEdit')!.untouched">
+              Bắt buộc chọn
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group vertical">
+            <label class="e-float-text">{{'[Ghi chú]' | translate }}</label>
+            <input  type="text" class="form-control" formControlName="note"
+              [(ngModel)]="model.NOTE">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer-timesheet">
+    <div class="col-3 "></div>
+    <div class="col-9 p-l rigth-card ">
+      <button (click)="save()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Lưu</button>
+      <button class="btn-cancel" (click)="close()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        Hủy</button>
+    </div>
+  </div>
+</div>
+<div class="modal-background"></div>

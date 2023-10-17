@@ -1,0 +1,28 @@
+cms-profile-overtime {
+  .pt-5 {
+    padding-top: 39px !important;
+  }
+  .app-main-content .app-container .card-content .btn {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 7px;
+    padding: 11px 28px 11px;
+  }
+
+  .e-row :hover {
+    cursor: pointer;
+  }
+
+ 
+
+  .cell-green {
+    background-color: rgb(79, 194, 79);
+    color: white;
+  }
+
+  .cell-red {
+    background-color: rgb(238, 88, 88);
+    color: white;
+  }
+}

@@ -1,0 +1,191 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Năng lực]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i> <span class="brackcrum-active" href="">{{'[Danh sách
+              quy trình]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="processlist" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+
+              <div class="list-grid">
+                <form class="searchFrom" name="searchFrom" [formGroup]="searchFrom" novalidate
+                  style="padding-bottom: 10px;">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required" for="fromDate">Từ ngày</label>
+                        <ejs-datepicker id="fromDate" format="dd/MM/yyyy" [(ngModel)]="model.fromDate"
+                          (keydown)="changeDate('fromDate')" value="model.fromDate" (blur)="changeDate('fromDate')"
+                          formControlName="fromDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="searchFrom.get('fromDate')!.hasError('required') && !searchFrom.get('fromDate')!.untouched">
+                          {{'[Bắt buộc chọn]' | translate }}
+                        </span>
+                        <span class="input-error"
+                          *ngIf="searchFrom.get('fromDate')!.hasError('incorrect') && !searchFrom.get('fromDate')!.untouched">
+                          {{'[Sai định dạng]' | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required" for="toDate">Đến ngày</label>
+                        <ejs-datepicker id="toDate" format="dd/MM/yyyy" [(ngModel)]="model.toDate"
+                          (keydown)="changeDate('toDate')" value="model.toDate" (blur)="changeDate('toDate')"
+                          formControlName="toDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="searchFrom.get('toDate')!.hasError('required') && !searchFrom.get('toDate')!.untouched">
+                          {{'[Bắt buộc chọn]' | translate }}
+                        </span>
+                        <span class="input-error"
+                          *ngIf="searchFrom.get('toDate')!.hasError('incorrect') && !searchFrom.get('toDate')!.untouched">
+                          {{'[Sai định dạng]' | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class = "row">
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required">{{'[Loại quy trình]' | translate }}</label>
+                        <ejs-dropdownlist [dataSource]='lstprocessTypeId' [fields]='fields' [showClearButton]="true"
+                          [(ngModel)]="model.processTypeId" formControlName="processTypeId" [placeholder]="''"
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstprocessTypeId)'>
+                        </ejs-dropdownlist>
+                        <span class="input-error"
+                          *ngIf="searchFrom.get('processTypeId')!.hasError('required') && !searchFrom.get('processTypeId')!.untouched">
+                          {{'[Bắt buộc chọn]' | translate }}</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required">{{'[Trạng thái]' | translate }}</label>
+                        <ejs-dropdownlist [dataSource]='lststatusId' [fields]='fields' [showClearButton]="true"
+                          [(ngModel)]="model.statusId" formControlName="statusId" [placeholder]="''"
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lststatusId)'>
+                        </ejs-dropdownlist>
+                        <span class="input-error"
+                          *ngIf="searchFrom.get('statusId')!.hasError('required') && !searchFrom.get('statusId')!.untouched">
+                          {{'[Bắt buộc chọn]' | translate }}</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <button ejs-button cssClass="e-info" (click)="getListData()"><i aria-hidden="true"
+                            class="fa fa-search"></i> Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='40' headerHeight='30'
+                  [height]='configs.height() - 140' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang'
+                  [allowSelection]='true' [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings'
+                  [editSettings]='configs.editSettings' (rowSelecting)="setButtonStatus($event!)"
+                  (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true'
+                  [filterSettings]='configs.filterOption' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (recordDoubleClick)="viewRecord($event!)">
+                  <e-columns>
+                    <!-- <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='40' textAlign="Center" [allowEditing]="false">
+                    </e-column> -->
+                    <e-column field='ID' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='TEMPLATE_ID' [showInColumnChooser]='false' [visible]='false'
+                      headerText='TEMPLATE_ID' [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <!-- <e-column field='' textAlign="Left" width="120px" headerTextAlign="Center" headerText="Chức năng"
+                      clipMode='none'>
+                      <ng-template #template let-data>
+                        <input type="checkbox" [(ngModel)]="data.isApproved" (change)="check($event)">
+                      </ng-template>
+
+                    </e-column> -->
+                    <e-column field='PROCESS_NAME' headerTextAlign="Center" textAlign="Center"
+                      headerText="{{'[Loại quy trình]' | translate }}" clipMode='EllipsisWithTooltip' width='200'>
+                    </e-column>
+                    <e-column field='EMPLOYEE_CODE' headerTextAlign="Center" textAlign="Center"
+                      headerText="{{'[Mã NV]' | translate }}" clipMode='EllipsisWithTooltip' width='120'>
+                    </e-column>
+                    <e-column field='EMPLOYEE_NAME' textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='ORG_CODE' textAlign="Left" headerText="{{'[Mã phòng ban]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='ORG_NAME' textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='POSITION_NAME' textAlign="Left" headerText="{{'[Chức vụ]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='STATUS_NAME' textAlign="Left" headerText="{{'[Trạng thái]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+
+  </div>
+</div>
+<v2hrm-confirm-modal id="confirm-combo-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span>Bạn muốn reset từ bước nào?</span>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <form name="editForm" [formGroup]="editForm" novalidate>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group vertical">
+            <label class="e-float-text required">{{'[Bước quy trình]' | translate }}</label>
+            <ejs-dropdownlist [dataSource]='lstCombo' [fields]='fields' [showClearButton]="true"
+              [(ngModel)]="model.templateDtlId" formControlName="templateDtlId" [placeholder]="''"
+              [allowFiltering]='true' (filtering)='onFiltering($event,lstCombo)'>
+            </ejs-dropdownlist>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-12">
+          <button class="btn btn-primary" (click)="confirmCombo('ok')">{{'[Reset]' | translate }}</button>
+          <button class="btn btn-default" (click)="confirmCombo('cancel')">{{'[Huỷ]' | translate }}</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</v2hrm-confirm-modal>

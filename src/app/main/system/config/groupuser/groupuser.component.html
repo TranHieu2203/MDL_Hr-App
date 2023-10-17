@@ -1,0 +1,158 @@
+<div class="app-main-content">
+  <div class="app-container">
+     <!-- toolbar -->
+     <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Trang chủ]' | translate }} <i
+              class="fa fa-angle-right" aria-hidden="true"> {{'[Hệ thống]' | translate }}</i>
+              <i
+              class="fa fa-angle-right" aria-hidden="true"> {{'[Nhóm tài khoản]' | translate }}</i>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card-content" *ngIf="isFilter">
+        <div class="card-main-content">
+          <div class="row">
+            <div class="col-sm-6" *ngIf="showHideSearch.type">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <ejs-dropdownlist id='type' [dataSource]='lstType'
+                    [fields]='fieldsCode' [showClearButton]="true"
+                    [sortOrder]='sorting' [(ngModel)]="search.type"
+                    [ngModelOptions]="{standalone: true}" [placeholder]="''"
+                    [allowFiltering]='true'
+                    (filtering)='onFilteringType($event!)'>
+                  </ejs-dropdownlist>
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text" for="type">{{'[Loại danh mục]' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6" *ngIf="showHideSearch.code">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input  type="text" id="code" name="code"
+                    [(ngModel)]="search.code" maxlength="30"
+                    [ngModelOptions]="{standalone: true}">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text" for="code">{{'[Mã]' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6" *ngIf="showHideSearch.name">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input  type="text" id="name" name="name"
+                    [(ngModel)]="search.name" maxlength="200"
+                    [ngModelOptions]="{standalone: true}">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text" for="name">{{'[Tên]' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6" *ngIf="showHideSearch.status">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <ejs-dropdownlist id='status' [dataSource]='lstStatusOrigin'
+                    [fields]='fields' [showClearButton]="true"
+                    [(ngModel)]="search.status"
+                    [ngModelOptions]="{standalone: true}" [placeholder]="''"
+                    [allowFiltering]='true'
+                    (filtering)='onFilteringStatus($event!)'>
+                  </ejs-dropdownlist>
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text" for="status">{{'[Trạng thái]' | translate }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row button-action">
+            <div class="col-sm-12 text-center">
+              <button class="btn btn-primary"
+                (click)="searchAdvanceFilter()">{{'[Tìm kiếm]' | translate }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-content">
+        <div class="card-main-content">
+          <div class="list-grid">
+            <ejs-grid #overviewgrid id='overviewgrid'
+              [dataSource]='data | async'
+              (dataStateChange)="dataStateChange($event!)" rowHeight='45'
+              headerHeight='52' [height]='configs.height()' [allowPaging]='true'
+              [pageSettings]='configs.pageSettings' [enableHover]='true'
+              (recordDoubleClick)="viewRecord($event!)" [allowSorting]='false'
+              allowResizing='true' [locale]='configs.currentLang'
+              [allowSelection]='true' [showColumnChooser]='true'
+              [selectionSettings]='configs.selectionSettings'
+              
+              [editSettings]='configs.editSettings'
+              (rowSelecting)="setButtonStatus($event!)"
+              (rowDeselecting)="setButtonStatus($event!)">
+              <e-columns>
+                <e-column type='checkbox' [showInColumnChooser]='false'
+                  [allowFiltering]='false' [allowSorting]='false' width='60'
+                  textAlign="Center" [allowEditing]="false">
+                </e-column>
+                <e-column field='id' [showInColumnChooser]='false'
+                  [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                  [allowEditing]="false"></e-column>
+                <!--  -->
+                <e-column width="60" eaderTextAlign="Center" textAlign="Center"
+                  headerText="{{'[STT]' | translate }}" clipMode="EllipsisWithTooltip">
+                  <ng-template #template let-data>
+                    <span>{{ formatStt(data.index) }}</span>
+                  </ng-template>
+                </e-column>
+                <e-column field='code' headerTextAlign="Center" textAlign="Left"
+                  headerText="{{'[Mã]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='name' headerTextAlign="Center" textAlign="Left"
+                  headerText="{{'[Tên]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+
+                <!--  -->
+                <e-column field='isActive' textAlign="Center"
+                  headerText="{{'[Trạng thái]' | translate }}" clipMode='EllipsisWithTooltip'
+                  [filter]='filterStatus'>
+                  <ng-template #template let-data>
+                    <div class="row-status full-width">
+                      <div class="status-effect text-center"
+                        *ngIf="data.isActive">
+                        <span>{{'[Hiệu lực]' | translate }}</span>
+                      </div>
+                      <div class="status-not-effect text-center"
+                        *ngIf="!data.isActive">
+                        <span>{{'[Không hiệu lực]' | translate }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

@@ -1,0 +1,74 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/payroll/setting/payrollformula'>{{'[Công thức tính lương]' | translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="payrollformula" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+        (dataStateChange)="dataStateChange($event!)" rowHeight='35'
+        headerHeight='40' [height]='configs.height()' [allowPaging]='true'
+        [pageSettings]='configs.pageSettings' [enableHover]='true'
+        (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+        allowResizing='true' [locale]='configs.currentLang'
+        [allowSelection]='true' [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'
+        [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' showColumnMenu='true' >
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='50'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+          <e-column field='code' headerTextAlign="Center" textAlign="Center"
+            headerText="{{'[Mã bảng lương]' | translate }}" clipMode='EllipsisWithTooltip'
+            width='120'></e-column>
+          <e-column field='name' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Tên bảng lương]' | translate }}" clipMode='EllipsisWithTooltip'
+            width='120'></e-column>
+          <e-column field='note' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Ghi chú]' | translate }}" clipMode='EllipsisWithTooltip'>
+          </e-column>
+          <!--  -->
+          <e-column field='isActive' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+            clipMode='EllipsisWithTooltip' width='120'>
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-effect text-center" *ngIf="data.isActive">
+                  <span>{{'[Hiệu lực]' | translate }}</span>
+                </div>
+                <div class="status-not-effect text-center"
+                  *ngIf="!data.isActive">
+                  <span>{{'[Không hiệu lực]' | translate }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

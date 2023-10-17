@@ -1,0 +1,167 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center" >
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Thiết lập]' | translate  }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/hrms/system/mailsetting/'>{{'[Thiết lập biểu mẫu mail]' | translate  }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="mailsettingedit" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%' (keypress)="keypress($event!)">
+        <e-panes>
+          <e-pane  [resizable]='false'>
+            <ng-template #content>
+              <div class="card-center" style="width:100%!important">
+                <form name="editForm" [formGroup]="editForm" novalidate>
+                  <div class="group-box">
+                    <!-- title -->
+                    <div class="card-head">
+                      <div class="icon-info info-icon"></div>
+                      <label class="title">{{'[Thông tin mẫu mail]' | translate  }}</label>
+                    </div>
+                    <!--  -->
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text required" for="code">{{'[Mã]' | translate  }}</label>
+                          <input  class="form-control" type="text" formControlName="code"
+                            [(ngModel)]="model.code" maxlength="31">
+                          <span class="input-error"
+                            *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
+                            {{'[Bắt buộc nhập]' | translate  }}
+                          </span>
+                          <span class="input-error "
+                            *ngIf="editForm.get('code')!.hasError('incorrect') && !editForm.get('code')!.untouched">
+                            {{'[Sai định dạng]' | translate  }}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text required">{{'[Tên mẫu mail]' | translate  }}</label>
+                          <input  class="form-control" type="text" formControlName="name"
+                            [(ngModel)]="model.name" maxlength="51">
+                          <span class="input-error"
+                            *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                            {{'[Bắt buộc nhập]' | translate  }}
+                          </span>
+                        </div>
+                      </div>
+                      <!--  -->
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text required">{{'[Tiêu đề mail]' | translate  }}</label>
+                          <input  class="form-control" type="text" formControlName="subjectMail"
+                            [(ngModel)]="model.subjectMail" maxlength="255">
+                          <span class="input-error"
+                            *ngIf="editForm.get('subjectMail')!.hasError('required') && !editForm.get('subjectMail')!.untouched">
+                            {{'[Bắt buộc nhập]' | translate  }}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Cc:]' | translate  }}</label>
+                          <input  class="form-control" type="text" formControlName="mailCC"
+                            [(ngModel)]="model.mailCC" maxlength="51">
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Bcc:]' | translate  }}</label>
+                          <input  class="form-control" type="text" formControlName="mailBCC"
+                            [(ngModel)]="model.mailBCC" maxlength="51">
+                        </div>
+                      </div>
+                      <!--  -->
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text required">{{'[Phân hệ]' | translate  }}</label>
+                          <ejs-dropdownlist id='moduleId' [dataSource]='lstModule'
+                            formControlName="moduleId" [showClearButton]="true"
+                            [(ngModel)]="model.moduleId" [fields]='fields'
+                            [allowFiltering]='true'
+                            (filtering)='onFiltering($event,lstModule)'>
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.get('moduleId')!.hasError('required') && !editForm.get('moduleId')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate  }}
+                          </span>
+                        </div>
+                      </div>
+                      <!--  -->
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Nội dung mail]' | translate  }}</label>
+                          <ejs-richtexteditor #rteTool [fontFamily]='fontFamily'
+                            [toolbarSettings]='tools' height="400px">
+                          </ejs-richtexteditor>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>  
+          </e-pane>
+          <e-pane size='360px' [resizable]='false'>
+            <ng-template #content>
+              <div class="list-element" *ngFor="let item of lstElement">
+                <p id="{{item.keyWord}}" draggable="true"
+                  (dragstart)="drag($event!)">
+                  {{item.keyName}}
+                </p>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+      
+    </div>
+    
+
+
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate  }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate  }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Huỷ]' | translate  }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate  }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate  }}</button>
+    <button class="btn btn-default"
+      (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate  }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate  }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate  }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate  }}</button>
+  </div>
+</v2hrm-confirm-modal>

@@ -1,0 +1,138 @@
+cms-app-modals-org {
+  display: none;
+
+  .treeviewdiv {
+    padding-left: 7px;
+  }
+
+  .org-deactive {
+    background-color: yellow;
+  }
+
+  .modal-organization {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 99999;
+
+    /* enables scrolling for tall modals */
+    overflow: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 600px;
+    border-radius: 0px;
+
+    .p-l {
+      padding-left: 0px;
+    }
+
+    .e-grid {
+      font-family: SVN-Avo !important;
+      border: none;
+    }
+
+    input.e-input,
+    textarea.e-input,
+    .e-input-group,
+    .e-input-group.e-control-wrapper {
+      font-family: SVN-Avo !important;
+      font-size: 13px;
+      color: #607d95;
+    }
+
+    .e-pager {
+      font-size: 12px !important;
+    }
+  }
+
+  .modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 200;
+  }
+
+  .modal-header-org {
+    height: 40px;
+    background: #ff6d00 !important;
+    display: flex;
+    justify-content: space-between;
+    color: #fff !important;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    align-items: center;
+
+    p {
+      margin: 0px;
+      color: #fff !important;
+    }
+  }
+
+  .modal-footer-org {
+    background: white;
+    height: 68px;
+    display: flex;
+
+    .rigth-card {
+      text-align: right;
+      padding: 15px;
+    }
+
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  .modal-content-org {
+    background: white;
+    height: 80%;
+    overflow: hidden;
+
+    .r-h {
+      height: 100%;
+    }
+
+    .list-grid {
+      height: 100%;
+    }
+
+    .e-pagerdropdown {
+      width: 50px !important;
+    }
+  }
+
+  span:hover {
+    cursor: pointer;
+  }
+
+  .e-gridpager.e-control.e-pager.e-lib {
+    padding: 8px !important;
+  }
+}
+
+.treeparent {
+  padding: 0px 5px;
+}
+.treeview-search{
+  width: 100%;
+  background: white;
+  position: sticky;
+  height: 35px;
+  z-index: 5;
+  top: 0px;
+
+}

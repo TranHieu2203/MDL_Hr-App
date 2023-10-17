@@ -1,0 +1,29 @@
+app-internalblog-edit{
+  .theme{
+    width: 28px;
+    height: 28px;
+    border-radius:10px ;
+    border: 2px solid white;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  .e-richtexteditor.e-rte-tb-expand {
+    opacity: 0.9;
+  }
+  #textPreview{
+    p{
+      padding-top: 30px;
+      font-weight: bold;
+    }
+  }
+  .e-richtexteditor .e-rte-toolbar, .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar {
+    z-index: 1;
+    }
+
+}
+#many-theme{
+  .v2hrm-modal .v2hrm-modal-body {
+    margin: 15% 15% !important;
+}
+
+}

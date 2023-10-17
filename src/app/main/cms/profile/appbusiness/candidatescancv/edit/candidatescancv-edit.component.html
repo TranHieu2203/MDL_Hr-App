@@ -1,0 +1,212 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i> <span class="brackcrum-active"
+              href='/hrms/profile/business/Candidate'>{{'[Scan CV]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)" *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!--main-content -->
+    <div class="card-md">
+      <div class="row">
+        <div id="img-card">
+          <div class="group-box">
+            <ejs-tooltip content='Chọn ảnh' target="#targets">
+              <div id="target">
+                <img *ngIf="!imageSource"
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                  class="img-avatar" />
+                <img *ngIf="imageSource" [src]='imageSource' class="img-avatar" style="border: 4px solid #a9a9a9;" />
+
+                <!--  <img *ngIf="model.avatar" [src]='model.avatar' class="img-avatar" style="object-fit: cover;" style="border: 4px solid #a9a9a9;"/> -->
+                <div onclick="javascript:document.getElementById('avatar').click();">
+                  <span _ngcontent-twb-c1267="" id="custom-edit" class="e-custom-edit">
+                    <i class="fa fa-pencil"
+                      style="font-size: 20px;color: #fff;left: 10px;top: 7px;position: absolute;"></i>
+                  </span>
+                </div>
+              </div>
+            </ejs-tooltip>
+            <input style="font-size: 13px;" #file type="file" id="avatar" accept="image/*" data-max-size="5120"
+              [disabled]="flagState === 'view'" (change)="uploadAvatar(file.files)" style="display: none;" />
+            <div class="emp-info">
+              <div class="text-center">
+                <label class="fullName"><a class="link-history"
+                    (click)="ViewHistory('profile')">{{model.fullName}}</a></label>
+              </div>
+              <div>
+                <p>{{model.positionName}}</p>
+              </div>
+              <hr>
+              <div>
+                <p class="email"><i class="fa fa-envelope-o" style="color: #737373;"></i><span
+                    style="color: #1d9bf0; padding-left: 10px;">{{model.email}}</span>
+                </p>
+              </div>
+              <div>
+                <p><i class="fa fa-phone" style="color: #737373;"></i>
+                  <span style="color: #1d9bf0; padding-left: 10px;">{{model.mobilePhone}}</span>
+                </p>
+              </div>
+
+              <div>
+                <!-- <p style="color: #737373;">{{'[Phòng ban]' | translate }}</p>
+                <p>{{model.orgName}}</p> -->
+              </div>
+              <div>
+                <!-- <p style="color: #737373;">{{'[Người quản lý]' | translate }}</p>
+                <p>{{model.orgManager}}</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-9 offset-3">
+          <form name="editForm" [formGroup]="editForm" novalidate>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- Thông tin hiên tại -->
+                <div class="group-box">
+                  <div class="card-head">
+                    <div class="icon-info v-icon"></div>
+                    <label class="title">{{'[Thông tin ứng viên]' | translate }}</label>
+                  </div>
+                  <!--  -->
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required">{{'[Tên nhân viên]' | translate }}</label>
+                        <input type="text" class="form-control" formControlName="fullName" [(ngModel)]="model.fullName">
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required">{{'[Giới tính]' | translate }}</label>
+                        <input type="text" class="form-control" formControlName="genderName"
+                          [(ngModel)]="model.genderName">
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required">{{'[Ngày sinh]' | translate }}</label>
+                        <ejs-datepicker id="birthDate" format="dd/MM/yyyy" [(ngModel)]="model.birthDate"
+                          (keydown)="changeDate('birthDate')" (blur)="changeDate('birthDate')"
+                          formControlName="birthDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">{{'[Địa chỉ]' | translate }}</label>
+                        <input type="text" class="form-control" formControlName="address" [(ngModel)]="model.address">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required">{{'[Mail]' | translate }}</label>
+                        <input type="text" class="form-control" formControlName="email" [(ngModel)]="model.email">
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text required">{{'[Điện thoại]' | translate }}</label>
+                        <input type="text" class="form-control" formControlName="mobilePhone"
+                          [(ngModel)]="model.mobilePhone">
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <textarea class="form-control" formControlName="skill" [(ngModel)]="model.skill"
+                          rows="5"></textarea>
+                        <label class="e-float-text " for="skill">{{'[Kỹ năng]' | translate }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="group-box">
+                  <div class="card-head">
+                    <div class="icon-info v-icon"></div>
+                    <label class="title">{{'[Mô tả chi tiết]' | translate }}</label>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <textarea class="form-control" formControlName="description" [(ngModel)]="model.description"
+                          rows="30"></textarea>
+                        <label class="e-float-text " for="description">{{'[Chi tiết]' | translate }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<input id="file" #file type="file" name="name" style="display: none;" (change)='inputFile(file.files)' />

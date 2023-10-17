@@ -1,0 +1,129 @@
+@use 'src/app/variables.scss';
+@import url(https://rsms.me/inter/inter.css);
+
+.common-tools-wrapper {
+
+    .common-tools {
+
+        height: variables.$common-tools-height;
+        font-family: 'Inter', sans-serif !important;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .common-tools-buttongroup {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            //new button
+            height: 32px;
+            border: 0.5px solid #CC782D;
+            border-radius: 4px;
+        }
+
+        .common-tools-btn-disabled {
+            pointer-events: none; //This makes it not clickable
+            opacity: 0.6; //This grays it out to look disabled
+        }
+
+        li {
+            display: inline-block;
+            color: #848484;
+            font-family: Inter;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 19.36px;
+            //new button
+            margin: 3px;
+            height: 32px;
+            padding: auto;
+            background: white;
+            color: #CC782D;
+            height: 32px;
+            border-radius: 4px;
+            width: 120px;
+            text-align: center;
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+
+        }
+
+        li:hover {
+            // color: variables.$primary;
+            //new button
+
+            background-color: rgb(250, 242, 234);
+        }
+
+        li:not(:last-child) {}
+
+        li:last-child {
+            border-right: none;
+        }
+
+        // .delete {
+        //     background: #dc3545;
+        //     color: white;
+        //     border: none;
+        // }
+
+        // .delete:hover {
+        //     background: red;
+        //     color: white;
+        //     border: none;
+
+        // }
+
+        .add,
+        .save {
+            color: #fff;
+            background-color: #CC782D;
+            box-shadow: 0 2px 0 rgba(255, 155, 5, 0.06);
+
+        }
+
+        .add:hover,
+        .save:hover {
+            color: #fff !important;
+            background-color: #D38239 !important;
+        }
+
+        div>span:last-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn-addnew-wrapper {
+            // width: 31px;
+            height: 32px;
+            // background-color: variables.$primary;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-addnew {
+            // font-size: 25px;
+            // color: #FFFFFF;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+    }
+}
+
+@media (max-width: 1200px) {
+    .common-tools-wrapper ul {
+        max-width: 375px;
+        overflow: scroll;
+    }
+}
+
+.fa-plus {
+    margin-right: 4px;
+}

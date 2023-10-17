@@ -1,0 +1,229 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="dash-header">
+      <div class="row full-width">
+        <div class="col-sm-10 p-n">
+          <span><i class="fa fa-home"></i>{{'[Trang chủ]' | translate }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="dash-content" style="padding-top: 30px ; background-color: #f8f9fb;">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="row full-width dash-card">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <!-- <div class="text-xs font-weight-bold pull-left mb-1">
+                                {{'[Đang làm việc]' | translate }}</div> -->
+                        <a target="_blank" [routerLink]="'/hrms/profile/setting/remind'"
+                          class="text-xs font-weight-bold pull-left mb-1">
+                          {{'Công việc cần xử lý' | translate }}</a>
+
+                        <div *ngIf="loadding" class="loading">...</div>
+                        <!-- <div *ngIf="!loadding" class= "mb-0 font-weight-bold text-gray-900"><b>{{danglamviec}}</b></div> -->
+                        <div *ngIf="!loadding" class="mb-0 font-weight-bold text-gray-900"><b>{{total}}</b></div>
+
+                      </div>
+                      <div class="col-auto">
+                        <img src="../../../../assets/images/dashboard/working.svg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="row full-width dash-card">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold pull-left mb-1">
+                          {{'[Chính thức]' | translate }}</div>
+                        <div *ngIf="loadding" class="loading">...</div>
+                        <div *ngIf="!loadding" class="mb-0 font-weight-bold text-gray-900"><b>{{chinhthuc}}</b></div>
+
+                      </div>
+                      <div class="col-auto">
+                        <img src="../../../../assets/images/dashboard/official.svg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="row full-width dash-card">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold pull-left mb-1">
+                          {{'[Tuyển mới]' | translate }}</div>
+                        <div *ngIf="loadding" class="loading">...</div>
+
+                        <div *ngIf="!loadding" class="mb-0 font-weight-bold text-gray-900"><b>{{tuyenmoi}}</b></div>
+
+                      </div>
+                      <div class="col-auto">
+                        <img src="../../../../assets/images/dashboard/newjoin.svg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="row full-width dash-card">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold pull-left mb-1">
+                          {{'[Nghỉ việc]' | translate }}</div>
+                        <div *ngIf="loadding" class="loading">...</div>
+
+                        <div *ngIf="!loadding" class="mb-0 font-weight-bold text-gray-900"><b>{{nghiviec}}</b></div>
+                      </div>
+                      <div class="col-auto">
+                        <img src="../../../../assets/images/dashboard/leave.svg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4  ">
+              <div class="row full-width dash-card shadow">
+                <!-- <div class="dash-card-header title full-width"
+                  style="background-color:#dee2e6; border-radius: 10px 10px 0 0; color: #4B4B4D;"> THỐNG KÊ TỶ LỆ GIỚI
+                  TÍNH </div> -->
+                <div class="dash-card-content dash-card-content-summary full-width">
+                  <div *ngIf="loadding" class="loading">...</div>
+                  <div class="row full-width">
+                    <highcharts-chart *ngIf="showChart1" [Highcharts]="Highcharts" [options]="OptionChartGender"
+                      style="width: 100%; display: block; margin: auto; float: left;">
+                    </highcharts-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4  ">
+              <div class="row full-width dash-card shadow">
+                <!-- <div class="dash-card-header title full-width"
+                  style="background-color:#dee2e6; border-radius: 10px 10px 0 0; color: #4B4B4D;"> THỐNG KÊ HỢP ĐỒNG LAO
+                  ĐỘNG </div> -->
+                <div class="dash-card-content dash-card-content-summary full-width ">
+                  <div *ngIf="loadding" class="loading">...</div>
+                  <div class="row full-width">
+                    <highcharts-chart *ngIf="showChart1" [Highcharts]="Highcharts" [options]="OptionChartContract"
+                      style="width: 100%; display: block; margin: auto; float: left;">
+                    </highcharts-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4  ">
+              <div class="row full-width dash-card shadow">
+                <!-- <div class="dash-card-header title full-width"
+                  style="background-color:#dee2e6; border-radius: 10px 10px 0 0; color: #4B4B4D;"> THỐNG KÊ TỶ LỆ ĐÓNG
+                  BẢO HIỂM </div> -->
+                <div class="dash-card-content dash-card-content-summary full-width">
+                  <div *ngIf="loadding" class="loading">...</div>
+                  <div class="row full-width">
+                    <highcharts-chart *ngIf="showChart1" [Highcharts]="Highcharts" [options]="OptionChartLearnning"
+                      style="width: 100%; display: block; margin: auto; float: left;">
+                    </highcharts-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6  ">
+              <div class="row full-width dash-card dash-card-normal shadow">
+                <!-- <div class="dash-card-header title full-width"
+                  style="background-color:#dee2e6; border-radius: 10px 10px 0 0; color: #4B4B4D;"> TỔNG SỐ NHÂN VIÊN
+                  THEO THÁNG </div> -->
+                <div class="dash-card-content dash-card-content-summary full-width">
+                  <div *ngIf="loadding" class="loading">...</div>
+                  <div class="row full-width">
+                    <highcharts-chart *ngIf="showChart1" [Highcharts]="Highcharts" [options]="OptionChartEmpMonth"
+                      style="width: 100%; display: block; margin: auto; float: left;">
+                    </highcharts-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6  ">
+              <div class="row full-width dash-card dash-card-normal shadow">
+                <!-- <div class="dash-card-header title full-width"
+                  style="background-color:#dee2e6; border-radius: 10px 10px 0 0; color: #4B4B4D;">BIỂU ĐỒ THÂM NIÊN
+                </div> -->
+                <div class="dash-card-content dash-card-content-summary full-width">
+                  <div *ngIf="loadding" class="loading">...</div>
+                  <div class="row full-width">
+                    <highcharts-chart *ngIf="showChart1" [Highcharts]="Highcharts" [options]="OptionChartSeniority"
+                      style="width: 100%; display: block; margin: auto; float: left;">
+                    </highcharts-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-sm-2">
+          <div id="accordion" style="height: 300px ;">
+            <div class="title">
+              <p>THAO TÁC NHANH</p>
+            </div>
+            <div (click)="navigate('/hrms/profile/business/staffprofile/new')" class="quick">
+              <img src="/assets/images/CoreIcon.svg" /> <span style="padding-left: 10px;"> Tạo hồ sơ</span>
+            </div>
+            <div (click)="navigate('/hrms/profile/business/decision/new')" class="quick">
+              <img src="/assets/images/CoreIcon.svg" /> <span style="padding-left: 10px;"> Tạo quyết định</span>
+            </div>
+            <div (click)="navigate('/hrms/profile/business/contractinfor/new')" class="quick">
+
+              <img src="/assets/images/CoreIcon.svg" /> <span style="padding-left: 10px;"> Tạo hợp đồng</span>
+            </div>
+            <div (click)="navigate('/hrms/attendance/business/registeroff')" class="quick">
+              <img src="/assets/images/CoreIcon.svg" /> <span style="padding-left: 10px;"> Đăng ký nghỉ</span>
+            </div>
+            <div (click)="navigate('/hrms/attendance/business/shiftsort')" class="quick">
+              <img src="/assets/images/CoreIcon.svg" /> <span style="padding-left: 10px;"> Xếp ca</span>
+            </div>
+            <div (click)="navigate('/hrms/attendance/list/salaryperiod')" class="quick">
+              <img src="/assets/images/CoreIcon.svg" /> <span style="padding-left: 10px;"> Khai báo kỳ công lương</span>
+            </div>
+          </div>
+          <div id="accordion" style="height: 460px ; margin-top: 30px;">
+            <div class="title">
+              <p>CẢNH BÁO HỆ THỐNG</p>
+            </div>
+            <div *ngFor="let item of data ; let a = index">
+              <div (click)="toggle(a)" class="header" *ngIf="item.count > 0">
+                <div>{{item.name}} <span style="color: red; font-weight: bold; ">({{item.count}})</span> </div>
+                <div [@rotatedState]="item.state">
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div [@myfirstanimation]='item.state' class="content" *ngIf="item.count > 0">
+                <div class="item" *ngFor="let i of item.value">
+                  <div class="emp" (click)="Directional(item.code, i)"><a class="link">{{i.name}} - {{i.code}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>

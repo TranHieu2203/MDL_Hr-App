@@ -1,0 +1,190 @@
+<!-- Widget Phiếu nhập kho-->
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Phiếu nhập kho (3)]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchImportOrder" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchImportOrderEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchImportOrderFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstImportOrder">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3, 'dash-primary': item.status_id === 4}">
+                        <i class="fa fa-circle"></i>{{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Phiếu xuất kho-->
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Phiếu xuất kho (3)]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchExportOrder" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchExportOrderEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchExportOrderFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstExportOrder">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3, 'dash-primary': item.status_id === 4}">
+                        <i class="fa fa-circle"></i> {{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Phiếu điều chuyển -->
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Phiếu điều chuyển (3)]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchTransferOrder" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchTransferOrderEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchTransferOrderFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstTransferOrder">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3, 'dash-primary': item.status_id === 4}">
+                        <i class="fa fa-circle"></i>{{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Tổng quát -->
+<div class="col-sm-6  dash-widget">
+    <div class="row full-width dash-card dash-card-small">
+        <div class="dash-card-header full-width">
+            Loại yêu cầu
+            <span class="btn-remove-widget" (click)="closeWidget('my_work')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width" style="height: 238px !important;">
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-warning">2</p>
+                    <p class="full-width summary-label">{{'[YCTD chờ phê duyệt]' | translate }}</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-success">2</p>
+                    <p class="full-width summary-label">{{'[YCTD đã phê duyệt]' | translate }}</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-error">2</p>
+                    <p class="full-width summary-label">{{'[YCTD bị từ chối]' | translate }}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Biểu đồ vượt mức tối đa -->
+<div class="col-sm-6  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <!-- <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="maxEnoughProductChart">
+                </highcharts-chart> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Tổng quan công việc -->
+<div class="col-sm-6  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <!-- <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="workSummaryChart">
+                </highcharts-chart> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Biến động giá trị tồn kho -->
+
+<div class="col-sm-6  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <!-- <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="inventoryExchangeChart">
+                </highcharts-chart> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Biểu đồ vượt mức tối đa -->
+<!--
+<div class="col-sm-6  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="minEnoughProductChart">
+                </highcharts-chart>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<!-- Widget Biểu đồ giá trị tồn kho tại từng kho -->
+<div class="col-sm-6  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <!-- <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="inventoryChart">
+                </highcharts-chart> -->
+            </div>
+        </div>
+    </div>
+</div>

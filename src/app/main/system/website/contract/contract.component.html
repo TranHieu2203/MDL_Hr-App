@@ -1,0 +1,53 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true">Website</i>
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/sys/website/list/blog'>{{'[Thông tin liên hệ]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' rowHeight='37' headerHeight='42'
+        [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+      [allowSorting]='true' allowResizing='true'
+        [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+         [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+            width='40' textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='_id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+            [allowEditing]="false">
+          </e-column>
+          <e-column field='name' headerTextAlign="Center" textAlign="Left" headerText="{{'[Tên liên hệ]' | translate }}"
+            clipMode='EllipsisWithTooltip' width='100'></e-column>
+          <e-column field='email' headerTextAlign="Center" textAlign="Left" width='120' headerText="{{'[Email]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+
+          <e-column field='phone' headerTextAlign="Center" width='100' textAlign="Center" headerText="{{'[SĐT]' | translate }}">
+          </e-column>
+          <e-column field='message' headerTextAlign="Center" textAlign="Left" headerText="{{'[Tin nhắn]' | translate }}"
+            clipMode='EllipsisWithTooltip'>
+          </e-column>
+          <e-column field='date_create' headerTextAlign="Center" textAlign="Left" headerText="{{'[Người tạo]' | translate }}"
+            clipMode='EllipsisWithTooltip' width='80'>
+          </e-column>
+
+        </e-columns>
+      </ejs-grid>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->

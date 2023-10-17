@@ -1,0 +1,49 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/payroll/list/listmachine'>{{'[Danh mục máy uốn]' | translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="listmachine" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' (dataStateChange)="dataStateChange($event!)"
+        rowHeight='37' headerHeight='42' [height]='configs.height()' [allowPaging]='true'
+        [pageSettings]='configs.pageSettings' [enableHover]='true' (recordDoubleClick)="viewRecord($event!)"
+        [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+        [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+        [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+        [allowFiltering]='true' [filterSettings]='configs.filterOption' showColumnMenu='true'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+            width='60' textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+            [allowEditing]="false">
+          </e-column>
+          <e-column field='code' headerTextAlign="Center" textAlign="Left" headerText="{{'[mã]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='name' headerTextAlign="Center" textAlign="Left" headerText="{{'[Tên]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='unit_Price' headerTextAlign="Center" textAlign="Right" headerText="{{'[Đơn giá]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->

@@ -1,0 +1,84 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/payroll/setting/payrollformula'>{{'[Công thức tính lương]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="payrollformula-edit" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--  -->
+    <!-- spliter -->
+    <div class="app-content">
+      <ejs-splitter #horizontal>
+        <e-panes>
+          <e-pane size='40%'>
+            <ng-template #content>
+              <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' [allowRowDragAndDrop]='true' rowHeight='40'
+                headerHeight='52' height='100%' [locale]='configs.currentLang' [allowSelection]='true'
+                allowTextWrap='true' [textWrapSettings]='wrapSettings' (rowSelecting)="rowSelecting($event!)"
+                (rowDrop)="rowDrop($event!)">
+                <e-columns>
+                  <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                    [isPrimaryKey]='true' [allowEditing]="false">
+                  </e-column>
+                  <e-column width="50" eaderTextAlign="Center" textAlign="Center" headerText="{{'[STT]' | translate }}"
+                    clipMode="EllipsisWithTooltip">
+                    <ng-template #template let-data>
+                      <span>{{ formatStt(data.index) }}</span>
+                    </ng-template>
+                  </e-column>
+                  <e-column field='name' textAlign="Left" headerTextAlign="Center" headerText="{{'[Tên phần tử lương]' | translate }}"
+                    width="200">
+                  </e-column>
+                  <e-column field='formulaName' textAlign="Left" headerTextAlign="Center" headerText="{{'[Công thức lương]' | translate }}">
+                  </e-column>
+                  <e-column field='colName' [visible]='false'>
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </ng-template>
+          </e-pane>
+          <e-pane size='40%' [resizable]='false'>
+            <ng-template #content>
+              <div>
+                <!-- <div #backdrop class="backdrop">
+                  <div class="highlights" [innerHTML]="highlightedText"></div>
+                </div>
+                <app-textarea-highlight [(ngModel)]="model.formulaName" [highlightTexts]="highlightTexts">
+                </app-textarea-highlight> -->
+                <textarea [(ngModel)]="model.formulaName" id="textarea" rows="30"></textarea>
+              </div>
+
+            </ng-template>
+          </e-pane>
+          <e-pane size='20%'>
+            <ng-template #content>
+              <div style="padding: 10px 10px 20px 10px">
+                <ejs-maskedtextbox #maskObj placeholder="Tìm kiếm phần tử..." id="search"
+                  (change)="searchNodes($event!)">
+                </ejs-maskedtextbox>
+              </div>
+
+              <div class="list-element" *ngFor="let item of elements1">
+                <p id="{{item.name}}" draggable="true" (dragstart)="drag($event!)">
+                  {{item.name}}
+                </p>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,137 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Năng lực]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/capacity/list/competencylevel'>{{'[Cấp độ năng lực]' | translate
+              }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="competencylevel" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <!--main-content -->
+    <div class="app-content">
+
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box">
+            <!-- title -->
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }}</label>
+            </div>
+            <!--  -->
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Nhóm năng lực]' | translate }}</label>
+                  <ejs-dropdownlist [dataSource]='lstSalaryScaleId' [fields]='fields' [showClearButton]="true"
+                    [(ngModel)]="model.capacityGroupId" formControlName="capacityGroupId" [placeholder]="''"
+                    [allowFiltering]='true' (filtering)='onFiltering($event,lstSalaryScaleId)'
+                    (change)="changeCapacityGroup($event!)">
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('capacityGroupId')!.hasError('required') && !editForm.get('capacityGroupId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Năng lực]' | translate }}</label>
+                  <ejs-dropdownlist [dataSource]='lstcompeFrameId' [fields]='fields' [showClearButton]="true"
+                    [(ngModel)]="model.compeFrameId" formControlName="compeFrameId" [placeholder]="''"
+                    [allowFiltering]='true' (filtering)='onFiltering($event,lstcompeFrameId)'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('compeFrameId')!.hasError('required') && !editForm.get('compeFrameId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Mức]' | translate }}</label>
+                  <ejs-numerictextbox formControlName="muc" format="N0" locale="en" name="muc" [(ngModel)]="model.muc"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('muc')!.hasError('required') && !editForm.get('muc')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text ">{{'[Điểm]' | translate }}</label>
+                  <ejs-numerictextbox formControlName="diem" format="N0" locale="en" name="diem"
+                    [(ngModel)]="model.diem" min="0" max="999999999">
+                  </ejs-numerictextbox>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="name">{{'[Hành vi]' | translate }}</label>
+                  <textarea class="form-control" type="text" formControlName="hanhvi"
+                    [(ngModel)]="model.hanhvi"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

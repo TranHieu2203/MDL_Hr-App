@@ -1,0 +1,291 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i> <span
+              class="brackcrum-active">{{'[Tạm ứng lương]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- main-content -->
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- Thông tin hợp đồng -->
+          <div class="card-head">
+            <div class="icon-info info-icon"></div>
+            <label class="title">{{'[Thông tin ứng lương]' | translate }}</label>
+          </div>
+          <div class="row">
+            <!-- mã nhân viên -->
+            <div class="col-sm-4">
+              <div class="form-group vertical-flex">
+                <label class="e-float-text required" for="code">{{'[Mã nhân viên]' | translate }}</label>
+                <input  formControlName="code" [(ngModel)]="model.employeeCode"
+                  type="text" class="form-control" readonly>
+                <div class="input-group-append">
+                  <button class="btn btn-search" type="button"
+                    (click)="choiseEmp()"></button>
+                </div>
+                <span class="input-error"
+                  *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!-- họ và tên -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text " for="fullname">{{'[Họ và tên]' | translate }}</label>
+                <input  type="text" class="form-control"
+                  formControlName="fullname" [(ngModel)]="model.employeeName"
+                  readonly>
+                <span class="input-error"
+                  *ngIf="editForm.get('fullname')!.hasError('required') && !editForm.get('fullname')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+
+            </div>
+            <!-- Chức danh -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text " for="positionId">{{'[Chức danh]' | translate }}</label>
+                <input  type="text" class="form-control"
+                  formControlName="positionId" [(ngModel)]="model.positionName"
+                  readonly>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Phòng ban -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text " for="orgId">{{'[Phòng ban]' | translate }}</label>
+                <input  type="text" class="form-control" formControlName="orgId"
+                  [(ngModel)]="model.orgName" readonly>
+                <span class="input-error"
+                  *ngIf="editForm.get('orgId')!.hasError('required') && !editForm.get('orgId')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!-- Đơn vị -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text">{{'[Đơn vị]' | translate }}</label>
+                <input  type="text" class="form-control"
+                  formControlName="orgParentName"
+                  [(ngModel)]="model.orgParentName" readonly>
+                <span class="input-error"
+                  *ngIf="editForm.get('orgParentName')!.hasError('required') && !editForm.get('orgParentName')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required"
+                  for="maxValue">{{'[Năm]' | translate }}</label>
+                <ejs-numerictextbox name="year" formControlName="yearId"
+                  [(ngModel)]="model.year" min="2000" max="2050"
+                  format='####' (change)="changeYear($event!)">
+                </ejs-numerictextbox>
+                <span class="input-error"
+                  *ngIf="editForm.get('yearId')!.hasError('required') && !editForm.get('yearId')!.untouched">
+                  {{'[Bắt buộc nhập]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!--Loại hợp đồng  -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="period">{{'[Kỳ lương]' | translate }}</label>
+                <ejs-dropdownlist id='period'
+                  [dataSource]='lstPeriod' formControlName="period"
+                  [showClearButton]="true" [(ngModel)]="model.periodId"
+                  [fields]='fields' [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstPeriod)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('period')!.hasError('required') && !editForm.get('period')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!-- Số hợp đồng -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="money">{{'[Số tiền ứng]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="money"
+                  formControlName="money" [(ngModel)]="model.money" min="0"
+                  max="999999999">
+                </ejs-numerictextbox>
+                <span class="input-error"
+                  *ngIf="editForm.get('money')!.hasError('required') && !editForm.get('money')!.untouched">
+                  {{'[Bắt buộc nhập]' | translate }}
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+          <!--Ngày ứng  -->
+          <div class="col-sm-4">
+            <div class="form-group vertical">
+              <ejs-datepicker id="advanceDate" format="dd/MM/yyyy"
+                [(ngModel)]="model.advanceDate"
+                (keydown)="changeDate('advanceDate')"
+                (blur)="changeDate('advanceDate')" formControlName="advanceDate"
+                placeholder=".../.../...">
+              </ejs-datepicker>
+              <span class="e-float-line"></span>
+              <label class="e-float-text required">{{'[Ngày ứng]' | translate }}</label>
+              <span class="input-error"
+                *ngIf="editForm.get('advanceDate')!.hasError('required') && !editForm.get('advanceDate')!.untouched">
+                {{'[Bắt buộc chọn]' | translate }}</span>
+              <span class="input-error"
+                *ngIf="editForm.get('advanceDate')!.hasError('incorrect') && !editForm.get('advanceDate')!.untouched">
+               {{'[ Sai định dạng]' | translate }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Người ký -->
+            <div class="col-sm-4">
+              <div class="form-group vertical-flex">
+                <label class="e-float-text required" for="signer">{{'[Người ký]' | translate }}</label>
+                <input  formControlName="signer" [(ngModel)]="model.signerName"
+                  type="text" class="form-control" readonly>
+                <div class="input-group-append">
+                  <button class="btn btn-search" type="button"
+                    (click)="choiseSigner()"></button>
+                </div>
+                <span class="input-error"
+                  *ngIf="editForm.get('signer')!.hasError('required') && !editForm.get('signer')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!-- Chức danh ký -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text " for="signerPosition">{{'[Chức danh ký]' | translate }}</label>
+                <input  type="text" class="form-control"
+                  formControlName="signerPosition"
+                  [(ngModel)]="model.signerPosition" readonly>
+                <span class="input-error"
+                  *ngIf="editForm.get('signerPosition')!.hasError('required') && !editForm.get('signerPosition')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!-- Ngày ký -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="ngayhachtoan">{{'[Ngày ký]' | translate }}</label>
+                <ejs-datepicker id="signDate" format="dd/MM/yyyy"
+                  [(ngModel)]="model.signDate"
+                  (keydown)="changeDate('signDate')"
+                  (blur)="changeDate('signDate')" formControlName="signDate"
+                  placeholder=".../.../...">
+                </ejs-datepicker>
+                <span class="input-error"
+                  *ngIf="editForm.get('signDate')!.hasError('required') && !editForm.get('signDate')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+                <span class="input-error"
+                  *ngIf="editForm.get('signDate')!.hasError('incorrect') && !editForm.get('signDate')!.untouched">
+                  {{'[Sai định dạng]' | translate }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Ghi chú -->
+            <div class="col-sm-12">
+              <div class="form-group vertical">
+                <label class="e-float-text " for="name"> {{'[Ghi chú]' | translate }}</label>
+                <textarea class="form-control" formControlName="note"
+                  [(ngModel)]="model.note"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Trạng thái -->
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="status">{{'[Trạng thái]' | translate }}</label>
+                <ejs-dropdownlist id='status' [dataSource]='lstStatusId'
+                  formControlName="status" [showClearButton]="true"
+                  [(ngModel)]="model.statusId" [fields]='fields'
+                  [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstStatusId)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('status')!.hasError('required') && !editForm.get('status')!.untouched">{{'[Bắt buộc chọn]' | translate }}</span>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--  -->
+  </div>
+</div>
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+<cms-app-modalsdecision id="cms-app-modalsdecision"></cms-app-modalsdecision>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default"
+      (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

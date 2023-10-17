@@ -1,0 +1,70 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/setting/settingremind'>{{'[Thiết lập hệ thống]' |
+              translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="remind" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card-center">
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[THIẾT LẬP CẢNH BÁO]' | translate }} </label>
+          </div>
+          <div [formGroup]="editForm">
+            <div class="row mb-3">
+              <div class="col-sm-4" formArrayName="arrayForm" *ngFor="let model of arrayData; let i = index">
+                <div [formGroupName]="i" class="form-group  vertical">
+                  <ejs-checkbox formControlName="isActive" label="{{model.name}}" [(ngModel)]="model.isActive"
+                    (ngModelChange)="changeCheckBox(model.isActive, i)">
+                  </ejs-checkbox>
+                  <ejs-numerictextbox format="N0" locale="en" placeholder="Số ngày" formControlName="day"
+                    [(ngModel)]="model.day" min="0" max="999999999">
+                  </ejs-numerictextbox>
+                  <span class="input-error" *ngIf="arrayForm.controls[i].get('day')!.hasError('required') &&
+                !arrayForm.controls[i].get('day')!.untouched ">
+                    {{'[Bắt buộc]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="group-box">
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[THIẾT LẬP MAIL SERVER]' | translate }} </label>
+          </div>
+          <div class="row mb-3">
+            
+
+          </div>
+        </div>
+        <div class="group-box">
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[THIẾT LẬP CHẤM CÔNG]' | translate }} </label>
+          </div>
+          <div class="row mb-3">
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

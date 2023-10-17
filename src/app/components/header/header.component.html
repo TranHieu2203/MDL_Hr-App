@@ -1,0 +1,71 @@
+<div class="nav-header bg-v2Hrm-app shadow-xs border-0">
+    <div class="nav-top bg-v2Hrm-app">
+
+
+        <a [routerLink]="moduleRouterLink" class="mob-menu ms-auto me-2 chat-active-btn"><i #mobButton
+                class="feather-command btn-round-md module font-xl"></i></a>
+
+        <div class="app-bar">
+            <!-- <app-bar></app-bar> -->
+        </div>
+
+        <button (click)="toggleOpen()" [class]="'nav-menu me-0 ms-2 mob-icon' + buttonClass"></button>
+    </div>
+
+    <nav [class]="'navigation scroll-bar' + navClass">
+        <div class="container ps-0 pe-0">
+            <div class="nav-content">
+                <div *ngIf="!!activeModule"
+                    class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2 mt-2">
+                    <div class="nav-caption fw-600 font-xssss text-grey-500">{{ activeModule.code }}</div>
+                    <ul class="mb-3">
+                        <li *ngFor="let f of activeModule.features; let index=index" (click)="toggleOpen()">
+
+                            <a [routerLink]="'/'+ activeModule.routerLink + '/' + f.routerLink"
+                                class="nav-content-bttn open-font">
+                                <i
+                                    [class]="f.iconClass + ' btn-round-md me-3 ' + bgClass(activeModule.index, index)"></i>
+                                <span>{{ f.code }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div *ngIf="!!module"
+                    class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2">
+                    <div class="nav-caption fw-600 font-xssss text-grey-500">{{ module.title }}</div>
+                    <ul class="mb-3">
+                        <li (click)="toggleOpen()" *ngFor="let child of children">
+                            <a [routerLink]="child.url" class="nav-content-bttn open-font">
+                                <i class="font-xl text-current feather-layout me-3"></i><span>{{ child.translate
+                                    }}</span></a>
+                            <ul *ngIf="!!child.children.length">
+
+                                <li (click)="toggleOpen()" *ngFor="let prochild of child.children">
+                                    <a [routerLink]="prochild.url" class="nav-content-bttn open-font">
+                                        <span>{{ prochild.translate }}</span></a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2">
+                    <div class="nav-caption fw-600 font-xssss text-grey-500"><span></span> Account</div>
+                    <ul class="mb-1">
+
+                        <li (click)="handleChangePassword()"><a
+                                class="nav-content-bttn open-font h-auto pt-2 pb-2 pointer"><i
+                                    class="font-sm feather-lock me-3 text-grey-500"></i><span>Đổi mật khẩu</span></a>
+                        </li>
+                        <li (click)="handleLogout()"><a class="nav-content-bttn open-font h-auto pt-2 pb-2 pointer"><i
+                                    class="font-sm feather-log-out me-3 text-grey-500"></i><span>Đăng xuất</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

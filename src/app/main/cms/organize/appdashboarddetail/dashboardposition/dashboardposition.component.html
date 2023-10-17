@@ -1,0 +1,155 @@
+<!-- <ejs-treegrid [dataSource]='data' [treeColumnIndex]='1' [sortSettings]="sortSettings" [allowFiltering]="true"
+  [allowSorting]="true" childMapping='subtasks' [allowPaging]="true" [pageSettings]='pageSettings'>
+  <e-columns>
+    <e-column field='taskID' headerText='ID' textAlign='Center' width=30></e-column>
+    <e-column field='taskName' headerText='Name' textAlign='Left' width=180></e-column>
+    <e-column field='startDate' headerText='Start Date' textAlign='Center' format='yMd' width=90></e-column>
+    <e-column field='duration' headerText='Duration' textAlign='Center' width=80></e-column>
+    <e-column field='priority' headerText='Priority' textAlign='Center' width=80></e-column>
+  </e-columns>
+</ejs-treegrid> -->
+
+
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tổ chức]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/organize/dashboarddetail/dashboardposition'>{{'[Tổng quan Công
+              việc]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 100px!important;">
+        <li class="nav-item">
+          <a (click)="changeTab(1)" class="nav-link active" data-toggle="tab" href="#home">{{'[Sơ đồ tổ chức]' |
+            translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a (click)="changeTab(2)" class="nav-link" data-toggle="tab" href="#position">{{'[Vị trí công việc]' |
+            translate }}</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <!-- Sơ đồ tổ chức -->
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Sơ đồ tổ chức]' | translate }}</label>
+            </div>
+            <div class="app-content" style="top:0px!">
+              <ejs-splitter #splitterInstance id="nested-splitter" height='100%' width='100%'>
+                <e-panes>
+                  <e-pane>
+                    <ng-template #content>
+                      <div class="list-grid">
+                        <ejs-treegrid #treegridOrgChartPosition id='treegridOrgChartPosition' [dataSource]='data'
+                          [treeColumnIndex]='0' [sortSettings]="sortSettings" [allowFiltering]="false"
+                          [allowSorting]="true" childMapping='children' [allowPaging]="false"
+                          [pageSettings]='pageSettings' [enableCollapseAll]="true"
+                          (rowDataBound)='rowDataBound($event!)'>
+                          <e-columns>
+                            <!-- <e-column field='ID' headerText='ID' textAlign='Center' width=30></e-column> -->
+                            <e-column field='orgName' headerText="{{'[Đơn vị]' | translate }}"
+                              textAlign='Left'></e-column>
+                            <e-column field='jobCnt' headerText="{{'[Công việc]' | translate }}" textAlign='Left'
+                              width=180></e-column>
+                            <e-column field='ytdFte' headerText="{{'[SL nhân sự]' | translate }}" textAlign='Left'
+                              width=180></e-column>
+                            <e-column field='planFte' headerText="{{'[SL nhân sự kế hoạch]' | translate }}"
+                              textAlign='Left' width=180></e-column>
+                            <e-column field='vsplanFte' headerText="{{'[Chênh lệch]' | translate }}" textAlign='Left'
+                              width=180></e-column>
+                            <e-column field='isJob' headerText="{{'[isJob]' | translate }}" textAlign='Left' width=180
+                              [visible]='false'></e-column>
+                            <e-column field='nhomDuan' headerText="{{'[nhomDuan]' | translate }}" textAlign='Left'
+                              width=180 [visible]='false'></e-column>
+                          </e-columns>
+                        </ejs-treegrid>
+                      </div>
+                    </ng-template>
+                  </e-pane>
+                </e-panes>
+              </ejs-splitter>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="position" role="tabpanel" aria-labelledby="position-tab">
+          <!-- Vị trí công việc -->
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info info-icon"></div>
+              <label class="title">Vị trí công việc</label>
+            </div>
+            <div class="app-content">
+              <ejs-splitter #splitterInstance id="nested-splitter2" height='100%' width='100%'>
+                <e-panes>
+                  <e-pane size="75%">
+                    <ng-template #content>
+                      <div class="list-grid">
+                        <ejs-treegrid #treegridJobChartPosition id='treegridJobChartPosition' [dataSource]='data2'
+                          [treeColumnIndex]='0' [sortSettings]="sortSettings" [allowFiltering]="false"
+                          [allowSorting]="true" childMapping='children2' [allowPaging]="false"
+                          [pageSettings]='pageSettings' [editSettings]='editSettings' [enableCollapseAll]="true"
+                          (rowDataBound)='rowDataBound2($event!)' (rowSelecting)="rowSelecting2($event!)">
+                          <e-columns>
+                            <!-- <e-column field='ID' headerText='ID' textAlign='Center' width=30></e-column> -->
+                            <e-column field='orgName' headerText="{{'[Đơn vị]' | translate }}" textAlign='Left'
+                              [ngClass]="'e-disabled'"></e-column>
+                            <e-column field='lyFte' headerText="{{'[SL năm trước]' | translate }}" textAlign='Left'
+                              width=180 editType='numericedit'></e-column>
+                            <e-column field='totalEmp' headerText="{{'[SL hiện tại]' | translate }}" textAlign='Left'
+                              width=180></e-column>
+                            <e-column field='chenhLech1' headerText="{{'[+/- chênh lệch]' | translate }}"
+                              textAlign='Left' width=180></e-column>
+                            <e-column field='totalPosition' headerText="{{'[SL kế hoạch]' | translate }}"
+                              textAlign='Left' width=180></e-column>
+                            <e-column field='chenhLech2' headerText="{{'[+/- chênh lệch]' | translate }}"
+                              textAlign='Left' width=180></e-column>
+                            <e-column field='isJob' headerText="{{'[isJob]' | translate }}" textAlign='Left' width=180
+                              [visible]='false'></e-column>
+                            <e-column field='nhomDuan' headerText="{{'[nhomDuan]' | translate }}" textAlign='Left'
+                              width=180 [visible]='false'></e-column>
+                            <e-column headerText='' width='150' [commands]='commands'></e-column>
+                          </e-columns>
+                        </ejs-treegrid>
+                      </div>
+                    </ng-template>
+                  </e-pane>
+                  <e-pane size="25%">
+                    <ng-template #content>
+                      <div class="list-grid">
+                        <ejs-treegrid #treegridJobChartPositionChild id='treegridJobChartPositionChild'
+                          [dataSource]='data3' [treeColumnIndex]='0' [sortSettings]="sortSettings"
+                          [allowFiltering]="false" [allowSorting]="true" childMapping='children3' [allowPaging]="false"
+                          [pageSettings]='pageSettings' [editSettings]='editSettings' [enableCollapseAll]="true"
+                          (rowDataBound)='rowDataBound3($event!)'>
+                          <e-columns>
+                            <e-column field='name' headerText="{{'[Tên chức năng]' | translate }}"
+                              textAlign='Left'></e-column>
+                            <e-column field='functionName' headerText="{{'[Thang đo]' | translate }}" textAlign='Left'
+                              width=180></e-column>
+                          </e-columns>
+                        </ejs-treegrid>
+                      </div>
+                    </ng-template>
+                  </e-pane>
+                </e-panes>
+              </ejs-splitter>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

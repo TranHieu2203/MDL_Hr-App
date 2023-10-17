@@ -1,0 +1,79 @@
+<!-- Widget Công việc được giao-->
+<div class="col-sm-6 dash-widget" *ngIf="showHideWidget.work_assigned === true">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            Công việc được giao (3)
+            <span class="btn-remove-widget" (click)="closeWidget('work_assigned')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchWorkAssigned" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchWorkAssignedEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchWorkAssignedFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstWorkAssigned">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.work_date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.work_name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3}">
+                        <i class="fa fa-circle"></i>{{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Widget Công việc của tôi -->
+<div class="col-sm-6  dash-widget" *ngIf="showHideWidget.my_work === true">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Công việc của tôi (3)]' | translate }}
+            <span class="btn-remove-widget" (click)="closeWidget('my_work')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchMyWork" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchMyWorkEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchMyWorkFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstMyWorks">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.work_date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.work_name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3}">
+                        <i class="fa fa-circle"></i>{{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tổng quan công việc -->
+<div class="col-sm-6  dash-widget" *ngIf="showHideWidget.work_summary === true">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Tổng quan công việc]' | translate }}
+            <span class="btn-remove-widget" (click)="closeWidget('work_summary')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div [chart]="chartSummary" ></div>
+        </div>
+    </div>
+</div>

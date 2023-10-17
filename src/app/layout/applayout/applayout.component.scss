@@ -1,0 +1,31 @@
+$specialWidth: 280px;
+
+.v-content {
+    width: 100vh;
+    display: flexbox;
+}
+
+.left-slider-bar {
+    z-index: 20;
+    position: fixed;
+    overflow: hidden;
+    // width: $specialWidth;
+    // height: 100vh;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.main {
+    // width: calc(100vh - 280px);
+    /* float: right; */
+    padding-left: $specialWidth;
+    transition: all 0.3s ease;
+    background-color: #f8f9fb;
+    height: 100vh;
+
+}
+
+app-common-tools {
+    position: absolute;
+    right: $specialWidth;
+}

@@ -1,0 +1,84 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/payroll/list/listmachine'>{{'[Danh mục sản phẩm]' | translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="listproduct" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' (dataStateChange)="dataStateChange($event!)"
+        rowHeight='37' headerHeight='42' [height]='configs.height()' [allowPaging]='true' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+        [pageSettings]='configs.pageSettings' [enableHover]='true' (recordDoubleClick)="viewRecord($event!)"
+        [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+        [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+            width='60' textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+            [allowEditing]="false">
+          </e-column>
+          <e-column field='code' headerTextAlign="left" textAlign="left" headerText="{{'[Mã sản phẩm]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='machinE_CODE' headerTextAlign="left" textAlign="left" headerText="{{'[Mã máy]' | translate }}" width='160'
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='cd' headerTextAlign="right" textAlign="right" headerText="{{'[CD]' | translate }}" clipMode='EllipsisWithTooltip'
+            width='120'></e-column>
+          <e-column field='cr' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[CR]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='dd' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[DD]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='kd' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[KD]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='qd' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[QD]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='kdk' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[KDK]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='kdd' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[KDD]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='kbm' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[KBM]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='uniT_PRICE' headerTextAlign="right" textAlign="right" width='120' headerText="{{'[Đơn giá uốn]' | translate }}"
+            type='number' format='N4' clipMode='EllipsisWithTooltip'></e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+  </div>
+</div>
+<input  id="file" type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile($event!)' />
+<v2hrm-confirm-modal id="confirm-import-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Xác nhận Import]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmImport('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmImport('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa không ?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

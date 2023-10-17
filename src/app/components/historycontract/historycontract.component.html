@@ -1,0 +1,80 @@
+<div class="list-grid">
+  <ejs-grid #overviewgridLstEmp id='overviewgridLstEmp'
+    [dataSource]='data'
+    (dataStateChange)="dataStateChange($event!)" rowHeight='35'
+    headerHeight='40' height='400px'
+    [allowPaging]='true' [pageSettings]='configs.pageSettings'
+    [enableHover]='true' 
+    [allowSorting]='true' allowResizing='true'
+    [locale]='configs.currentLang' [allowSelection]='true'
+    [showColumnChooser]='true'
+    [selectionSettings]='configs.selectionSettings'
+    [editSettings]='configs.editSettings'
+    [allowFiltering]='true' [filterSettings]='configs.filterOption' >
+    <e-columns>
+      <!-- <e-column type='checkbox' [showInColumnChooser]='false'
+        [allowFiltering]='false' [allowSorting]='false' width='60'
+        textAlign="Center" [allowEditing]="false">
+      </e-column> -->
+      <e-column field='id' [showInColumnChooser]='false'
+        [visible]='false' headerText='ID' [isPrimaryKey]='true'
+        [allowEditing]="false">
+      </e-column>
+      <e-column field='employeeCode' headerTextAlign="Left"
+        textAlign="Left" headerText="{{'[Mã nhân viên]' | translate }}"
+        clipMode='EllipsisWithTooltip' width='122'></e-column>
+      <e-column field='employeeName' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+        clipMode='EllipsisWithTooltip'>
+      </e-column>
+      <e-column field='orgName' headerTextAlign="Center"
+      textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+      clipMode='EllipsisWithTooltip'>
+    </e-column>
+      <e-column field='contractNo' headerTextAlign="Center"
+      textAlign="Left" headerText="{{'[Số hợp đồng]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="176">
+      <ng-template #template let-data>
+        <a style="color: blue; cursor: pointer;" (click)="ViewRecord(data)"> {{data.contractNo}}</a>
+      </ng-template>
+    </e-column>
+      <e-column field='contractTypeName' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Loại hợp đồng]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="228">
+      </e-column>
+      <e-column field='startDate' headerTextAlign="Center"
+        type="date"
+        [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false"
+        textAlign="Center" headerText="{{'[Ngày bắt đầu]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="126"></e-column>
+      <e-column field='expireDate' headerTextAlign="Center"
+        type="date"
+        [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false"
+        textAlign="Center" headerText="{{'[Ngày kết thúc]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="126"></e-column>
+      <e-column field='signDate' headerTextAlign="Center"
+        type="date"
+        [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false"
+        textAlign="Center" headerText="{{'[Ngày ký]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="126"></e-column>
+      <e-column field='signerName' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Người ký]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="158">
+      </e-column>
+      <e-column field='signerPosition' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Chức danh người ký]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="170">
+      </e-column>
+      <e-column field='statusId' textAlign="Center"
+        headerText="{{'[Trạng thái]' | translate }}" clipMode='EllipsisWithTooltip' width="158">
+        <ng-template #template let-data>
+          <div class="row-status full-width">
+            <div class="status-effect text-center">
+              <span>{{data.statusName}}</span>
+            </div>
+          </div>
+        </ng-template>
+      </e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

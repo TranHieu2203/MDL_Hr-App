@@ -1,0 +1,98 @@
+<div class="row group-filter">
+  <div class="col">
+    <div class="row ">
+      <div class="col-sm-5">
+        <div class="form-inline row">
+          <label class="col-sm-5 form-label required">{{'[Từ ngày]' | translate }}</label>
+          <div class="col-sm-7">
+            <ejs-datepicker format="dd/MM/yyyy" [(ngModel)]="model.dateStart"
+              placeholder=".../.../...">
+            </ejs-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-inline row">
+          <label class="col-sm-5 form-label required">{{'[Đến ngày]' | translate }}</label>
+          <div class="col-sm-7">
+            <ejs-datepicker format="dd/MM/yyyy" [(ngModel)]="model.dateEnd"
+              placeholder=".../.../...">
+            </ejs-datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data'
+  [selectionSettings]='selectionOptions'
+  (dataStateChange)="dataStateChange($event!)" rowHeight='32' headerHeight='35'
+  [height]='configs.height()' [allowPaging]='true'
+  [pageSettings]='configs.pageSettings' [enableHover]='true'
+  [allowSorting]='false' allowResizing='true' [locale]='configs.currentLang'
+  [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+  <e-columns>
+    <e-column field='ORG_NAME' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip' width="220">
+    </e-column>
+    <e-column field='EMP_TOTAL' headerTextAlign="Left" textAlign="Center"
+      headerText="{{'[Tổng số]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='JOINED' headerTextAlign="Left" textAlign="Center"
+      headerText="{{'[Đã tham gia BHXH]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='INJOIN' headerTextAlign="Left" textAlign="Center"
+      headerText="{{'[Chưa tham gia BHXH]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='AT_FIRST' headerTextAlign="Left" textAlign="Center"
+      headerText="{{'[Đầu kỳ]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='UP_TO' headerTextAlign="Left" textAlign="Center"
+      headerText="{{'[Tăng trong kỳ]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='DOWN_TO' headerTextAlign="Left" textAlign="Center"
+      headerText="{{'[Giảm trong kỳ]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='AT_LAST' headerTextAlign="Left" textAlign="Center"
+      headerText="{{'[Cuối kỳ]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+  </e-columns>
+  <e-aggregates>
+    <e-aggregate>
+      <e-columns>
+        <!-- <e-column field="ORG_NAME">
+          <ng-template #footerTemplate let-data>Tổng số</ng-template>
+        </e-column> -->
+        <e-column field="EMP_TOTAL" type="sum" format='N0'>
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="JOINED" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="AT_FIRST" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="UP_TO" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="DOWN_TO" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="AT_LAST" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+      </e-columns>
+    </e-aggregate>
+  </e-aggregates>
+</ejs-grid>

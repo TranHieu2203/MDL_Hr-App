@@ -1,0 +1,193 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='#'>{{'[Phê duyệt Sơ yếu lý lịch]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="staffprofile-change" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div id='container'>
+        <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+          <e-panes>
+            <e-pane size='270px' max='40%'>
+              <ng-template #content>
+                <div id='vertical_splitter' class="vertical_splitter">
+                  <div>
+                    <div class="content">
+                      <cms-app-org></cms-app-org>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="content content-checkbox">
+                      <ejs-checkbox label="Cả nhân viên nghỉ việc" (change)="GetEmp($event!)" [checked]="false">
+                      </ejs-checkbox>
+                      <div class="bg-ter"></div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </e-pane>
+            <e-pane>
+              <ng-template #content>
+                <div class="list-grid">
+                  <!-- <form class="reasonForm" name="reasonForm" [formGroup]="reasonForm" novalidate style="padding-bottom: 10px;">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="e-float-input">
+                          <label class="e-float-text" for="reason">{{'[Lý do]' | translate }}</label>
+                          <input  class="form-control" type="text" formControlName="reason" [(ngModel)]="model.reason">
+                        </div>
+                      </div>
+                    </div>
+                  </form> -->
+                  <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' showColumnMenu='true'
+                    (dataStateChange)="dataStateChange($event!)" [rowHeight]='gridRowHeight' headerHeight='40'
+                    [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                    [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+                    allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+                    [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings'
+                    [editSettings]='configs.editSettings' (rowSelecting)="setButtonStatus($event!)"
+                    (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                    <e-columns>
+                      <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                        [allowSorting]='false' width='50' textAlign="Center" [allowEditing]="false">
+                      </e-column>
+                      <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                        [isPrimaryKey]='true' [allowEditing]="false">
+                      </e-column>
+                      <e-column field='employeeId' [showInColumnChooser]='false' [visible]='false' headerText='employeeId'
+                        [isPrimaryKey]='true' [allowEditing]="false">
+                      </e-column>
+                      <e-column field='statusName' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width='110'>
+                        <ng-template #template let-data>
+                          <div class="row-status full-width">
+                            <div class="text-center status-warning" *ngIf="data.statusId == 1 ">
+                              <span>{{'[Chờ duyệt]' | translate }}</span>
+                            </div>
+                            <div class="text-center status-effect" *ngIf="data.statusId == 2">
+                              <span>{{'[Đã duyệt]' | translate }}</span>
+                            </div>
+                            <div class="text-center status-not-effect" *ngIf="data.statusId == 3">
+                              <span>{{'[Từ chối]' | translate }}</span>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </e-column>
+                      <e-column field='reason' headerTextAlign="Left" textAlign="Left" headerText="{{'[Lý do]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width='122'></e-column>
+                      <!-- <e-column field='avatar' headerTextAlign="Center" textAlign="Center" headerText="{{'[Ảnh]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width='100'>
+                        <ng-template #template let-data>
+                          <img src="{{data.avatar}}"
+                            style="height:65px; width: 65px; border-radius: 50%;object-fit: cover;"
+                            *ngIf="data.avatar!= null">
+                        </ng-template>
+                      </e-column> -->
+                      <e-column field='code' headerTextAlign="Left" textAlign="Left" headerText="{{'[Mã NV]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width='122'></e-column>
+                      <e-column field='fullname' headerTextAlign="Left" textAlign="Left" headerText="{{'[Họ tên]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width='180'>
+                      </e-column>
+                      <e-column field='orgName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+                        clipMode='EllipsisWithTooltip'>
+                      </e-column>
+                      <e-column field='positionName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Vị trí công việc]' | translate }}"
+                        clipMode='EllipsisWithTooltip'>
+                      </e-column>
+                      <e-column field='createDate' headerTextAlign="Center" type="date"
+                        [format]="{ type: 'date', format: 'dd/MM/yyyy HH:mm' }" textAlign="Center" headerText="{{'[Ngày yêu cầu]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width='180' [allowFiltering]='false'></e-column>
+                      <e-column field='updatedBy' headerTextAlign="Left" textAlign="Left" headerText="{{'[Tài khoản duyệt]' | translate }}"
+                        clipMode='EllipsisWithTooltip'>
+                      </e-column>
+                      <e-column field='updatedDate' headerTextAlign="Center" type="date"
+                        [format]="{ type: 'date', format: 'dd/MM/yyyy HH:mm' }" textAlign="Center" headerText="{{'[Ngày phê duyệt]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width='180' [allowFiltering]='false'></e-column>
+                      
+                    </e-columns>
+                  </ejs-grid>
+                </div>
+              </ng-template>
+            </e-pane>
+          </e-panes>
+        </ejs-splitter>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa không ?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<v2hrm-confirm-modal id="confirm-approved-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span>Bạn có muốn phê duyệt?</span>
+
+
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="e-float-input">
+         
+          <textarea class="form-control" type="text" placeholder="Lý do..." [(ngModel)]="reasonname" name="reasonname"></textarea> 
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="confirmApproved('ok')">{{'[Đồng ý]' | translate }}</button>
+        <button class="btn btn-default" (click)="confirmApproved('cancel')">{{'[Huỷ]' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</v2hrm-confirm-modal>
+
+<v2hrm-confirm-modal id="confirm-unapproved-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span>Bạn có muốn từ chối?</span>
+
+
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="e-float-input">
+          <textarea class="form-control" type="text" placeholder="Lý do..." [(ngModel)]="reasonname" name="reasonname"></textarea> 
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="confirmUnApproved('ok')">{{'[Đồng ý]' | translate }}</button>
+      <button class="btn btn-default" (click)="confirmUnApproved('cancel')">{{'[Huỷ]' | translate }}</button>
+      </div>
+      
+    </div>
+    
+  </div>
+</v2hrm-confirm-modal>

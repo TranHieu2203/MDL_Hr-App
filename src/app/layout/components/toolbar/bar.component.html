@@ -1,0 +1,116 @@
+<div class="bar">
+  <div class="header-left">
+    <input  type="text" class="form-control" placeholder="Search"/>
+    <div class="module-links">
+      <a *ngFor="let module of modules" [routerLink]="module.url" (click)="onModuleClick(module)">{{ module.title }}</a>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div class="user-info">
+      <div class="dropdown" dropdown>
+        <a dropdownToggle class="pull-right text-center btn btn-setting dropdown-toggle" data-toggle="dropdown"
+          aria-haspopup="true" aria- expanded="true">
+          <img class="user-avatar" src="{{model.avatar}}" *ngIf="model.avatar" />
+          <img class="user-avatar" src="/assets/images/no-img.png" *ngIf="!model.avatar" />
+          <span class="user-name" style="font-size: 14px;color: white;">{{userInfo.username}}</span></a>
+        <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          
+          <li role="presentation" class="user-item" (click)="ChangePassword()"> <a role="menuitem"><i
+                class="fa fa-key"></i>Đổi mật khẩu</a></li>
+          <li role="presentation" class="user-item" (click)="signOut()"> <a role="menuitem"><i
+                class="fa fa-sign-out"></i>Đăng
+              xuất</a></li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="app-toolbell">
+      <app-toolbell #toolbell (clickOutside)="clickOutside(toolbell)">
+      </app-toolbell>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM CHANGE PASSWORD-->
+<v2hrm-confirm-modal id="open-change-pass">
+  <form name="passwordForm" [formGroup]="passwordForm">
+    <div class="row full-width v2hrm-modal-header"
+      style="margin-bottom: 0 !important;text-align: center;display: block;">
+      Đổi mật khẩu
+    </div>
+    <!-- Mật khẩu mới -->
+    <div class="row full-width v2hrm-modal-content">
+      <div class="row full-width">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="e-float-input">
+              <input  [type]="tooglePassWord1 ? 'text' : 'password'" id="currentPass" name="currentPass"
+                [(ngModel)]="model.currentPassword" formControlName="currentPass"
+                placeholder="Nhập mật khẩu hiện tại...">
+              <span class="e-float-line"></span>
+              <label class="e-float-text required" for="currentPass">Mật khẩu hiện tại</label>
+              <span class="eye" (click)="tooglePassWord1 = !tooglePassWord1"><i class="fa"
+                  [class.fa-eye]="!tooglePassWord1" [class.fa-eye-slash]="tooglePassWord1"></i></span>
+              <span class="e-float-line"></span>
+              <span class="input-error"
+                *ngIf="passwordForm.get('currentPass')!.hasError('required') && !passwordForm.get('currentPass')!.untouched">
+                Trường Mật khẩu cũ {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Mật khẩu mới -->
+    <div class="row full-width v2hrm-modal-content">
+      <div class="row full-width">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="e-float-input">
+              <input  [type]="tooglePassWord2 ? 'text' : 'password'" id="password" name="password"
+                [(ngModel)]="model.newPassword" formControlName="password" placeholder="Nhập mật khẩu mới...">
+              <span class="e-float-line"></span>
+              <label class="e-float-text required" for="password">Mật khẩu mới (<span
+                  style="color: rgb(255, 36, 36);">Chứa ký tự in hoa và thường</span>)</label>
+              <span class="eye" (click)="tooglePassWord2 = !tooglePassWord2"><i class="fa"
+                  [class.fa-eye]="!tooglePassWord2" [class.fa-eye-slash]="tooglePassWord2"></i></span>
+              <span class="e-float-line"></span>
+              <span class="input-error"
+                *ngIf="passwordForm.get('password')!.hasError('required') && !passwordForm.get('password')!.untouched">
+                Trường Mật khẩu mới {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Xác nhận mật khẩu -->
+    <div class="row full-width v2hrm-modal-content">
+      <div class="row full-width">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="e-float-input">
+              <input  [type]="tooglePassWord3 ? 'text' : 'password'" id="confirm_password" name="old-confirm_password"
+                [(ngModel)]="model.confirm_password" formControlName="confirm_password"
+                placeholder="Nhập lại mật khẩu mới...">
+              <span class="e-float-line"></span>
+              <label class="e-float-text required" for="confirm_password">Nhập lại mật khẩu mới</label>
+              <span class="eye" (click)="tooglePassWord3 = !tooglePassWord3"><i class="fa"
+                  [class.fa-eye]="!tooglePassWord3" [class.fa-eye-slash]="tooglePassWord3"></i></span>
+              <span class="e-float-line"></span>
+              <span class="input-error"
+                *ngIf="passwordForm.get('confirm_password')!.hasError('required') && !passwordForm.get('confirm_password')!.untouched">
+                Trường Nhập lại mật khẩu mới {{'[Bắt buộc nhập]' | translate }}</span>
+              <span class="input-error" *ngIf=" confirmFlag === true">
+                Mật khẩu mới không trùng nhau
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row full-width v2hrm-modal-footer text-center">
+      <button class="btn btn-primary" (click)="confirmChoose('ok')">Đồng ý</button>
+      <button class="btn btn-default" (click)="confirmChoose('cancel')">Hủy</button>
+    </div>
+  </form>
+</v2hrm-confirm-modal>

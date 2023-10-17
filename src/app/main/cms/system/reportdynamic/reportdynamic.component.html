@@ -1,0 +1,97 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/system/groupuser'>{{'[Thiết lập báo cáo động]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <!-- <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div> -->
+        <app-common-tools name="sys_reportdynamic" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+
+      </div>
+    </div>
+
+    <div class="app-content">
+
+
+      <div class="card card-content">
+        <div class="card-main-content">
+          <div class="list-grid">
+            <ejs-grid #overviewgrid id='overviewgrid'
+              [dataSource]='data | async'
+              (dataStateChange)="dataStateChange($event!)" rowHeight='37'
+              headerHeight='42' [height]='configs.height()-5'
+              [allowPaging]='true' [pageSettings]='configs.pageSettings'
+              [enableHover]='true' (recordDoubleClick)="viewRecord($event!)"
+              [allowSorting]='false' allowResizing='true'
+              [locale]='configs.currentLang' [allowSelection]='true'
+              [showColumnChooser]='true'
+              [selectionSettings]='configs.selectionSettings'
+              [editSettings]='configs.editSettings'
+              (rowSelecting)="setButtonStatus($event!)"
+              (rowDeselecting)="setButtonStatus($event!)">
+              <e-columns>
+                <e-column type='checkbox' [showInColumnChooser]='false'
+                  [allowFiltering]='false' [allowSorting]='false' width='60'
+                  textAlign="Center" [allowEditing]="false">
+                </e-column>
+                <e-column field='id' [showInColumnChooser]='false'
+                  [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                  [allowEditing]="false"></e-column>
+                <!--  -->
+
+                <e-column width="60" HeaderTextAlign="Center" textAlign="Center"
+                  headerText="{{'[STT]' | translate }}" clipMode="EllipsisWithTooltip">
+                  <ng-template #template let-data>
+                    <span>{{ formatStt(data.index) }}</span>
+                  </ng-template>
+                </e-column>
+                <e-column  textAlign="Center" headerText="{{'[Định nghĩa dữ liệu]' | translate }}" 
+                clipMode='EllipsisWithTooltip'>
+                <ng-template #template let-data>
+                  <div class="row-status full-width">
+                    <div (click)="configData(data.id)" class="btn btn-warning" >
+                      <i class="fa fa-cog"></i>
+                    </div>
+                   
+                  </div>
+                </ng-template>
+              </e-column>
+                <e-column field='code' headerTextAlign="Left" textAlign="Left"
+                  headerText="{{'[Mã]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='nameVn' headerTextAlign="Left" textAlign="Left"
+                  headerText="{{'[Tên]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+                  <e-column field='storedProcedureName' headerTextAlign="Left" textAlign="Left"
+                  headerText="{{'[storedProcedureName]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='moduleName' headerTextAlign="Left" textAlign="Left"
+                  headerText="{{'[Module]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+                  <e-column field='orders' headerTextAlign="Center" textAlign="Center" type='number'
+                  headerText="{{'[Thứ tự sắp xếp]' | translate }}" clipMode='EllipsisWithTooltip' format='N0'>
+                </e-column>
+                
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->

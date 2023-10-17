@@ -1,0 +1,103 @@
+@keyframes modulecolor {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.nav-top {
+    width: 100%;
+}
+
+.bg-v2Hrm-app {
+    background: #3b5998;
+}
+
+.logo-img {
+    background-color: transparent;
+}
+
+.miuka-text-logo {
+    background: -webkit-linear-gradient(#09f, rgb(0, 69, 207));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.module {
+    display: inline-block !important;
+    color: white !important;
+    animation: modulecolor 10s infinite ease-in-out !important;
+}
+
+.module:hover {
+    animation-play-state: running !important;
+}
+
+.theme-dark {
+    .module {
+        background-color: transparent !important;
+    }
+}
+
+.theme-dark {
+    .bg-greylight {
+        background-color: #1a2236 !important;
+        color: #ddd !important;
+    }
+}
+
+@media screen and (max-width: 991px) {
+
+    .miuka-text-logo,
+    .logo-text {
+        line-height: 28px !important;
+        font-size: 24px !important;
+        transition: all;
+        transition-duration: 500ms;
+    }
+}
+
+.mob-extend {
+    background-color: inherit;
+}
+
+@media screen and (max-width: 412px) {
+
+    .miuka-text-logo,
+    .logo-text {
+        display: none !important;
+        transition: all;
+        transition-duration: 500ms;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .mob-extend {
+        display: none !important;
+        transition: all;
+        transition-duration: 500ms;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .logo-img {
+        display: none !important;
+        transition: all;
+        transition-duration: 500ms;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .mob-menu {
+        display: none !important;
+    }
+}
+
+a {
+    text-decoration: none;
+}

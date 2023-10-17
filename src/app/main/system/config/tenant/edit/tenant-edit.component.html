@@ -1,0 +1,270 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Trang chủ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"> {{'[Hệ thống]' | translate }}</i>
+            <i class="fa fa-angle-right" aria-hidden="true"> {{'[Danh mục quản lý khách hàng]' | translate }}</i>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)" *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[Thông tin]' | translate }} </label>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="text" formControlName="tenancyName" [(ngModel)]="model.tenancyName">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="tenancyName">{{'[Tên Công ty]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('tenancyName')!.hasError('required') && !editForm.get('tenancyName')!.untouched">
+                    {{'[Trường Tên bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error "
+                    *ngIf="editForm.get('tenancyName')!.hasError('maxlength') && !editForm.get('tenancyName')!.untouched">
+                    {{'[Tên không được vượt quá 300 ký tự]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="text" formControlName="code" [(ngModel)]="model.code">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="code">{{'[Địa chỉ truy cập]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
+                    {{'[Trường Mã bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error"
+                    *ngIf="editForm.get('code')!.hasError('pattern') && !editForm.get('code')!.untouched">
+                    {{'[Mã không được chứa ký tự đặc biệt]' | translate }}
+                  </span>
+                  <span class="input-error "
+                    *ngIf="editForm.get('code')!.hasError('maxlength') && !editForm.get('code')!.untouched">
+                    {{'[Mã không được vượt quá 30 ký tự]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">{{'[Lĩnh vực]' | translate }}</label>
+                <ejs-dropdownlist id="area" [dataSource]='lstArea' [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="model.areaId" formControlName="areaId" [placeholder]="''" [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstArea)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('areaId')!.hasError('required') && !editForm.get('areaId')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Package</label>
+                <ejs-dropdownlist [dataSource]='lstPackage' [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="model.packageId" formControlName="packageId" [placeholder]="''" [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstPackage)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('packageId')!.hasError('required') && !editForm.get('packageId')!.untouched">
+                  {{'[Trường Package Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!--  -->
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <ejs-dropdownlist [dataSource]='lstConnectionString' [fields]='fieldConnectionString'
+                    [showClearButton]="true" [(ngModel)]="model.connectionString" formControlName="connectionString"
+                    [placeholder]="''" [allowFiltering]='true' (filtering)='onFiltering($event,lstConnectionString)'>
+                  </ejs-dropdownlist>
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="status">{{'[Server kết nối]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('connectionString')!.hasError('required') && !editForm.get('connectionString')!.untouched">
+                    {{'[Trường Server kết nối bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="text" formControlName="userName" [(ngModel)]="model.userName">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="userName">{{'[Tên đăng nhập]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('userName')!.hasError('required') && !editForm.get('userName')!.untouched">
+                    {{'[Trường Tên đăng nhập bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error "
+                    *ngIf="editForm.get('userName')!.hasError('maxlength') && !editForm.get('userName')!.untouched">
+                    {{'[Tên đăng nhập không được vượt quá 300 ký tự]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="text" formControlName="ownerName" [(ngModel)]="model.ownerName">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="ownerName">{{'[Họ và Tên]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('ownerName')!.hasError('required') && !editForm.get('ownerName')!.untouched">
+                    {{'[Trường Họ và Tên bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error "
+                    *ngIf="editForm.get('ownerName')!.hasError('maxlength') && !editForm.get('ownerName')!.untouched">
+                    {{'[Họ và Tên không được vượt quá 300 ký tự]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="flagState =='new'" class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="password" formControlName="password" [(ngModel)]="model.password">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="password">{{'[Mật khẩu]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('password')!.hasError('required') && !editForm.get('password')!.untouched">
+                    {{'[Trường Mật khẩu bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error "
+                    *ngIf="editForm.get('password')!.hasError('maxlength') && !editForm.get('password')!.untouched">
+                    {{'[Mật khẩu không được vượt quá 300 ký tự]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="text" formControlName="email" [(ngModel)]="model.email">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="ownerName">{{'[Email]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('email')!.hasError('required') && !editForm.get('email')!.untouched">
+                    {{'[Email và Tên bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error "
+                    *ngIf="editForm.get('email')!.hasError('maxlength') && !editForm.get('email')!.untouched">
+                    {{'[Email không được vượt quá 300 ký tự]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="flagState =='new'" class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="password" formControlName="passwordConfirm" [(ngModel)]="model.passwordConfirm">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="passwordConfirm">{{'[Nhập lại Mật khẩu]' | translate
+                    }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('passwordConfirm')!.hasError('required') && !editForm.get('passwordConfirm')!.untouched">
+                    {{'[Trường Mật khẩu bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error "
+                    *ngIf="editForm.get('passwordConfirm')!.hasError('maxlength') && !editForm.get('passwordConfirm')!.untouched">
+                    {{'[Mật khẩu không được vượt quá 300 ký tự]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="text" formControlName="phone" [(ngModel)]="model.phone">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="phone">{{'[Số điện thoại]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('phone')!.hasError('required') && !editForm.get('phone')!.untouched">
+                    {{'[Trường Số điện thoại nhập bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="e-float-input">
+                  <input type="text" formControlName="codeEmp" [(ngModel)]="model.codeEmp">
+                  <span class="e-float-line"></span>
+                  <label class="e-float-text required" for="codeEmp">{{'[Mã nhân viên chăm sóc]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('codeEmp')!.hasError('required') && !editForm.get('codeEmp')!.untouched">
+                    {{'[Mã nhân viên chăm sóc bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

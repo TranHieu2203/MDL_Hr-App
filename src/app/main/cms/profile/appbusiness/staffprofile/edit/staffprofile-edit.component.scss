@@ -1,0 +1,110 @@
+
+cms-profile-staffprofile-edit {
+  .link-history{
+
+  }
+  .img-avatar{
+    width: 90%;
+    border-radius: 50%;
+    }
+  .process-active{
+    color: #F37540 !important;
+  }
+  .flex-row{display: flex;}
+  .group-box {
+    overflow: auto;
+}
+  .process{
+    cursor: pointer;
+    padding: 7px 0px 0px 0px;
+  }
+  .working-area{
+    padding-left: 10px;
+    overflow: auto;
+  }
+  .image {
+    display: flex;
+    justify-content: center;
+    padding-top: 35px;
+  }
+  .e-tooltip-wrap.e-popup {
+    background-color: rgb(105, 105, 105);
+    border: 2px solid #000;
+  }
+  .e-tooltip-wrap {
+    border-radius: 4px;
+    opacity: 1;
+  }
+  #target {
+    padding-top: 30px;
+    text-align: center;
+
+  }
+  #target:hover {
+    cursor: pointer;
+  }
+  #img-card {
+    margin-top: -30px;
+    position: fixed;
+    width: 300px;
+    height: calc(100vh - 109px);
+
+  }
+ 
+  .fullname {
+    color: #000;
+    text-transform: uppercase;
+  }
+  .email{
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #212529!important;
+  }
+
+ .emp-info {
+   text-align: left; 
+   padding: 20px 10px 0px 10px;
+    p {
+      margin-right: 10px;
+      color: #4B4B4D;
+      font-size: 14px;
+    }
+ }
+ .link-history{
+  color: #737373;
+  font-size: 14px;
+}
+ .link-history:hover{
+  cursor: pointer;
+  text-decoration: underline;
+  }
+  .btn-coppy{
+    border: none;
+    color: #0075f2;
+    background-color: transparent;
+    float: right;
+  }
+  .cbo-item-header{
+    text-align: center;
+    font-weight: 700;
+  }
+}
+
+input.form-control[type=file]{
+  height: 54px!important;
+}
+.img-avatar {
+  width: 100px; /* Điều chỉnh kích thước theo mong muốn */
+  height: 210px;
+  border-radius: 50%; /* Làm tròn viền để tạo hình tròn */
+  border: 2px solid #fff; /* Viền mảnh khảm bao quanh hình ảnh */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); /* Đổ bóng cho hình ảnh */
+  cursor: pointer; /* Thay đổi hình dạng con trỏ khi di chuột qua */
+  transition: transform 0.3s, border 0.3s; /* Hiệu ứng khi hover */
+}
+
+.img-avatar:hover {
+  transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+  border-color: #3498db; /* Màu viền thay đổi khi hover */
+}

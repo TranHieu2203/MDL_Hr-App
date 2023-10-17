@@ -1,0 +1,146 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tổ chức]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/organize/business/position'>{{'[Chi tiết vị trí công việc]' |
+              translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="position-editdirect" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="app-content">
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box" formGroupName="model">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }} </label>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <div class="e-float-input">
+                        <ejs-checkbox formControlName="isQLTT"
+                          label="{{'[Thay đổi vị trí Quản lý trực tiếp]' | translate }}" [(ngModel)]="model.isQLTT">
+                        </ejs-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- Vị trí quản lý trực tiếp -->
+                  <div class="col-sm-12">
+                    <div class="form-group vertical-flex">
+                      <label class="e-float-text">{{'[Vị trí quản lý trực tiếp]' | translate }}</label>
+                      <input formControlName="lm" [ngModel]="model.lmposition" type="text" class="form-control"
+                        readonly>
+                      <div class="input-group-append">
+                        <button class="btn btn-search" type="button" (click)="choiseQLTT()"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- Quản lý trực tiếp -->
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text" for="lmname">{{'[Quản lý trực tiếp]' | translate }}</label>
+                      <input class="form-control" type="text" formControlName="lmname" [ngModel]="model.lmname"
+                        readonly>
+                    </div>
+                  </div>
+                </div>
+                <!-- Vị trí quản lý gián tiếp -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <div class="e-float-input">
+                        <ejs-checkbox formControlName="isQLGT"
+                          label="{{'[Thay đổi vị trí Quản lý gián tiếp]' | translate }}" [(ngModel)]="model.isQLGT">
+                        </ejs-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical-flex">
+                      <label class="e-float-text">{{'[Vị trí quản lý gián tiếp]' | translate }}</label>
+                      <input formControlName="csm" [ngModel]="model.csmposition" type="text" class="form-control"
+                        readonly>
+                      <div class="input-group-append">
+                        <button class="btn btn-search" type="button" (click)="choiseQLGT()"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Quản lý gián tiếp -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text" for="csmname">{{'[Quản lý gián tiếp]' | translate }}</label>
+                      <input class="form-control" type="text" formControlName="csmname" [ngModel]="model.csmname"
+                        readonly>
+                    </div>
+                  </div>
+                </div>
+                <!-- Master -->
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<cms-app-modals-org id="cms-app-modals-org">
+</cms-app-modals-org>
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmBack('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

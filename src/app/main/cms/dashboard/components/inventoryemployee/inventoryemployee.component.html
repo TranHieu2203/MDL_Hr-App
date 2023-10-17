@@ -1,0 +1,146 @@
+<!-- Widget Phiếu nhập kho-->
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Phiếu nhập kho (3)]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchImportOrder" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchImportOrderEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchImportOrderFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstImportOrder">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3, 'dash-primary': item.status_id === 4}">
+                        <i class="fa fa-circle"></i> {{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Phiếu xuất kho-->
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Phiếu xuất kho (3)]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchExportOrder" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchExportOrderEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchExportOrderFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstExportOrder">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3, 'dash-primary': item.status_id === 4}">
+                        <i class="fa fa-circle"></i> {{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Phiếu điều chuyển -->
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Phiếu điều chuyển (3)]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchTransferOrder" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchTransferOrderEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchTransferOrderFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstTransferOrder">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3, 'dash-primary': item.status_id === 4}">
+                        <i class="fa fa-circle"></i> {{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row full-width">
+    <!-- Widget Phiếu nhập kho/xuất kho mới nhất-->
+    <div class="col-sm-6 dash-widget">
+        <div class="row full-width dash-card dash-card-normal">
+            <div class="dash-card-header full-width">
+                {{'[Phiếu nhập kho mới nhất]' | translate }}
+            </div>
+            <div class="dash-card-content dash-card-content-view full-width">
+                <div class="row full-width">
+                    <div class="row full-width m-b-15 m-t-15">
+                        <div class="col-sm-6">{{'[Phiếu nhập kho:]' | translate }} <b>{{import_order.order_code}}</b></div>
+                        <div class="col-sm-3">{{'[Trạng thái]' | translate }}</div>
+                        <div class="col-sm-3"><b>{{import_order.status}}</b></div>
+                    </div>
+                    <div class="row full-width m-b-15">
+                        <div class="col-sm-6">{{'[Số lượng:]' | translate }} <b>{{import_order.quantity}}</b></div>
+                        <div class="col-sm-6"><b>{{import_order.name}}</b></div>
+                    </div>
+                    <div class="row full-width dash-view-detail b-b">
+                        <button class="btn btn-primary" (click)="viewOrderImport(import_order)">{{'[Xem chi tiết]' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 dash-widget">
+        <div class="row full-width dash-card dash-card-normal">
+            <div class="dash-card-header full-width">
+                {{'[Phiếu xuất kho mới nhất]' | translate }}
+            </div>
+            <div class="dash-card-content dash-card-content-view full-width">
+                <div class="row full-width">
+                    <div class="row full-width m-b-15 m-t-15">
+                        <div class="col-sm-6">{{'[Phiếu xuất kho: ]' | translate }}<b>{{export_order.order_code}}</b></div>
+                        <div class="col-sm-3">{{'[Trạng thái]' | translate }}</div>
+                        <div class="col-sm-3"><b>{{export_order.status}}</b></div>
+                    </div>
+                    <div class="row full-width m-b-15">
+                        <div class="col-sm-6">{{'[Số lượng: ]' | translate }}<b>{{export_order.quantity}}</b></div>
+                        <div class="col-sm-6"><b>{{export_order.name}}</b></div>
+                    </div>
+                    <div class="row full-width dash-view-detail b-b">
+                        <button class="btn btn-primary" (click)="viewOrderExport(export_order)">{{'[Xem chi tiết]' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

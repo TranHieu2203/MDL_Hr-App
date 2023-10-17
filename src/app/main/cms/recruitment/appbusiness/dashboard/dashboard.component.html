@@ -1,0 +1,81 @@
+<div class="app-main-content">
+    <div class="app-container">
+      <!-- toolbar -->
+      <div class="app-toolbar">
+        <div class="card-full">
+          <!-- breadcrum-->
+          <div class="app-breadcrum">
+            <div class="brackcrum">
+              <i class="fa fa-home" aria-hidden="true"></i>{{'[Tuyển dụng]' | translate }} <i class="fa fa-angle-right"
+                aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+              <span class="brackcrum-active" href='/cms/recruitment/business/dashboard'>{{'[Dashboard]' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="app-content">
+        <div class="dashboard-card">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <ejs-accumulationchart id="Funnel" [legendSettings]="legendSettings"  [tooltip]="tooltip" title="Recruitment conduit(2023)">
+                  <e-accumulation-series-collection>
+                    <e-accumulation-series  width='60%'  height='80%' type='Funnel' [dataSource]='dataFunnelChart' xName='x' yName='y' [dataLabel]='dataLabel' [gapRatio]="0.05"></e-accumulation-series>
+                  </e-accumulation-series-collection>
+              </ejs-accumulationchart>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <ejs-accumulationchart id="Pie" [legendSettings]='legendSettings'[tooltip]="tooltip" title="Sourcing Channels(2023)">
+                  <e-accumulation-series-collection>
+                    <e-accumulation-series [dataSource]='piedata' xName='x' yName='y' groupTo='11' [dataLabel]='dataLabel'></e-accumulation-series>
+                  </e-accumulation-series-collection>
+              </ejs-accumulationchart>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="card">
+                <ejs-chart id="Bar" [primaryXAxis]='primaryXAxis'[primaryYAxis]='primaryYAxis' title="Reasons For Candidate Decline(2023)" [tooltip]="tooltip">
+                  <e-series-collection>
+                    <e-series [dataSource]='chartDataBar' type='Bar' xName='x' yName='y' name=''></e-series>
+                  </e-series-collection>
+              </ejs-chart>            
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card">
+                <ejs-chart id="chartDataMuntiple" [primaryXAxis]='primaryXAxis'[primaryYAxis]='primaryYAxis' [tooltip]="tooltip" title="Percentage of applicants(07/2023)">
+                  <e-series-collection>
+                      <e-series [dataSource]='chartDataMuntiple' type='StackingColumn' xName='x' yName='y' name='Ứng viên'></e-series>
+                      <e-series [dataSource]='chartDataMuntiple' type='StackingColumn' xName='x' yName='y1' name='Phỏng vấn lần 1'></e-series>
+                      <e-series [dataSource]='chartDataMuntiple' type='StackingColumn' xName='x' yName='y2' name='Phỏng vấn lần 2'></e-series>
+                      <e-series [dataSource]='chartDataMuntiple' type='Line' xName='x' yName='y4' name='Thành nhân viên' [marker]='marker' opacity=0.6></e-series>
+                  </e-series-collection>
+              </ejs-chart>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card">
+                <ejs-accumulationchart id="chart-container" [legendSettings]='legendSettings'[tooltip]="tooltip" title="Open position(07/2023)">
+                  <e-accumulation-series-collection>
+                      <e-accumulation-series [dataSource]='openPosition' xName='x' yName='y' innerRadius='40%' [dataLabel]='dataLabel' [gapRatio]="0.05"></e-accumulation-series>
+                  </e-accumulation-series-collection>
+              </ejs-accumulationchart>
+              </div>
+              <div clas="card">            
+            </div>
+          </div>
+        </div>
+
+      
+          </div>
+    </div>
+  </div>
+  
+ 

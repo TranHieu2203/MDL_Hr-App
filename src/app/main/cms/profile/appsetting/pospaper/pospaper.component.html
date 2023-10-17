@@ -1,0 +1,85 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='#'>{{'[Giấy tờ theo chức vụ]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="pospaper" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="row h100">
+        <div class="col-sm-2 pt-2 scr">
+          <ejs-treeview #listTreeObj id="default" [fields]='field' (nodeSelected)="OtherSelecting($event!)">
+          </ejs-treeview>
+
+        </div>
+        <div class="col-sm-10 pt-2">
+          <div class="app-content">
+            <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' rowHeight='37' headerHeight='42'
+              [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+              [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true' allowResizing='true'
+              [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+              [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+              (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+              [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+              <e-columns>
+                <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                  width='60' textAlign="Center" [allowEditing]="false">
+                </e-column>
+                <e-column width="60" eaderTextAlign="Center" textAlign="Center" headerText=""
+                  clipMode="EllipsisWithTooltip">
+                  <ng-template #template let-data>
+                    <span>{{ formatStt(data.index) }}</span>
+                  </ng-template>
+                </e-column>
+                <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                  [isPrimaryKey]='true' [allowEditing]="false">
+                </e-column>
+                <e-column field='paperName' headerTextAlign="Center" textAlign="Left" he headerText="{{'[Giấy tờ cần nộp]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='createBy' headerTextAlign="Center" textAlign="Left" heade headerText="{{'[Ngày tạo]'|translate}}"
+                  clipMode='EllipsisWithTooltip' >
+                </e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<v2hrm-confirm-modal id="ListPaper">
+  <ejs-grid #papaergrid id='papaergrid' [dataSource]='dataPaper' rowHeight='37' headerHeight='42' height='450px'
+    [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+    (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang'
+    [allowSelection]='true' [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings'
+    [editSettings]='configs.editSettings' (rowSelecting)="setButtonStatus($event!)"
+    (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+    <e-columns>
+      <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false' width='60'
+        textAlign="Center" [allowEditing]="false">
+      </e-column>
+      <e-column width="60" eaderTextAlign="Center" textAlign="Center" headerText= headerText="EllipsisWithTooltip">
+        <ng-template #template let-data>
+          <span>{{ formatStt(data.index) }}</span>
+        </ng-template>
+      </e-column>
+      <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+        [allowEditing]="false">
+      </e-column>
+    </e-columns>
+  </ejs-grid>
+  <div style="margin-top: 20px 0; float: right;">
+    <button class="btn-choose" (click)="funcSave()">Lưu</button>
+  </div>
+</v2hrm-confirm-modal>

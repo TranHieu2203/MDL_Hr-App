@@ -1,0 +1,68 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Khác ]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Lương 3P]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            {{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/others/payroll3p/config3p/unitprice'>{{'[Đơn giá]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+        (dataStateChange)="dataStateChange($event!)" rowHeight='37'
+        headerHeight='47' [height]='configs.height()' [allowPaging]='true'
+        [pageSettings]='configs.pageSettings' [enableHover]='true'
+        (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+        allowResizing='true' [locale]='configs.currentLang'
+        [allowSelection]='true' [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='30'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+          <e-column field='price' headerTextAlign="Center" textAlign="Right" type='number' format='N0'
+            headerText="{{'[Đơn giá]' | translate }}" clipMode='EllipsisWithTooltip'
+            width="80"></e-column>
+            <e-column field='effectDate' headerTextAlign="Left" type="date"
+            [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center"
+            headerText="{{'[Ngày hiệu lực]' | translate }}" clipMode='EllipsisWithTooltip' width='120'></e-column>
+            <e-column field='coefficientStart' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Hệ số bắt đầu]' | translate }}" clipMode='EllipsisWithTooltip'
+            width="80"></e-column>
+          <e-column field='note' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Ghi chú]' | translate }}" clipMode='EllipsisWithTooltip'>
+          </e-column>
+        </e-columns>
+      </ejs-grid>
+
+    </div>
+  </div>

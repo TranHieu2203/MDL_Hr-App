@@ -1,0 +1,91 @@
+<div class="list-grid">
+  <ejs-grid #overviewgridLstEmp id='overviewgridLstEmp'
+    [dataSource]='data'
+    (dataStateChange)="dataStateChange($event!)" rowHeight='35'
+    headerHeight='40' height='400px'
+    [allowPaging]='true' [pageSettings]='configs.pageSettings'
+    [enableHover]='true' 
+    [allowSorting]='true' allowResizing='true'
+    [locale]='configs.currentLang' [allowSelection]='true'
+    [showColumnChooser]='true'
+    [selectionSettings]='configs.selectionSettings'
+    [editSettings]='configs.editSettings'
+    [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+    <e-columns>
+      <!-- <e-column type='checkbox' [showInColumnChooser]='false'
+        [allowFiltering]='false' [allowSorting]='false' width='50'
+        textAlign="Center" [allowEditing]="false">
+      </e-column> -->
+      <e-column field='id' [showInColumnChooser]='false'
+        [visible]='false' headerText='ID' [isPrimaryKey]='true'
+        [allowEditing]="false">
+      </e-column>
+      <e-column field='no' headerTextAlign="Center"
+        textAlign="Center" headerText="{{'[Số quyết định]' | translate }}"
+        clipMode='EllipsisWithTooltip' width='130'>
+        <ng-template #template let-data>
+          <a style="color: blue; cursor: pointer;" (click)="ViewRecord(data)"> {{data.no}}</a>
+        </ng-template>
+      </e-column>
+      <e-column field='disciplineObjName' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Loại kỷ luật]' | translate }}"
+        clipMode='EllipsisWithTooltip'></e-column>
+
+      <e-column field='orgName' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+        clipMode='EllipsisWithTooltip'></e-column>
+
+      <e-column field='employeeName' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Nhân viên]' | translate }}"
+        clipMode='EllipsisWithTooltip'>
+      </e-column>
+      <e-column field='effectDate' headerTextAlign="Center"
+        type="date"
+        [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false"
+        textAlign="Center" headerText="{{'[Ngày hiệu lực]' | translate }}"
+        clipMode='EllipsisWithTooltip' width='130'></e-column>
+      <e-column field='disciplineType' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Hình thức]' | translate }}"
+        clipMode='EllipsisWithTooltip'></e-column>
+      <e-column field='money' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Số tiền phạt]' | translate }}"
+        clipMode='EllipsisWithTooltip'></e-column>
+
+      <e-column field='statusId' textAlign="Center"
+        headerText="{{'[Trạng thái]' | translate }}" clipMode='EllipsisWithTooltip'
+        width='100'>
+        <ng-template #template let-data>
+          <div class="row-status full-width">
+            <div class="text-center" *ngIf="data.statusId == 1 ">
+              <span>{{'[Chờ duyệt]' | translate }}</span>
+            </div>
+            <div class="text-center" *ngIf="data.statusId == 2">
+              <span>{{'[Đã duyệt]' | translate }}</span>
+            </div>
+            <div class="text-center" *ngIf="data.statusId == 3">
+              <span>{{'[Từ chối]' | translate }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </e-column>
+      <e-column field='isSalary' headerTextAlign="Center"
+        textAlign="Center" headerText="{{'[Trừ vào kỳ lương]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="140">
+        <ng-template #template let-data>
+          <ejs-checkbox [ngModel]="data.isSalary">
+          </ejs-checkbox>
+        </ng-template>
+      </e-column>
+      <e-column field='periodSalaryTaxName'
+        headerTextAlign="Center" textAlign="Left"
+        headerText="{{'[Kỳ lương tính thuế]' | translate }}"
+        clipMode='EllipsisWithTooltip'>
+      </e-column>
+      <e-column field='reason' headerTextAlign="Center"
+        textAlign="Left" headerText="{{'[Lý do kỷ luật]' | translate }}"
+        clipMode='EllipsisWithTooltip'>
+      </e-column>
+    
+    </e-columns>
+  </ejs-grid>
+</div>

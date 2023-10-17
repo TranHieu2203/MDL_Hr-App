@@ -1,0 +1,351 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Bảo hiểm]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/list/insspecified'>{{'[Quy định mức đóng bảo hiểm]' |
+              translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="insspecified-edit" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <!--main-content -->
+    <div class="app-content">
+
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box">
+            <!-- title -->
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }}</label>
+            </div>
+            <!--  -->
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Vùng bảo hiểm]' | translate }}</label>
+                  <ejs-dropdownlist id='locationId' [dataSource]='lstInsRegionId' formControlName="locationId"
+                    [showClearButton]="true" [(ngModel)]="model.locationId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstInsRegionId)'>
+                  </ejs-dropdownlist>
+                </div>
+              </div>
+              <!-- <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required">{{'[Ngày hiệu lực ]' | translate }}</label>
+                <ejs-datepicker id="EffectiveDate" format="dd/MM/yyyy" [ngModel]="model.EffectiveDate"
+                  formControlName="EffectiveDate" placeholder=".../.../...">
+                </ejs-datepicker>
+              </div>
+            </div> -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="ngayhachtoan">{{'[Ngày hiệu lực]' | translate }}</label>
+                  <ejs-datepicker id="effectDate" format="dd/MM/yyyy" [(ngModel)]="model.effectiveDate"
+                    formControlName="effectiveDate" placeholder=".../.../...">
+                  </ejs-datepicker>
+                  <span class="input-error"
+                    *ngIf="editForm.get('effectiveDate')!.hasError('required') && !editForm.get('effectiveDate')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  <span class="input-error"
+                    *ngIf="editForm.get('effectiveDate')!.hasError('incorrect') && !editForm.get('effectiveDate')!.untouched">
+                    {{'[Sai định dạng]' | translate }}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="1">{{'[Mức trần]' | translate }}</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="2">{{'[Tỷ lệ công ty]' | translate }}</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="3">{{'[Tỷ lệ nhân viên]' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="si">{{'[BHXH]' | translate }}</label>
+                  <!-- <ejs-numerictextbox format="N0" locale="en" name="si" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="model.si">
+                </ejs-numerictextbox> -->
+                  <ejs-numerictextbox format="N0" locale="en" name="si" formControlName="si" [(ngModel)]="model.si"
+                  min ="0">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('si')!.hasError('required') && !editForm.get('si')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="siCom">{{'[BHXH]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="siCom" formControlName="siCom"
+                    [(ngModel)]="model.siCom">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('siCom')!.hasError('required') && !editForm.get('siCom')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="siEmp">{{'[BHXH]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="siEmp" formControlName="siEmp"
+                    [(ngModel)]="model.siEmp">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('siEmp')!.hasError('required') && !editForm.get('siEmp')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="hi">{{'[BHYT]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="hi" formControlName="hi" [(ngModel)]="model.hi">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('hi')!.hasError('required') && !editForm.get('hi')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="hiCom">{{'[BHYT]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="hiCom" formControlName="hiCom"
+                    [(ngModel)]="model.hiCom">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('hiCom')!.hasError('required') && !editForm.get('hiCom')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="hiEmp">{{'[BHYT]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="hiEmp" formControlName="hiEmp"
+                    [(ngModel)]="model.hiEmp">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('hiEmp')!.hasError('required') && !editForm.get('hiEmp')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="ui">{{'[BHTN]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="ui" formControlName="ui" [(ngModel)]="model.ui">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('ui')!.hasError('required') && !editForm.get('ui')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="uiCom">{{'[BHTN]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="uiCom" formControlName="uiCom"
+                    [(ngModel)]="model.uiCom">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('uiCom')!.hasError('required') && !editForm.get('uiCom')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="uiEmp">{{'[BHTN]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="uiEmp" formControlName="uiEmp"
+                    [(ngModel)]="model.uiEmp">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('uiEmp')!.hasError('required') && !editForm.get('uiEmp')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="oi">{{'[BH TNLD,BNN]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="oi" formControlName="oi" [(ngModel)]="model.oi">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('oi')!.hasError('required') && !editForm.get('oi')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="oiCom">{{'[BH TNLD,BNN]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="oiCom" formControlName="oiCom"
+                    [(ngModel)]="model.oiCom">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('oiCom')!.hasError('required') && !editForm.get('oiCom')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="oiEmp">{{'[BH TNLD,BNN]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="oiEmp" formControlName="oiEmp"
+                    [(ngModel)]="model.oiEmp">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('oiEmp')!.hasError('required') && !editForm.get('oiEmp')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <ejs-checkbox formControlName="sick" label="{{'[Ốm]' | translate }}" [(ngModel)]="model.sick ">
+                    </ejs-checkbox>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <ejs-checkbox formControlName="maternity" label="{{'[Thai sản]' | translate }}"
+                      [(ngModel)]="model.maternity ">
+                    </ejs-checkbox>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <ejs-checkbox formControlName="offInHouse" label="{{'[Nghỉ tại nhà]' | translate }}"
+                      [(ngModel)]="model.offInHouse ">
+                    </ejs-checkbox>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <ejs-checkbox formControlName="offTogether" label="{{'[Nghỉ tập trung]' | translate }}"
+                      [(ngModel)]="model.offTogether ">
+                    </ejs-checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required" for="retireMale">{{'[Nam]' | translate }}</label>
+                    <ejs-numerictextbox format="N0" locale="en" name="retireMale" formControlName="retireMale"
+                      [(ngModel)]="model.retireMale">
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                    *ngIf="(editForm.get('retireMale')!.hasError('required') || editForm.get('retireMale')!.value < 0) ">
+                    {{'[Bắt buộc nhập số lớn hơn 0]' | translate }}
+                  </span>
+                  {{editForm.get('retireMale')!.value}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required" for="retireFemale">{{'[Nữ]' | translate }}</label>
+                    <ejs-numerictextbox format="N0" locale="en" name="retireFemale" formControlName="retireFemale"
+                      [(ngModel)]="model.retireFemale">
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                    *ngIf="editForm.get('retireFemale')!.hasError('required') && !editForm.get('retireFemale')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required" for="salaryMin">{{'[Mức lương tối thiểu vùng]' | translate
+                      }}</label>
+                    <ejs-numerictextbox format="N0" locale="en" name="salaryMin" formControlName="salaryMin"
+                      [(ngModel)]="model.salaryMin">
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                    *ngIf="editForm.get('salaryMin')!.hasError('required') && !editForm.get('salaryMin')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required" for="salaryBasic">{{'[Mức lương cơ sở]' | translate }}</label>
+                    <ejs-numerictextbox format="N0" locale="en" name="salaryBasic" formControlName="salaryBasic"
+                      [(ngModel)]="model.salaryBasic">
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                    *ngIf="editForm.get('salaryBasic')!.hasError('required') && !editForm.get('salaryBasic')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+
+<!-- CONFIRM DIRECT MODAL-->
+<!-- <v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal> -->

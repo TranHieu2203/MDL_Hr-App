@@ -1,0 +1,37 @@
+cms-app-ranksystem {
+    .text-center{
+     text-align: center !important;
+    }
+    .with-50{
+        width: 50px !important;
+    }
+    .with-100{
+        width: 100px !important;
+    }
+    .with-200{
+        width: 200px !important;
+    }
+    .table-ranksystem{
+        margin: auto; 
+        width: 98%;
+    }
+    .text-right{
+        text-align: right;
+    }
+    .add-hover:hover{
+        cursor: pointer;
+        font-size: 18px;
+    }
+    tr{
+        line-height: 2px;
+    }
+    
+}
+#modal-coefficient{
+    .btn-remove{
+        display: none;
+    }
+    textarea.form-control {
+        height: 38px !important;
+    }
+}

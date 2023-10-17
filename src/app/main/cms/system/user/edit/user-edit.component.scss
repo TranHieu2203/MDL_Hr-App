@@ -1,0 +1,18 @@
+app-user-edit {
+    .group-box .img-avatar {
+        width: 140px;
+        height: 140px;
+        //border-radius: 50%;
+        margin: 0 auto;
+    }
+    .p-t-25{
+        padding-top: 25px;
+    }
+    .img-avatar:hover{
+        cursor: pointer;
+    }
+    .btn-danger{
+        border: none;
+        margin-top: 5px;
+    }
+}

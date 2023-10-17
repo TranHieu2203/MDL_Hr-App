@@ -1,0 +1,267 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/list/groupposition'>{{'[Thiết lập template phê duyệt cho
+              nhân viên]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="sys_approvetemplatesetupemp" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='400px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+              <div class="list-grid">
+                <ejs-grid #overviewgridLstEmp id='overviewgridLstEmp' [dataSource]='dataemp' rowHeight='32'
+                  headerHeight='35' height='100%' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' [allowSorting]='false' allowResizing='true' [allowFiltering]='true' [filterSettings]='configs.filterOption'
+                  (rowSelected)="getDataGrid($event!)" (recordClick)="viewRecordEmp($event!)"
+                  [locale]='configs.currentLang'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='50' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <!-- <e-column width="60" eaderTextAlign="Center" textAlign="Center"
+                      headerText="{{'[STT]' | translate }}" clipMode="EllipsisWithTooltip">
+                      <ng-template #template let-data>
+                        
+                        <span>{{ formatSttEmp(dataemp.index) }}</span>
+                      </ng-template>
+                    </e-column> -->
+                    <e-column field='code' textAlign="Left" headerText="{{'[Mã nhân viên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='fullname' textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='positionName' textAlign="Left" headerText="{{'[Vị trí]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='orgName' textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+
+
+                    <e-column field='workStatusId' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                      <ng-template #template let-data>
+                        <div class="row-status full-width">
+                          <!-- <div class="status-effect text-center" *ngIf="dataemp.workStatusId !=2">
+                            <span>{{'[Đang làm việc]' | translate }}</span>
+                          </div>
+                          <div class="status-not-effect text-center"
+                            *ngIf="dataemp.workStatusId==2">
+                            <span>{{'[Nghỉ việc]' | translate }}</span>
+                          </div> -->
+                        </div>
+                      </ng-template>
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+            <ng-template #content>
+
+
+
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="list-grid">
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='47'
+                  [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang'
+                  [allowSelection]='true' [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings'
+                  [editSettings]='configs.editSettings' (rowSelecting)="setButtonStatus($event!)"
+                  (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='60' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='employeeCode' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Mã nhân viên]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="120"></e-column>
+                    <e-column field='employeeName' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Tên nhân viên]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="120"></e-column>
+                    <e-column field='seProcessTypeName' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Loại quy trình]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="120"></e-column>
+                    <e-column field='seProcessTemplateName' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Tên quy trình]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="120"></e-column>
+                    <e-column field='effectDate' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center"
+                      headerText="{{'[Ngày hiệu lực]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="130"></e-column>
+                    <e-column field='expireDate' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center"
+                      headerText="{{'[Ngày hết hiệu lực]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="130"></e-column>
+                    <e-column field='dayFrom' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Số ngày nghỉ từ]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="120"></e-column>
+                    <e-column field='dayTo' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Số ngày nghỉ đến]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="120"></e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+
+        </e-panes>
+      </ejs-splitter>
+
+    </div>
+  </div>
+
+  <ejs-dialog id="animationDialog" [header]='dialogHeader' [isModal]='true' #defaultDialog [visible]='false'
+    [animationSettings]='animationSettings' [showCloseIcon]='true' target='.app-container' [width]="900">
+    <ng-template #content>
+      <div class="card">
+        <app-common-tools name="approvetemplatesetup-edit" [items$]="toolItemsEdit$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }} </label>
+            </div>
+            <!--  -->
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Loại quy trình]' | translate }}</label>
+                  <ejs-dropdownlist [dataSource]='lstTemplateType' [fields]='fields' [showClearButton]="true"
+                    [(ngModel)]="model.seProcessTypeId" formControlName="seProcessTypeId" [placeholder]="''"
+                    [allowFiltering]='true'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('seProcessTypeId')!.hasError('required') && !editForm.get('seProcessTypeId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Tên quy trình]' | translate }}</label>
+                  <ejs-dropdownlist [dataSource]='lstTemplate' [fields]='fields' [showClearButton]="true"
+                    [(ngModel)]="model.seProcessTemplateId" formControlName="seProcessTemplateId" [placeholder]="''"
+                    [allowFiltering]='true'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('seProcessTemplateId')!.hasError('required') && !editForm.get('seProcessTemplateId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="effectDate">{{'[Ngày hiệu lực]' | translate }}</label>
+                  <ejs-datepicker id="effectDate" format="dd/MM/yyyy" [(ngModel)]="model.effectDate"
+                    (keydown)="changeDate('effectDate')" (blur)="changeDate('effectDate')" formControlName="effectDate"
+                    placeholder=".../.../...">
+                  </ejs-datepicker>
+                  <span class="input-error"
+                    *ngIf="editForm.get('effectDate')!.hasError('required') && !editForm.get('effectDate')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  <span class="input-error"
+                    *ngIf="editForm.get('effectDate')!.hasError('incorrect') && !editForm.get('effectDate')!.untouched">
+                    {{'[Sai định dạng]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Ngày kết thúc]' | translate }}</label>
+                  <ejs-datepicker id="expireDate" format="dd/MM/yyyy" [(ngModel)]="model.expireDate"
+                    (keydown)="changeDate('expireDate')" (blur)="changeDate('expireDate')" formControlName="expireDate"
+                    placeholder=".../.../...">
+                  </ejs-datepicker>
+
+                  <span class="input-error" *ngIf="editForm.get('expireDate')!.hasError('incorrect')">
+                    {{'[Sai định dạng]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Số ngày nghỉ từ]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="dayFrom" formControlName="dayFrom"
+                    [(ngModel)]="model.dayFrom" min="1" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Số ngày nghỉ đến]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="dayTo" formControlName="dayTo"
+                    [(ngModel)]="model.dayTo" min="1" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <!--nhân viên -->
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <div class="input-group mb-3">
+                        <button class="btn btn-info" type="button" (click)="choiseEmp()">{{'[Chọn nhân viên]' |
+                          translate }}</button>
+                        <button class="btn btn-danger ml-3" type="button" (click)="removeEmp()">{{'[Xoá]' | translate
+                          }}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-3">
+                <div class="col">
+                  <cms-app-listemployee #listemployee></cms-app-listemployee>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+    </ng-template>
+  </ejs-dialog>
+  <!-- search employee -->
+  <cms-app-modalsemp id="cms-app-modalsemp">
+  </cms-app-modalsemp>
+  <!-- CONFIRM DELETE MODAL-->
+  <v2hrm-confirm-modal id="confirm-delete-modal">
+    <div class="row full-width v2hrm-modal-header">
+      {{'[Bạn có chắc chắn muốn xóa dữ liệu?]' | translate }}
+    </div>
+    <div class="row full-width v2hrm-modal-footer text-center">
+      <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+      <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+    </div>
+  </v2hrm-confirm-modal>

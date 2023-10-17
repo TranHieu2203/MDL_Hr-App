@@ -1,0 +1,91 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Trang chủ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i> {{'[Hệ thống]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"> </i>
+            <span class="brackcrum-active">{{'[Quản lý khách hàng]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="tenant" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card card-content">
+        <div class="card-main-content">
+          <div class="list-grid">
+            <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+              (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='47' [height]='configs.height()'
+              [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+              (recordDoubleClick)="viewRecord($event!)" [allowSorting]='false' allowResizing='true'
+              [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+              [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+              (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+              [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+              <e-columns>
+                <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                  width='30' textAlign="Center" [allowEditing]="false">
+                </e-column>
+                <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                  [isPrimaryKey]='true' [allowEditing]="false"></e-column>
+                <!--  -->
+                <e-column width="30" eaderTextAlign="Center" textAlign="Center" headerText="{{'[STT]'|translate}}"
+                  clipMode="EllipsisWithTooltip">
+                  <ng-template #template let-data>
+                    <span>{{ formatStt(data.index) }}</span>
+                  </ng-template>
+                </e-column>
+                <e-column field='code' headerTextAlign="Left" textAlign="Left" headerText="{{'[Địa chỉ truy cập]'|translate}}"
+                  clipMode='EllipsisWithTooltip' width="100">
+                </e-column>
+                <e-column field='tenancyName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Tên Công ty]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='fullName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Họ và Tên]'|translate}}"
+                  clipMode='EllipsisWithTooltip' width="150"></e-column>
+                <e-column field='email' headerTextAlign="Left" textAlign="Left" headerText="{{'[Email]'|translate}}" width="120"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='phone' headerTextAlign="Left" textAlign="Left" headerText="{{'[Phone]'|translate}}" width="80"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='areaName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Lĩnh vực]'|translate}}" width="100"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='connectionString' headerTextAlign="Left" textAlign="Left" headerText="{{'[Server kết nối]'|translate}}"
+                  clipMode='EllipsisWithTooltip' width="80"></e-column>
+                <!--  -->
+                <e-column field='isActive' textAlign="Center" headerText="{{'[Trạng thái]'|translate}}"clipMode='EllipsisWithTooltip' width="80">
+                  <ng-template #template let-data>
+                    <div class="row-status full-width">
+                      <div class="status-effect text-center" *ngIf="data.isActive">
+                        <span>{{'[Hiệu lực]' | translate }}</span>
+                      </div>
+                      <div class="status-not-effect text-center" *ngIf="!data.isActive">
+                        <span>{{'[Không hiệu lực]' | translate }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa không ?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

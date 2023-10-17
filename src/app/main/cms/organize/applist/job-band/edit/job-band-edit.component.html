@@ -1,0 +1,96 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/organize/list/job-band'>{{'[Cấp bậc]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="job-band" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <!--main-content -->
+    <div class="app-content">
+
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box">
+            <!-- title -->
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }}</label>
+            </div>
+            <!--  -->
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Tên cấp bậc(VN)]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="nameVN" [(ngModel)]="model.nameVN"
+                    maxlength="100">
+                  <span class="input-error"
+                    *ngIf="editForm.get('nameVN')!.hasError('required') && !editForm.get('nameVN')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Tên cấp bậc(EN)]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="nameEN" [(ngModel)]="model.nameEN"
+                    maxlength="100">
+                  <span class="input-error"
+                    *ngIf="editForm.get('nameEN')!.hasError('required') && !editForm.get('nameEN')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!--  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Cấp bậc]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="levelFrom" [(ngModel)]="model.levelFrom"
+                    maxlength="100">
+                  <span class="input-error"
+                    *ngIf="editForm.get('levelFrom')!.hasError('required') && !editForm.get('levelFrom')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<!-- <v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal> -->
+
+
+<!-- CONFIRM DIRECT MODAL-->
+<!-- <v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal> -->

@@ -1,0 +1,176 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/hrms/profile/appbusiness/kpiemployee'>{{'[Tính lương KPI]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal>
+        <e-panes>
+          <e-pane size='270px' min='20%' max='40%' >
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane >
+            <ng-template #content>
+              <ejs-grid #overviewgrid id='overviewgrid'
+                [dataSource]='data |async' rowHeight='37' headerHeight='42'
+                (dataStateChange)="dataStateChange($event!)"
+                [height]='configs.height()' [allowPaging]='true'
+                [pageSettings]='configs.pageSettings' [enableHover]='true'
+                allowResizing='true' [locale]='configs.currentLang'
+                [allowSelection]='true' [selectionSettings]='selectionOptions'
+                [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowTextWrap]="true"
+                [textWrapSettings]="configs.wrapSettings"
+                (queryCellInfo)='customiseCell($event!)' [enableHover]="false"
+                [allowFiltering]='true' [filterSettings]='configs.filterOption' showColumnMenu='true' [showColumnChooser]='true'
+                [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                <e-columns>
+                  <e-column type='checkbox' [showInColumnChooser]='false'
+                    [allowFiltering]='false' [allowSorting]='false' width='60'
+                    textAlign="Center" [allowEditing]="false" isFrozen="true">
+                  </e-column>
+                  <e-column field='id' [showInColumnChooser]='false'
+                    [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                    [allowEditing]="false" isFrozen="true">
+                  </e-column>
+                  <e-column field='employeeCode' headerTextAlign="Center"
+                    textAlign="Left" headerText="{{'[Mã nhân viên]' | translate }}" 
+                    clipMode='EllipsisWithTooltip' width='100'isFrozen="true">
+                  </e-column>
+                  <e-column field='employeeName' headerTextAlign="Center"
+                    textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width='180' isFrozen="true">
+                  </e-column>
+                  <e-column field='positionName' headerTextAlign="Center"
+                    textAlign="Left" headerText="{{'[Chức vụ]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width='100'  isFrozen="true">
+                  </e-column>
+                  <e-column field='kpiTargetName' headerTextAlign="Center"
+                    textAlign="Left" headerText="{{'[Tên KPI]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width='350' isFrozen="true">
+                  </e-column> 
+                  <e-column field='startValue' headerTextAlign="right"
+                    textAlign="right" headerText="{{'[Chỉ tiêu]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width='130' format="N0">
+                  </e-column>
+                  <e-column field='realValue' headerTextAlign="right"
+                    textAlign="right" headerText="{{'[Giá trị thực đạt]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width='130' format="N2">
+                  </e-column>
+                  <e-column field='equalValue' headerTextAlign="Center"
+                    textAlign="Left" headerText="{{'[Tỉ lệ hoàn thành]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width='120' format="N2">
+                  </e-column>
+                  <e-column field='kpiSalary' headerTextAlign="right"
+                    textAlign="right" headerText="{{'[Lương KPI]' | translate }}" 
+                    clipMode='EllipsisWithTooltip' width='130' format="N2">
+                  </e-column>
+                  <e-column field='note' headerTextAlign="Center"
+                    textAlign="Left" headerText="{{'[Ghi chú]' | translate }}"
+                    clipMode='EllipsisWithTooltip'>
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </ng-template>
+          </e-pane>
+          <e-pane size='230px' >
+            <ng-template #content>
+              <div class="col-sm-12">
+                <ejs-switch class="lockPayroll" onLabel="Mở" offLabel="Khóa"
+                [(ngModel)]="model.isLock">
+              </ejs-switch>
+              </div>
+              <form name="editForm" [formGroup]="editForm" novalidate>
+                <div class="row pt-4">
+         
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required"
+                        for="maxValue">{{'[Năm]' | translate }}</label>
+                      <ejs-numerictextbox name="year" formControlName="yearId"
+                        [(ngModel)]="model.yearId" min="2000" max="2050"
+                        format='####' (change)="changeYear($event!)">
+                      </ejs-numerictextbox>
+                      <span class="input-error"
+                        *ngIf="editForm.get('yearId')!.hasError('required') && !editForm.get('yearId')!.untouched">
+                        {{'[Bắt buộc nhập]' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required" for="periodId">{{'[Kỳ lương]' | translate }}</label>
+                      <ejs-dropdownlist id='periodId' [dataSource]='lstPeriodId'
+                        formControlName="periodId" [(ngModel)]="model.periodId"
+                        [fields]='fields' (change)="changePeriod($event!)">
+                      </ejs-dropdownlist>
+                      <span class="input-error"
+                        *ngIf="editForm.get('periodId')!.hasError('required') && !editForm.get('periodId')!.untouched">
+                        {{'[Bắt buộc chọn]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required" for="typeId">{{'[Loại phần tử KPI]' | translate }}</label>
+                      <ejs-dropdownlist id='typeId' [dataSource]='lstTypeId'
+                        formControlName="typeId" [(ngModel)]="model.typeId"
+                        [fields]='fields' (change)="changeType($event!)">
+                      </ejs-dropdownlist>
+                      <span class="input-error"
+                        *ngIf="editForm.get('typeId')!.hasError('required') && !editForm.get('typeId')!.untouched">
+                        {{'[Bắt buộc chọn]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text">{{'[Phần tử KPI]' | translate }}</label>
+                      <ejs-dropdownlist id='kpiTargetId'
+                        [dataSource]='lstKpiTargetId'
+                        formControlName="kpiTargetId"
+                        [(ngModel)]="model.kpiTargetId" [fields]='fields'
+                        (change)="changeKpiTargetId($event!)">
+                      </ejs-dropdownlist>
+                      
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+<input  id="file" #file type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile(file.files)' />

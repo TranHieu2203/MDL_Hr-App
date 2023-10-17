@@ -1,0 +1,127 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/remind'>{{'[Thiết lập nhắc nhở]' |
+              translate }}</span>
+          </div>
+        </div>
+        <app-common-tools name="sys_settingremind" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <div id='vertical_splitter' class="vertical_splitter">
+                <div>
+                  <div class="content">
+                    <cms-app-org showCheckBox="true"></cms-app-org>
+                  </div>
+                </div>
+                <div>
+                  <div class="content content-checkbox">
+                    <ejs-checkbox label="{{'[Cả nhân viên nghỉ việc]' | translate }}" (change)="GetEmp($event!)"
+                      [checked]="false">
+                    </ejs-checkbox>
+                    <div class="bg-ter"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="list-grid">
+                <form class="searchFrom" name="searchFrom" [formGroup]="searchFrom" novalidate
+                  style="padding-bottom: 10px;">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">{{'[Loại nhắc nhở]' | translate }}</label>
+                        <ejs-dropdownlist [dataSource]='lstRemindId' [fields]='fields' [showClearButton]="true"
+                          [(ngModel)]="model.name" formControlName="name" [placeholder]="''" [allowFiltering]='true'
+                          (filtering)='onFiltering($event,lstRemindId)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <button ejs-button cssClass="e-info" (click)="getListData()"><i aria-hidden="true"
+                            class="fa fa-search"></i> Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='40' headerHeight='30'
+                  [height]='configs.height() - 20' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang'
+                  [allowSelection]='true' [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings'
+                  [editSettings]='configs.editSettings' (rowSelecting)="setButtonStatus($event!)"
+                  (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='50' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='ID' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='CONTRACT_ID' [showInColumnChooser]='false' [visible]='false' headerText='CONTRACT_ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='MAIL_CODE' [showInColumnChooser]='false' [visible]='false' headerText='MAIL_CODE'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='IS_SENDMAIL' [showInColumnChooser]='false' [visible]='false'
+                      headerText='IS_SENDMAIL' [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='TYPE_CODE' headerTextAlign="Left" textAlign="Left" [visible]='false'
+                      headerText='TYPE_CODE' clipMode='EllipsisWithTooltip' width='150'></e-column>
+                    <!-- <e-column field='avatar' headerTextAlign="Center" textAlign="Center" headerText="{{'[Ảnh]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='100'>
+                      <ng-template #template let-data>
+                        <img src="{{data.avatar}}" class="grid-avatar" *ngIf="data.avatar!= null">
+                      </ng-template>
+                    </e-column> -->
+                    <e-column field='TYPE_NAME' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Loại nhắc nhở]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width='150'></e-column>
+                    <e-column field='EMPLOYEE_CODE' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Mã NV]' | translate }}" clipMode='EllipsisWithTooltip' width='100'></e-column>
+                    <e-column field='EMPLOYEE_NAME' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Họ tên]' | translate }}" clipMode='EllipsisWithTooltip' width='180'>
+                    </e-column>
+                    <e-column field='ORG_NAME' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='POSITION_NAME' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Chức danh]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='DAY' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Số ngày còn lại]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+
+    </div>
+
+  </div>
+</div>

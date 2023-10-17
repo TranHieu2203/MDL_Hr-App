@@ -1,0 +1,316 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Công ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/applist/shift'>{{'[Ca làm việc]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="shiftedit" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="app-content">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="row">
+          <div class="col-sm-9">
+            <div class="group-box">
+              <!-- title -->
+              <div class="card-head">
+                <div class="icon-info v-icon"></div>
+                <label class="title">{{'[Thông tin]' | translate }}</label>
+              </div>
+              <!--  -->
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Mã]' | translate }}</label>
+                    <input class="form-control" type="text" formControlName="code" [(ngModel)]="model.code"
+                      maxlength="31">
+                    <span class="input-error"
+                      *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
+                      {{'[Bắt buộc nhập]' | translate }}
+                    </span>
+                    <span class="input-error "
+                      *ngIf="editForm.get('code')!.hasError('incorrect') && !editForm.get('code')!.untouched">
+                      {{'[Sai định dạng]' | translate }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+                    <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name"
+                      maxlength="51">
+                    <span class="input-error"
+                      *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                      {{'[Bắt buộc nhập]' | translate }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Kiểu công]' | translate }}</label>
+                    <ejs-dropdownlist [dataSource]='lstTimeTypeId' [fields]='fields' [showClearButton]="true"
+                      [(ngModel)]="model.timeTypeId" formControlName="timeTypeId" [placeholder]="''"
+                      [allowFiltering]='true' (filtering)='onFiltering($event,lstTimeTypeId)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                      *ngIf="editForm.get('timeTypeId')!.hasError('required') && !editForm.get('timeTypeId')!.untouched">
+                      Bắt buộc chọn
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- ca chieu  -->
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Giờ bắt đầu]' | translate }}</label>
+                    <ejs-timepicker [placeholder]='watermark' formControlName="hoursStart"
+                      [(ngModel)]="model.hoursStart" [format]='formatString' [step]='interval'>
+                    </ejs-timepicker>
+                    <span class="input-error"
+                      *ngIf="editForm.get('hoursStart')!.hasError('required') && !editForm.get('hoursStart')!.untouched">
+                      Bắt buộc chọn
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Giờ kết thúc]' | translate }}</label>
+                    <ejs-timepicker [placeholder]='watermark' formControlName="hoursStop" [(ngModel)]="model.hoursStop"
+                      [format]='formatString' [step]='interval'>
+                    </ejs-timepicker>
+                    <span class="input-error"
+                      *ngIf="editForm.get('hoursStop')!.hasError('required') && !editForm.get('hoursStop')!.untouched">
+                      {{'[Bắt buộc chọn]' | translate }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-3" style="padding: 0px;">
+                  <div class="form-group vertical">
+                    <ejs-checkbox formControlName="isNoon" label="Ca đêm" [(ngModel)]="model.isNoon">
+                    </ejs-checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Giờ chấm sớm nhất]' | translate }}</label>
+                    <ejs-timepicker [placeholder]='watermark' formControlName="shiftIn" [(ngModel)]="model.shiftIn"
+                      [format]='formatString' [step]='interval'>
+                    </ejs-timepicker>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Giờ chấm muộn nhất]' | translate }}</label>
+                    <ejs-timepicker [placeholder]='watermark' formControlName="shiftOut" [(ngModel)]="model.shiftOut"
+                      [format]='formatString' [step]='interval'>
+                    </ejs-timepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Số giờ làm việc]' | translate }}</label>
+                    <ejs-numerictextbox format="N1" locale="en" name="levelCommend" formControlName="timeStandard"
+                      [(ngModel)]="model.timeStandard" min="0" max="99">
+                    </ejs-numerictextbox>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Hệ số]' | translate }}</label>
+                    <ejs-numerictextbox format="N1" locale="en" name="levelCommend" formControlName="coefficient"
+                      [(ngModel)]="model.coefficient" min="0" max="99">
+                    </ejs-numerictextbox>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <!-- ca chieu  -->
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <ejs-checkbox formControlName="isBreak" label="Có nghỉ giữa ca" [(ngModel)]="model.isBreak ">
+                    </ejs-checkbox>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <ejs-checkbox formControlName="isSkip" label="Bỏ qua chấm công" [(ngModel)]="model.isSkip ">
+                    </ejs-checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3" *ngIf="model.isBreak">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Nghỉ giữa ca từ]' | translate }}</label>
+                    <ejs-timepicker [placeholder]='watermark' formControlName="breaksFrom"
+                      [(ngModel)]="model.breaksFrom" [format]='formatString' [step]='interval'>
+                    </ejs-timepicker>
+
+                  </div>
+                </div>
+                <div class="col-sm-3" *ngIf="model.isBreak">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Nghỉ
+                      giữa ca đến]' | translate }}</label>
+                    <ejs-timepicker [placeholder]='watermark' formControlName="breaksTo" [(ngModel)]="model.breaksTo"
+                      [format]='formatString' [step]='interval'>
+                    </ejs-timepicker>
+
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group  vertical">
+                    <label class="e-float-text">{{'[Số phút đi muộn]' | translate }}</label>
+                    <ejs-numerictextbox format="N0" locale="en" name="timeLate" formControlName="timeLate"
+                      [(ngModel)]="model.timeLate" min="0" max="1440">
+                    </ejs-numerictextbox>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group  vertical">
+                    <label class="e-float-text">{{'[Số phút về sớm]' | translate }}</label>
+                    <ejs-numerictextbox format="N0" locale="en" name="timeEarly" formControlName="timeEarly"
+                      [(ngModel)]="model.timeEarly" min="0" max="1440">
+                    </ejs-numerictextbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Thứ tự sắp xếp]' | translate }}</label>
+                    <ejs-numerictextbox format="N0" locale="en" name="orders" formControlName="orders"
+                      [(ngModel)]="model.orders" min="0" max="1440">
+                    </ejs-numerictextbox>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Ghi chú]' | translate }}</label>
+                    <textarea class="form-control" formControlName="note" [(ngModel)]="model.note" id="note"
+                      rows="2"></textarea>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="group-box">
+              <!-- title -->
+              <div class="card-head">
+                <div class="icon-info info-icon"></div>
+                <label class="title">{{'[Lịch trình Ca]' | translate }}</label>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Thứ 2]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="monId" id='monId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.monId" [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Thứ 3]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="tueId" id='tueId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.tueId" [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Thứ 4]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="wedId" id='wedId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.wedId" [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Thứ 5]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="thuId" id='thuId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.thuId" [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Thứ 6]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="friId" id='friId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.friId" [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Thứ 7]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="satId" id='satId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.satId" [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Chủ nhật]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="sunId" id='sunId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.sunId" [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

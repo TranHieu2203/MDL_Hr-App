@@ -1,0 +1,79 @@
+cms-profile-candidatescancv-edit {
+    .image {
+        display: flex;
+        justify-content: center;
+        padding-top: 35px;
+      }
+      .e-tooltip-wrap.e-popup {
+        background-color: rgb(105, 105, 105);
+        border: 2px solid #000;
+      }
+      .e-tooltip-wrap {
+        border-radius: 4px;
+        opacity: 1;
+      }
+      #target {
+        padding-top: 30px;
+        text-align: center;
+    
+      }
+      #target:hover {
+        cursor: pointer;
+      }
+      #img-card {
+        margin-top: -30px;
+        position: fixed;
+        width: 300px;
+      }
+     
+      .fullname {
+        color: #000;
+        text-transform: uppercase;
+      }
+      .email{
+        white-space: pre;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #212529!important;
+      }
+    
+     .emp-info {
+       text-align: left; 
+       padding: 20px 10px 0px 10px;
+        p {
+          margin-right: 10px;
+          color: #4B4B4D;
+          font-size: 14px;
+        }
+     }
+     .link-history:hover{
+      cursor: pointer;
+      text-decoration: underline;
+      }
+      .btn-coppy{
+        border: none;
+        color: #0075f2;
+        background-color: transparent;
+        float: right;
+      }
+      .cbo-item-header{
+        text-align: center;
+        font-weight: 700;
+      }
+
+      #home{
+        margin-top: -30px;
+      }
+      .tab-content{
+        padding: 0rem 0rem;
+      }
+      #custom-edit{
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #00f;
+        top: calc(100% - 246px);
+        left: calc(100% - 119px);
+      }
+}

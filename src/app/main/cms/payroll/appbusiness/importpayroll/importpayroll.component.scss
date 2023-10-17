@@ -1,0 +1,50 @@
+cms-importpayroll {
+  .pt-5 {
+    padding-top: 39px !important;
+  }
+  .app-main-content .app-container .card-content .btn {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 7px;
+    padding: 11px 28px 11px;
+  }
+
+  .e-row :hover {
+    cursor: pointer;
+  }
+
+  .cell-green {
+    background-color: rgb(79, 194, 79);
+    color: white;
+  } 
+
+  .cell-red {
+    background-color: rgb(238, 88, 88);
+    color: white;
+  }
+  // css form group inline
+  .form-inline {
+    padding-top: 10px;
+    font-family: "v2hrm-font" !important;
+    label.form-label {
+      font-weight: normal !important;
+      font-size: 14px !important;
+      line-height: 18px !important;
+      color: #3e4e64 !important;
+    }
+    .required::after {
+      content: " *";
+      color: red;
+    }
+  }
+  .e-switch-wrapper {
+    margin-top: 30px !important;
+    height: 25px !important;
+    width: 89px !important  ;
+  }
+}
+
+
+
+

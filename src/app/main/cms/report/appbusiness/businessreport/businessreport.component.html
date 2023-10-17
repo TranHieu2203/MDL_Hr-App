@@ -1,0 +1,84 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Báo cáo]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/report/appbusiness/businessreport'>{{'[Báo cáo]' | translate }}
+            </span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="businessreport" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal>
+        <e-panes>
+        
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <ejs-treeview #treeViewReport (nodeSelected)="nodeSelecting($event!)" [fields]='field' expanded="true" style="padding: 11px 3px 23px 12px !important;">
+              </ejs-treeview>
+            </ng-template>
+          </e-pane>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+
+
+            <ng-template #content>
+              <div #template id="control-search row pt-1 pb-1">
+                <div class="row pt-2 pb-2">
+                  <div class="col-xl-3">
+                    <ejs-dropdownlist id='yearId' [dataSource]='lstYear' [(ngModel)]="model.yearId" [fields]='fields'
+                      (change)="changeYear($event!)" placeholder="{{'[Chọn năm]'}}">
+                    </ejs-dropdownlist>
+                  </div>
+                  <div class="col-xl-3">
+                    <ejs-dropdownlist id='periodId' [dataSource]='lstPeriodId' [(ngModel)]="model.periodId" placeholder="{{'[Chọn kỳ công]'|translate}}"
+                      [fields]='fields'>
+                    </ejs-dropdownlist>
+                  </div>
+                  <div class="col-xl-3">
+                    <div class="btn btn-info" (click)="downloadFile(curentUrlDownLoad)" *ngIf="curentUrlDownLoad!=''">
+                      <i class="fa fa-download"></i> {{'[Tải về]'|translate}}
+                    </div>
+                  </div>
+
+                </div>
+             
+              </div>
+              <ejs-spreadsheet #spreadsheet height="100%" width="100%" allowSave="true" allowOpen="false"
+                allowFreezePane=true [allowFreezePane]=true [showRibbon]="true"
+                openUrl='https://services.syncfusion.com/angular/production/api/spreadsheet/open'
+                saveUrl='https://services.syncfusion.com/angular/production/api/spreadsheet/save'>
+
+              </ejs-spreadsheet>
+
+              <!-- <cms-app-reportins *ngIf="nodeSelected == 5">
+              </cms-app-reportins>
+              <cms-app-reportemployee *ngIf="nodeSelected == 6  || nodeSelected == 12">
+              </cms-app-reportemployee>
+              <cms-app-reportinsbyorg *ngIf="nodeSelected == 7">
+              </cms-app-reportinsbyorg>
+              <cms-app-reportattandence *ngIf="nodeSelected == 8 || nodeSelected == 9 || nodeSelected == 10">
+              </cms-app-reportattandence>
+              <cms-app-reportpayroll *ngIf="nodeSelected == 11 || nodeSelected==13 || nodeSelected == 14">
+              </cms-app-reportpayroll> -->
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>

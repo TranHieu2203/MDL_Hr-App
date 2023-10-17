@@ -1,0 +1,135 @@
+<div class="row group-filter">
+  <div class="col">
+    <div class="row ">
+      <div class="col-sm-6">
+        <div class="form-inline row">
+          <label class="col-sm-5 form-label required">{{'[Năm]' | translate }}</label>
+          <div class="col-sm-7">
+            <ejs-numerictextbox name="year" [(ngModel)]="yearId" min="2000"
+              max="2050" format='####'>
+            </ejs-numerictextbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data'
+  [selectionSettings]='selectionOptions'
+  (dataStateChange)="dataStateChange($event!)" rowHeight='32' headerHeight='35'
+  [height]='configs.height()' [allowPaging]='true'
+  [pageSettings]='configs.pageSettings' [enableHover]='true'
+  [allowSorting]='false' allowResizing='true' [locale]='configs.currentLang'
+  [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' [allowGrouping]='true'
+  [groupSettings]='groupOptions'>
+  <e-columns>
+
+    <e-column field='EMPLOYEE_CODE' headerTextAlign="Center" textAlign="Center"
+      headerText="{{'[Mã nhân viên]' | translate }}" clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='EMPLOYEE_NAME' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Họ và tên]' | translate }}" clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='ORG_NAME' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+
+    <e-column field='SAL_BASIC_INS' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Mức đóng]' | translate }}" clipMode='EllipsisWithTooltip' format='N0'>
+    </e-column>
+    <e-column field='T1' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 1]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T2' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 2]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T3' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 3]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T4' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 4]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T5' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 5]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T6' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 6]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T7' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 7]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T8' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 8]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T9' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 9]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T10' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 10]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T11' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 11]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+    <e-column field='T12' headerTextAlign="Left" textAlign="Left"
+      headerText="{{'[Tháng 12]' | translate }}" clipMode='EllipsisWithTooltip' width="150"
+      format='N0'>
+    </e-column>
+  </e-columns>
+  <e-aggregates>
+    <e-aggregate>
+      <e-columns>
+        <e-column field="T1" type="sum" format='N0'>
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T2" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T3" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T4" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T5" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T6" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T7" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T8" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T9" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T110" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T11" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+        <e-column field="T12" type="sum">
+          <ng-template #footerTemplate let-data>{{data.sum}}</ng-template>
+        </e-column>
+      </e-columns>
+    </e-aggregate>
+  </e-aggregates>
+</ejs-grid>

@@ -1,0 +1,71 @@
+<div class="modal-employee">
+  <div class="modal-header-emp">
+    <div>
+      <p>Chọn nhân viên</p>
+    </div>
+    <div>
+      <span (click)="maximize()"><i class="fa fa-window-restore me-3" aria-hidden="true"></i></span>
+      <span class="pl-2" (click)="close()"><i class="fa fa-window-close" aria-hidden="true"></i></span>
+    </div>
+  </div>
+
+  <div class="modal-content-emp">
+    <div class="row r-h">
+      <div class="col-3 md-b-r">
+        <div id='treeparent'>
+          <cms-app-org></cms-app-org>
+        </div>
+      </div>
+      <div class="col-9 p-l">
+        <div class="list-grid">
+          <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+            [selectionSettings]='configs.selectionSettings' (dataStateChange)="dataStateChange($event!)" rowHeight='32'
+            headerHeight='35' height='400' [allowPaging]='true' [pageSettings]='selectionOptions' [enableHover]='true'
+            [allowSorting]='true' allowResizing='true' [allowFiltering]='true' [filterSettings]='configs.filterOption' [filterSettings]='configs.filterOption'
+            [locale]='configs.currentLang'>
+            <e-columns>
+              <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                *ngIf="param!=undefined && param.multiselect" width='60' textAlign="Center" [allowEditing]="false">
+              </e-column>
+              <e-column field='employeeCode' headerTextAlign="Left" textAlign="Left"
+                headerText="{{'[Mã NV]' | translate }}" clipMode='EllipsisWithTooltip' width="80">
+              </e-column>
+              <e-column field='employeeName' headerTextAlign="Left" textAlign="Left"
+                headerText="{{'[Họ và tên]' | translate }}" clipMode='EllipsisWithTooltip' width="120">
+              </e-column>
+              <!--  <e-column field='contractNo' headerText="{{'[Số hợp đồng" width="100">
+              </e-column> -->
+              <e-column field='positionName' headerTextAlign="Left" textAlign="Left"
+                headerText="{{'[Vị trí]' | translate }}" clipMode='EllipsisWithTooltip'>
+              </e-column>
+              <e-column field='orgName' headerTextAlign="Left" textAlign="Left"
+                headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip' width="150"></e-column>
+              <!--  <e-column field='dateStart' [visible]='false'>
+              </e-column>
+              <e-column field='dateEnd' [visible]='false'>
+              </e-column>-->
+            </e-columns>
+          </ejs-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer-emp">
+    <div class="col-3 md-b-r">
+      <div class="terminate">
+        <ejs-checkbox label="Cả nhân viên nghỉ việc" (change)="GetEmp($event!)" [checked]="false">
+        </ejs-checkbox>
+
+      </div>
+    </div>
+    <div class="col-9 p-l md-r-card">
+      <button class="btn-choose" (click)="choise()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Chọn</button>
+      <button class="btn-cancel" (click)="close()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        Hủy</button>
+    </div>
+  </div>
+</div>
+<div class="modal-background"></div>

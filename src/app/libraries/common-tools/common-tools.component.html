@@ -1,0 +1,15 @@
+<div class="common-tools-wrapper">
+    <ul class="common-tools">
+        <li (click)="clickToolbar(itemButton)" *ngFor="let itemButton of toolbar" class="pointer {{itemButton.id}}"
+            [class.common-tools-btn-disabled]="!!itemButton.isDisable">
+            <div class="common-tools-buttongroup">
+                <span [class.btn-addnew-wrapper]="itemButton.id.toLowerCase() === 'add'">
+                    <i class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"
+                        [class.btn-addnew]="itemButton.id.toLowerCase() === 'add'">
+                    </i>
+                    {{itemButton.text}}
+                </span>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,71 @@
+<div #container class="module-popup w-auto h-auto d-block">
+    <div class="modal-popup-wrap bg-white p-0 shadow-lg rounded-3">
+        <div class="modal-popup-body p-3 w-auto h-auto">
+            <div class="container">
+                <div *ngFor="let row of moduleArr; let rowIndex = index" class="row">
+                    <div *ngFor="let m of row; let columnIndex = index" [class]="columnBsClass">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <a (click)="moduleClick(m)">
+                                    <div class="font-large fw-bold text-center cursor-pointer" [appTooltip]="m.tooltip | translate">
+                                        {{ m.code | translate }}
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="nav-content">
+                                <ul class="mb-1 top-content">
+                                    <li *ngFor="let f of m.features; let index = index;">
+                                        <div *ngIf="index % 2 === 0" class="row">
+                                            <div class="col-6">
+                                                <div class="card-body d-block w-100 ps-3 pe-3 pb-4 text-center">
+                                                    <figure
+                                                        class="overflow-hidden avatar ms-auto me-auto mb-0 position-relative w65 z-index-1 text-center">
+
+                                                        <a (click)="featureClick(m, f)"
+                                                            class="nav-content-bttn open-font cursor-pointer">
+                                                            <i [appTooltip]="f.tooltip | translate"
+                                                                [class]="f.iconClass + ' btn-round-md me-3 icon ' + bgClass(columnIndex, index)"></i>
+                                                        </a>
+                                                    </figure>
+                                                    <div class="clearfix"></div>
+                                                    <h4 class="fw-700 font-xssss mt-3 mb-1 d-block w-100 f-code"
+                                                        [ngStyle]="{ 
+                                                    whiteSpace: 'nowrap',  
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis'
+                                                }">{{f.code | translate }}</h4>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="m.features[index+1]" class="col-6">
+                                                <div class="card-body d-block w-100 ps-3 pe-3 pb-4 text-center">
+                                                    <figure
+                                                        class="overflow-hidden avatar ms-auto me-auto mb-0 position-relative w65 z-index-1 text-center">
+                                                        <a (click)="featureClick(m, m.features[index + 1])"
+                                                            class="nav-content-bttn open-font cursor-pointer">
+                                                            <i [appTooltip]="m.features[index+1].tooltip  | translate"
+                                                                [class]="m.features[index+1].iconClass + ' btn-round-md me-3 ' + bgClass(columnIndex, index+1)"></i>
+                                                        </a>
+                                                    </figure>
+                                                    <div class="clearfix"></div>
+                                                    <h4 class="fw-700 font-xssss mt-3 mb-1 d-block w-100 f-code"
+                                                        [ngStyle]="{ 
+                                                    whiteSpace: 'nowrap',  
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis'
+                                                }">{{m.features[index+1].code | translate}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

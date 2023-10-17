@@ -1,0 +1,111 @@
+<div class="row group-filter">
+  <div class="col">
+    <div class="row ">
+      <div class="col-sm-6">
+        <div class="form-inline row">
+          <label class="col-sm-5 form-label required">{{'[Đến ngày]' | translate }}</label>
+          <div class="col-sm-7">
+            <ejs-datepicker format="dd/MM/yyyy" [(ngModel)]="model.toDate" placeholder=".../.../...">
+            </ejs-datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--hight chart-->
+<div class="row">
+  <div class="col-sm-6">
+    <!-- <highcharts-chart *ngIf="flagState" [Highcharts]="Highcharts" [options]="OptionChartOrg"
+      style="width: 100%; display: block; margin: auto; float: left;">
+    </highcharts-chart> -->
+  </div>
+  <div class="col-sm-6">
+    <!-- <highcharts-chart *ngIf="flagState" [Highcharts]="Highcharts" [options]="OptionChartPos"
+      style="width: 100%; display: block; margin: auto; float: left;">
+    </highcharts-chart> -->
+  </div>
+  <!-- <div class="col-sm-6" *ngIf="flagState">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th scope="col">phòng ban</th>
+          <td *ngFor="let item of lstIncOrg">{{item.NAME}}</td>
+        </tr>
+        <tr>
+          <th scope="col">Số lượng</th>
+          <td *ngFor="let item of lstIncOrg">{{item.TOTAL}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-6" *ngIf="flagState">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Chức danh</th>
+          <th scope="col">Số lượng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lstIncPos; let i = index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{item.NAME}}</td>
+          <td>{{item.TOTAL}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div> -->
+  <div class="col-sm-6">
+    <!-- <highcharts-chart *ngIf="flagState" [Highcharts]="Highcharts" [options]="OptionChartAca"
+      style="width: 100%; display: block; margin: auto; float: left;">
+    </highcharts-chart> -->
+  </div>
+  <div class="col-sm-6">
+    <!-- <highcharts-chart *ngIf="flagState" [Highcharts]="Highcharts" [options]="OptionChartEmpMonth"
+      style="width: 100%; display: block; margin: auto; float: left;">
+    </highcharts-chart> -->
+  </div>
+  <!-- <div class="col-sm-6" *ngIf="flagState">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Trình độ học vấn</th>
+          <th scope="col">Số lượng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lstIncACA; let i = index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{item.NAME}}</td>
+          <td>{{item.TOTAL}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-6" *ngIf="flagState">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">tháng</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col">Thêm mới</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lstEmp; let i = index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{item.name}}</td>
+          <td>{{item.emp}}</td>
+          <td>{{item.incEmp}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div> -->
+</div>

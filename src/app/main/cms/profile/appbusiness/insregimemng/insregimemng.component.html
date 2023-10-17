@@ -1,0 +1,138 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Bảo hiểm]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/insregimemng'>{{'[Quản lý hưởng chế độ bảo hiểm]' | translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="insregimemng" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <div id='vertical_splitter' class="vertical_splitter">
+                <div>
+                  <div class="content">
+                    <cms-app-org></cms-app-org>
+                  </div>
+                </div>
+                <div>
+                  <div class="content content-checkbox">
+                    <ejs-checkbox label="Cả nhân viên nghỉ việc" (change)="GetAllData($event!)" [checked]="false">
+                    </ejs-checkbox>
+                    <div class="bg-ter"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="list-grid">
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='35' headerHeight='40'
+                  [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+                  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+                  [allowFiltering]='true' [filterSettings]='configs.filterOption'
+                  [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='40' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+
+                    <!--  -->
+                    <e-column field='employeeCode' headerTextAlign="Center" textAlign="Left" headerText="{{'[Mã nhân viên]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="90"></e-column>
+                    <e-column field='employeeName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Tên nhân viên]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                    <e-column field='orgName' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip'>
+                      <ng-template #template let-data>
+
+                        <ejs-tooltip #tooltip id='tooltip' [content]='configs.getTooltip(data.orgDesc)' cssClass="ttbg"
+                          [position]='"BottomCenter"' target=".circletool" [showTipPointer]='false'>
+                          <div id="box">
+                            <div id='1' class="circletool">{{data.orgName}} </div>
+                            <br />
+                          </div>
+                        </ejs-tooltip>
+
+                      </ng-template>
+                    </e-column>
+                    <e-column field='positionName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Chức danh]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                    <e-column field='regimeTypeName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Loại chế độ hưởng]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                    <!-- <e-column field='bhxhStatusName' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Tình trạng BHXH]' | translate }}" width="120" clipMode='EllipsisWithTooltip'></e-column> -->
+
+                    <e-column field='startDate' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày bắt đầu]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                    <e-column field='endDate' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày kết thúc]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                    <e-column field='dayCount' headerTextAlign="Center" textAlign="Right" headerText="{{'[Số ngày tính]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+                      <e-column field='cumulativeDay' headerTextAlign="Center" textAlign="Right" headerText="{{'[Số ngày lũy kế]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+                      <e-column field='childCount' headerTextAlign="Center" textAlign="Right" headerText="{{'[Số con]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+                      <e-column field='salIns' headerTextAlign="Center" textAlign="Right" headerText="{{'[Lương tính BHXH]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+                      <e-column field='salAllowance' headerTextAlign="Center" textAlign="Right" headerText="{{'[Số tiền được hưởng trợ cấp]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+                      <e-column field='moneyApproveIns' headerTextAlign="Center" textAlign="Right" headerText="{{'[Tiền BH chi trả]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+                      <e-column field='dateApproveIns' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày BH chi trả]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                      <e-column field='dayApproveIns' headerTextAlign="Center" textAlign="Right" headerText="{{'[Số ngày BH chi trả]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+                      <e-column field='payTypeName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Hình thức thanh toán]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                      <e-column field='periodDate' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Đợt khai báo]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120"></e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default"
+      (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

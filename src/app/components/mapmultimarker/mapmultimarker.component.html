@@ -1,0 +1,23 @@
+<input  type="text" class="form-control"
+  (keydown.enter)="$event.preventDefault()"
+  placeholder="Tìm kiếm địa điểm" autocorrect="off" autocapitalize="off"
+  spellcheck="off" type="text" #search>
+  
+<agm-map #AgmMap style="width: 100%;height: 100%;" [latitude]="model.lat"
+  [longitude]="model.long" [zoom]="model.zoom" [disableDefaultUI]="false">
+  <agm-marker  *ngFor="let data of model.markers; let i = index"  (markerClick)="openWindow(data.id)" 
+  [latitude]="data.LATITUDE" [longitude]="data.LONGITUDE">
+    <agm-info-window 
+    [isOpen]="isInfoWindowOpen(data.id)"
+    [latitude]="data.LATITUDE" 
+    [longitude]="data.LONGITUDE">
+    <div class="row" >
+      <span style="margin-right: 10px;">{{data.WDATE }}</span>
+      <span style="margin-right: 10px;">{{data.WTIME}}</span>
+      <span><a href={{data.IMAGE}} target="_blank">
+        <img src={{data.IMAGE}} width="25px" height="25px"></a>
+      </span>
+    </div>
+  </agm-info-window>
+  </agm-marker>
+</agm-map>

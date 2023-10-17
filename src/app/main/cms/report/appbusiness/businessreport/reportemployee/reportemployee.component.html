@@ -1,0 +1,49 @@
+    <div class="row form-inline">
+      <label class="col-xl-1 form-label required">{{'[Đến ngày]' | translate }}</label>
+      <div class="col-xl-3">
+        <ejs-datepicker format="dd/MM/yyyy" [(ngModel)]="model.toDate" placeholder=".../.../...">
+        </ejs-datepicker>
+      </div>
+  </div>
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' [selectionSettings]='selectionOptions'
+  (dataStateChange)="dataStateChange($event!)" rowHeight='32' headerHeight='35' [height]='configs.height()'
+  [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true' [allowSorting]='false'
+  allowResizing='true' [locale]='configs.currentLang' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' [allowGrouping]='true'
+  [groupSettings]='groupOptions'>
+  <e-columns>
+
+    <e-column field='employeeCode' headerTextAlign="Center" textAlign="Center" headerText="{{'[Mã nhân viên]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='employeeName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='orgName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='positionName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Chức vụ]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='birthDay' headerTextAlign="Center" type="date" [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false"
+      textAlign="Center" headerText="{{'[Ngày sinh]' | translate }}" clipMode='EllipsisWithTooltip'>
+    </e-column>
+    <e-column field='gender' headerTextAlign="Left" textAlign="Left" headerText="{{'[Giới tính]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='education' headerTextAlign="Left" textAlign="Left" headerText="{{'[Trình độ học vấn]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='qualification' headerTextAlign="Left" textAlign="Left" headerText="{{'[Trình độ chuyên môn]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='language' headerTextAlign="Left" textAlign="Left" headerText="{{'[Ngoại ngữ]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='dateJoin' headerTextAlign="Center" type="date" [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false"
+      textAlign="Center" headerText="{{'[Ngày vào công ty]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+  </e-columns>
+</ejs-grid>

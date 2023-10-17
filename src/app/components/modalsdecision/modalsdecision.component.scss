@@ -1,0 +1,120 @@
+cms-app-modalsdecision {
+  display: none;
+
+  .modal-decision {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 250;
+    /* enables scrolling for tall modals */
+    overflow: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1100px;
+    height: 600px;
+    border-radius: 5px;
+    .b-r {
+      border-right: 1px solid rgba(0, 0, 0, 0.125);
+      padding-top: 20px;
+    }
+    .p-l {
+      padding-left: 0px;
+    }
+    .e-grid {
+      font-family: SVN-Avo !important;
+      border: none;
+    }
+    input.e-input,
+    textarea.e-input,
+    .e-input-group,
+    .e-input-group.e-control-wrapper {
+      font-family: SVN-Avo !important;
+      font-size: 13px;
+      color: #607d95;
+    }
+    .e-pager {
+      font-size: 12px !important;
+    }
+  }
+  .modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 200;
+  }
+  .modal-header-decision {
+    height: 50px;
+    background: #1d9bf0 !important;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    align-items: center;
+    p {
+      margin: 0px;
+    }
+  }
+  .modal-footer-decision {
+    background: white;
+    height: 68px;
+    display: flex;
+    .rigth-card {
+      text-align: right;
+      padding: 15px;
+    }
+    button {
+      margin: 0px 7px 0px 5px;
+      background-color: #0075f2;
+      color: #fff;
+      border: none;
+      padding: 2px 15px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      border-radius: 5px;
+      height: 36px;
+    }
+    .btn-cancel {
+      background: white;
+      border: 1px solid #0075f2;
+      color: #0075f2;
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
+  .modal-content-decision {
+    background: white;
+    height: 80%;
+    .r-h {
+      height: 100%;
+    }
+    .list-grid {
+      height: 100%;
+    }
+    .e-pagerdropdown {
+      width: 50px !important;
+    }
+  }
+  span:hover {
+    cursor: pointer;
+  }
+  .e-gridpager.e-control.e-pager.e-lib {
+    padding: 8px !important;
+  }
+}

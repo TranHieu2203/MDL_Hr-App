@@ -1,0 +1,139 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i> <span class="brackcrum-active" href="">{{'[Quản lý phúc
+              lợi]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="welfarecal" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+
+              <div class="list-grid">
+                <form class="searchFrom" name="searchFrom" [formGroup]="searchFrom" novalidate
+                  style="padding-bottom: 10px;">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <label class="e-float-text" for="welfareListId">{{'[Loại phúc lợi]' | translate }}</label>
+                        <ejs-dropdownlist id='welfareListId' [dataSource]='lstWelfareList'
+                          formControlName="welfareListId" [showClearButton]="true" [(ngModel)]="model.welfareListId"
+                          [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstWelfareList)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <label class="e-float-text" for="calDate">Ngày tính toán</label>
+                        <ejs-datepicker id="calDate" format="dd/MM/yyyy" [(ngModel)]="model.calDate"
+                          (keydown)="changeDate('calDate')" value="model.calDate" (blur)="changeDate('calDate')"
+                          formControlName="calDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <button ejs-button cssClass="e-info" (click)="getListData()"><i aria-hidden="true"
+                            class="fa fa-search"></i> Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' rowHeight='35'
+                  headerHeight='40' [height]='configs.height()' [allowPaging]='true'
+                  [pageSettings]='configs.pageSettings' [enableHover]='true' [allowSorting]='true' allowResizing='true'
+                  [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='40' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='ID' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='WELFARE_NAME' textAlign="Left" headerText="{{'[Loại phúc lợi]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='EMPLOYEECODE' headerTextAlign="Center" textAlign="Center"
+                      headerText="{{'[Mã NV]' | translate }}" clipMode='EllipsisWithTooltip' width='120'>
+                    </e-column>
+                    <e-column field='EMPLOYEENAME' textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='ORGNAME' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip'>
+                      <ng-template #template let-data>
+
+                        <ejs-tooltip #tooltip id='tooltip' [content]='configs.getTooltip(data.ORG_DESC)' cssClass="ttbg"
+                          [position]='"BottomCenter"' target=".circletool" [showTipPointer]='false'>
+                          <div id="box">
+                            <div id='1' class="circletool">{{data.ORGNAME}} </div>
+                            <br />
+                          </div>
+                        </ejs-tooltip>
+
+                      </ng-template>
+                    </e-column>
+                    <e-column field='POSITIONNAME' textAlign="Left" headerText="{{'[Chức vụ]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='CONTRACTTYPENAME' textAlign="Left"
+                      headerText="{{'[Loại hợp đồng]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='NUMBERCHILD' textAlign="Left" headerText="{{'[Số con]' | translate }}"
+                      clipMode='EllipsisWithTooltip' type='number' format='N0'>
+                    </e-column>
+                    <e-column field='GENDERNAME' textAlign="Center" headerTextAlign="Center"
+                      headerText="{{'[Giới tính]' | translate }}" clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                    <e-column field='SENIORITY' textAlign="Center" headerTextAlign="Center"
+                      headerText="{{'[Thâm niên (tháng)]' | translate }}" clipMode='EllipsisWithTooltip' width="120"
+                      type='number' format='N0'>
+                    </e-column>
+                    <e-column field='MONEY' textAlign="Left" headerText="{{'[Số tiền]' | translate }}"
+                      clipMode='EllipsisWithTooltip' type='number' format='N0'>
+                    </e-column>
+                    <e-column field='START_DATE' textAlign="Center" headerTextAlign="Center" [allowFiltering]="false"
+                      headerText="{{'[Ngày hiệu lực]' | translate }}" clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                    <e-column field='END_DATE' textAlign="Center" headerTextAlign="Center" [allowFiltering]="false"
+                      headerText="{{'[Ngày hết hiệu lực]' | translate }}" clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+
+  </div>
+</div>

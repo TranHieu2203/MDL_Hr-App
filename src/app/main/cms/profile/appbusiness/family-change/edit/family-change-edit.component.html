@@ -1,0 +1,228 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/family-change'>{{'[Phê duyệt Gia cảnh]' |
+              translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="family-change" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="app-content">
+
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box">
+            <!-- title -->
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }} </label>
+            </div>
+            <!--  -->
+            <div class="row">
+              <!-- Tên -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name"
+                  [ngClass]="{'highlight': compareText(model.name?.toString(),modelCompare.name?.toString()) && modelCompare !== null}">
+                  <span class="input-error"
+                    *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                    {{'[Bắt buộc]' | translate }}</span>
+                </div>
+              </div>
+              <!-- Mối quan hệ  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Mối quan hệ]' | translate }}</label>
+                  <ejs-dropdownlist id='relationshipId' [dataSource]='lstEmpSituation' formControlName="relationshipId"
+                    [showClearButton]="true" [(ngModel)]="model.relationshipId" [fields]='fields'
+                    [allowFiltering]='true'
+                    [ngClass]="{'highlight': model.relationshipId !== modelCompare.relationshipId && modelCompare !== null}"
+                    (filtering)='onFiltering($event,lstEmpSituation)'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('relationshipId')!.hasError('required') && !editForm.get('relationshipId')!.untouched">
+                    {{'[Bắt buộc]' | translate }}</span>
+                </div>
+              </div>
+              <!-- CMND-->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[CMND/ Thẻ căn cước]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="no" [(ngModel)]="model.no"
+                  [ngClass]="{'highlight': compareText(model.no?.toString(),modelCompare.no?.toString()) && modelCompare !== null}" maxlength="12">
+                  <span class="input-error" *ngIf="editForm.get('no')!.hasError('') && !editForm.get('no')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}</span>
+                </div>
+              </div>
+              <!-- Mã số thuế -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Mã số thuế]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="taxNo" [(ngModel)]="model.taxNo"
+                  [ngClass]="{'highlight': compareText(model.taxNo?.toString(),modelCompare.taxNo?.toString()) && modelCompare !== null}"
+                    maxlength="20">
+                </div>
+              </div>
+              <!-- Sổ hộ khẩu -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Số sổ hộ khẩu]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="familyNo"
+                  [ngClass]="{'highlight': compareText(model.familyNo?.toString(),modelCompare.familyNo?.toString()) && modelCompare !== null}"
+                    [(ngModel)]="model.familyNo" maxlength="20">
+                </div>
+              </div>
+              <!-- Tên chủ hộ -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Tên chủ hộ]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="familyName"
+                  [ngClass]="{'highlight': compareText(model.familyName?.toString(),modelCompare.familyName?.toString()) && modelCompare !== null}"
+                    [(ngModel)]="model.familyName">
+                </div>
+              </div>
+              <!-- Địa chỉ -->
+              <div class="col-sm-12">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Địa chỉ chi tiết]' | translate }}</label>
+                  <textarea class="form-control" formControlName="address" [(ngModel)]="model.address"
+                  [ngClass]="{'highlight': compareText(model.address?.toString(),modelCompare.address?.toString()) && modelCompare !== null}"
+                    id="textarea" rows="2"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <!-- Ngày sing -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Ngày sinh]' | translate }}</label>
+                  <ejs-datepicker id="birth" format="dd/MM/yyyy" [(ngModel)]="model.birth"
+                    (keydown)="changeDate('birth')" (blur)="changeDate('birth')" formControlName="birth"
+                    [ngClass]="{'highlight': model.birth !== modelCompare.birth && modelCompare !== null}"
+                    placeholder=".../.../..." readonly>
+                  </ejs-datepicker>
+                </div>
+              </div>
+              <!-- Ngày bắt dầu -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Ngày bắt đầu giảm trừ]' | translate }}</label>
+                  <ejs-datepicker id="dateStart" format="dd/MM/yyyy" [(ngModel)]="model.dateStart"
+                    [ngClass]="{'highlight': model.dateStart !== modelCompare.dateStart && modelCompare !== null}"
+                    (keydown)="changeDate('dateStart')" (blur)="changeDate('dateStart')" formControlName="dateStart"
+                    placeholder=".../.../..." readonly>
+                  </ejs-datepicker>
+                </div>
+              </div>
+              <!-- Ngày bắt dầu -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Ngày kết thúc giảm trừ]' | translate }}</label>
+                  <ejs-datepicker id="dateEnd" format="dd/MM/yyyy" [(ngModel)]="model.dateEnd"
+                    [ngClass]="{'highlight': model.dateEnd !== modelCompare.dateEnd && modelCompare !== null}"
+                    (keydown)="changeDate('dateEnd')" (blur)="changeDate('dateEnd')" formControlName="dateEnd"
+                    placeholder=".../.../..." readonly>
+                  </ejs-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<v2hrm-confirm-modal id="confirm-approved-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span>Bạn có muốn phê duyệt?</span>
+
+
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="e-float-input">
+         
+          <textarea class="form-control" type="text" placeholder="Lý do..." [(ngModel)]="reasonname" name="reasonname"></textarea> 
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="confirmApproved('ok')">{{'[Đồng ý]' | translate }}</button>
+        <button class="btn btn-default" (click)="confirmApproved('cancel')">{{'[Huỷ]' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</v2hrm-confirm-modal>
+
+<v2hrm-confirm-modal id="confirm-unapproved-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span>Bạn có muốn từ chối?</span>
+
+
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="e-float-input">
+          <textarea class="form-control" type="text" placeholder="Lý do..." [(ngModel)]="reasonname" name="reasonname"></textarea> 
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="confirmUnApproved('ok')">{{'[Đồng ý]' | translate }}</button>
+      <button class="btn btn-default" (click)="confirmUnApproved('cancel')">{{'[Huỷ]' | translate }}</button>
+      </div>
+      
+    </div>
+    
+  </div>
+</v2hrm-confirm-modal>

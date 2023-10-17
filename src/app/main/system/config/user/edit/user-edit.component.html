@@ -1,0 +1,175 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum ">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Trang chủ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"> {{'[Hệ thống]' | translate }}</i>
+            <i class="fa fa-angle-right" aria-hidden="true"> {{'[Tài khoản]' | translate }}</i>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)" *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card card-content">
+        <div class="card-main-content card-center">
+          <form name="editForm" [formGroup]="editForm" novalidate>
+
+            <div class="group-box">
+              <!-- title -->
+              <div class="card-head">
+                <div class="icon-info v-icon"></div>
+                <label class="title">{{'[Thông tin]' | translate }} </label>
+              </div>
+              <!--  -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <ejs-dropdownlist [dataSource]='lstGroupUser' [fields]='fields' [showClearButton]="true"
+                        [(ngModel)]="model.groupId" formControlName="groupId" [placeholder]="''" [allowFiltering]='true'
+                        (filtering)='onFiltering($event,lstGroupUser)'>
+                      </ejs-dropdownlist>
+                      <span class="e-float-line"></span>
+                      <label class="e-float-text required" for="code">{{'[Nhóm tài khoản]' | translate }}</label>
+                      <span class="input-error"
+                        *ngIf="editForm.get('groupId')!.hasError('required') && !editForm.get('groupId')!.untouched">
+                        {{'[Trường Nhóm tài khoản bắt buộc chọn]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <input type="text" formControlName="fullName" [(ngModel)]="model.userName">
+                      <span class="e-float-line"></span>
+                      <label class="e-float-text required" for="name">{{'[Họ và tên]' | translate }}</label>
+                      <span class="input-error"
+                        *ngIf="editForm.get('userName')!.hasError('required') && !editForm.get('userName')!.untouched">
+                        {{'[Trường Tài khoản bắt buộc nhập]' | translate }}
+                      </span>
+                      <span class="input-error "
+                        *ngIf="editForm.get('userName')!.hasError('maxlength') && !editForm.get('userName')!.untouched">
+                        {{'[Tài khoản không được vượt quá 30 ký tự]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <input type="text" formControlName="userName" [(ngModel)]="model.fullName">
+                      <span class="e-float-line"></span>
+                      <label class="e-float-text required" for="name">{{'[Tài khoản]' | translate }}</label>
+                      <span class="input-error"
+                        *ngIf="editForm.get('fullName')!.hasError('required') && !editForm.get('fullName')!.untouched">
+                        {{'[Trường Tên bắt buộc nhập]' | translate }}
+                      </span>
+                      <span class="input-error "
+                        *ngIf="editForm.get('fullName')!.hasError('maxlength') && !editForm.get('fullName')!.untouched">
+                        {{'[Tên không được vượt quá 30 ký tự]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <input type="password" formControlName="password" [(ngModel)]="model.password">
+                      <span class="e-float-line"></span>
+                      <label class="e-float-text required" for="name">{{'[Password]' | translate }}</label>
+                      <span class="input-error"
+                        *ngIf="editForm.get('password')!.hasError('required') && !editForm.get('password')!.untouched">
+                        {{'[Trường Mật khẩu bắt buộc nhập]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <input type="password" formControlName="rePassword" [(ngModel)]="model.rePassword">
+                      <span class="e-float-line"></span>
+                      <label class="e-float-text required" for="name">{{'[Xác nhận mật khẩu]' | translate }}</label>
+                      <span class="input-error"
+                        *ngIf="editForm.get('rePassword')!.hasError('required') && !editForm.get('rePassword')!.untouched">
+                        {{'[Trường Xác nhận mật khẩu bắt buộc nhập]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <input type="text" formControlName="email" [(ngModel)]="model.email">
+                      <span class="e-float-line"></span>
+                      <label class="e-float-text required" for="name">{{'[Email]' | translate }}</label>
+                      <span class="input-error"
+                        *ngIf="editForm.get('email')!.hasError('required') && !editForm.get('email')!.untouched">
+                        {{'[Trường Email bắt buộc nhập]' | translate }}
+                      </span>
+                      <span class="input-error"
+                        *ngIf="editForm.get('email')!.hasError('required') && !editForm.get('email')!.untouched">
+                        {{'[Trường Email bắt buộc nhập]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

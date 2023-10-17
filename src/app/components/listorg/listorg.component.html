@@ -1,0 +1,26 @@
+<div class="list-grid">
+  <ejs-grid #overviewgridLstEmp id='overviewgridLstEmp' [dataSource]='data'
+    (dataStateChange)="dataStateChange($event!)" rowHeight='32' headerHeight='35'
+    height='100%' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+    [enableHover]='true' [allowSorting]='false' allowResizing='true'
+    [locale]='configs.currentLang'>
+    <e-columns>
+      <e-column width="60" eaderTextAlign="Center" textAlign="Center"
+        headerText="{{'[STT]' | translate }}" clipMode="EllipsisWithTooltip">
+        <ng-template #template let-data>
+          <span>{{ formatStt(data.index) }}</span>
+        </ng-template>
+      </e-column>
+      <!-- <e-column field='id' textAlign="Left"
+        headerText="{{'[ID" clipMode='EllipsisWithTooltip'></e-column> -->
+        <!-- <e-column field='orgId' textAlign="Left"
+        headerText="{{'[orgId" clipMode='EllipsisWithTooltip'></e-column> -->
+
+        <e-column field='orgName' textAlign="Left"
+        headerText="{{'[Tên đơn vị]' | translate }} " clipMode='EllipsisWithTooltip'></e-column>
+      <e-column field='PARENT_NAME' textAlign="Left" 
+        headerText="{{'[Tên đơn vị]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+        
+    </e-columns>
+  </ejs-grid>
+</div>

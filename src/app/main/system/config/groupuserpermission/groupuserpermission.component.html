@@ -1,0 +1,136 @@
+<div class="app-main-content">
+  <div class="app-container">
+     <!-- toolbar -->
+     <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Trang chủ]' | translate }} <i
+              class="fa fa-angle-right" aria-hidden="true"> {{'[Hệ thống]' | translate }}</i>
+              <i
+              class="fa fa-angle-right" aria-hidden="true"> {{'[Danh mục nhóm tài khoản]' | translate }}</i>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="card card-content">
+        <div class="card-main-content">
+          <ejs-splitter #horizontal width='100%'>
+            <e-panes>
+              <e-pane size='200px'  max='40%'>
+                <ng-template #content>
+                  <div class="row pt-3 pb-3">
+                    <div class="col">
+                      <input  type="text" id="firstname" name="firstname"
+                        placeholder="Tìm kiếm...">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <ejs-treeview #treeView
+                        (nodeSelected)="nodeSelecting($event!)" [fields]='field'>
+                      </ejs-treeview>
+                    </div>
+                  </div>
+                </ng-template>
+              </e-pane>
+              <e-pane>
+                <ng-template #content>
+                  <div class="list-grid">
+                    <ejs-grid #overviewgrid id='overviewgrid'
+                      [dataSource]='data'
+                      (dataStateChange)="dataStateChange($event!)" rowHeight='40'
+                      headerHeight='52' [height]='configs.height()'
+                      [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                      [enableHover]='true' [allowSorting]='false'
+                      allowResizing='true' [locale]='configs.currentLang'>
+                      <e-columns>
+                        <e-column field='userGroupId' [visible]='false'>
+                        </e-column>
+                        <e-column field='userId' [visible]='false'> </e-column>
+                        <e-column field='functionId' [visible]='false'>
+                        </e-column>
+                        <e-column field='groupFuntionId' [visible]='false'>
+                        </e-column>
+                        <!--  -->
+                        <e-column width="60" eaderTextAlign="Center"
+                          textAlign="Center" headerText="{{'[STT]' | translate }}"
+                          clipMode="EllipsisWithTooltip">
+                          <ng-template #template let-data>
+                            <span>{{ formatStt(data.index) }}</span>
+                          </ng-template>
+                        </e-column>
+                        <e-column field='functionCode' headerTextAlign="Center"
+                          textAlign="Left" headerText="{{'[Mã Chức năng]' | translate }}"
+                          clipMode='EllipsisWithTooltip'>
+                        </e-column>
+                        <e-column field='functionName' headerTextAlign="Center"
+                          textAlign="Left" headerText="{{'[Tên Chức năng]' | translate }}"
+                          clipMode='EllipsisWithTooltip'>
+                        </e-column>
+                        <e-column field='groupFunctionName'
+                          headerTextAlign="Center" textAlign="Left"
+                          headerText="{{'[Tên Nhóm chức năng]' | translate }}"
+                          clipMode='EllipsisWithTooltip'>
+                        </e-column>
+                        <e-column field='moduleName' headerTextAlign="Center"
+                          textAlign="Left" headerText="{{'[Tên Module]' | translate }}"
+                          clipMode='EllipsisWithTooltip'></e-column>
+                        <!--  -->
+                        <e-column [isPrimaryKey]='true' width="70" field='isAdd'
+                          textAlign="Center" headerText="{{'[Thêm]' | translate }}">
+                          <ng-template #template let-data>
+                            <ejs-checkbox [ngModel]="data.isAdd"
+                              (change)="check(data, 'isAdd',$event)">
+                            </ejs-checkbox>
+                          </ng-template>
+                        </e-column>
+                        <e-column [isPrimaryKey]='true' width="70"
+                          field='isEdit' textAlign="Center" headerText="{{'[Sửa]' | translate }}">
+                          <ng-template #template let-data>
+                            <ejs-checkbox [ngModel]="data.isEdit"
+                              (change)="check(data, 'isEdit',$event)">
+                            </ejs-checkbox>
+                          </ng-template>
+                        </e-column>
+                        <e-column [isPrimaryKey]='true' width="70"
+                          field='isDelete' textAlign="Center" headerText="{{'[Xóa]' | translate }}">
+                          <ng-template #template let-data>
+                            <ejs-checkbox [ngModel]="data.isDelete"
+                              (change)="check(data,'isDelete',$event)">
+                            </ejs-checkbox>
+                          </ng-template>
+                        </e-column>
+                      </e-columns>
+                    </ejs-grid>
+                  </div>
+
+                </ng-template>
+
+              </e-pane>
+            </e-panes>
+          </ejs-splitter>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

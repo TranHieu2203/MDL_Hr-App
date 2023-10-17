@@ -1,0 +1,160 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="app-breadcrum">
+        <a class="breadcrum-text" href='/hrms/dashboard'>
+          {{'[Trang chủ]' | translate }}
+        </a>
+        <span class="breadcrum-icon"><i class="fa fa-caret-right"></i></span>
+        <a class="breadcrum-text">
+         {{'[ Danh mục]' | translate }}
+        </a>
+        <span class="breadcrum-icon"><i class="fa fa-caret-right"></i></span>
+        <a class="breadcrum-text" href='/sys/config/userpermission'>
+          Danh mục Tài khoản
+        </a>
+      </div>
+      <div class="app-title">
+        Danh mục Tài khoản
+      </div>
+      <div class="card card-content">
+        <div class="main-toolbar">
+          <div class="row">
+            <div class="col-sm-9 p-n">
+              <button id="add" class="btn-action"
+                (click)="clickToolbar(itemButton)"
+                *ngFor="let itemButton of toolbar"
+                [disabled]="itemButton.isDisable === true">
+                <p class="text-center"><i
+                    class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+                </p>
+                <p class="text-center">{{itemButton.text}}</p>
+              </button>
+            </div>
+            <div class="col-sm-3 p-n text-right">
+              <div class="row right-filter">
+                <div class="col">
+                  <div class="form-group">
+                    <div class="e-float-input">
+                      <input  type="text" id="firstname" name="firstname"
+                        placeholder="Tìm kiếm...">
+                      <span class="search-icon"><i
+                          class="fa fa-search"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="card card-content">
+        <div class="card-main-content">
+          <ejs-splitter #horizontal width='100%'>
+            <e-panes>
+              <e-pane size='200px'  max='40%'>
+                <ng-template #content>
+                  <div class="row pt-3 pb-3">
+                    <div class="col">
+                      <input  type="text" id="firstname" name="firstname"
+                        placeholder="Tìm kiếm...">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <ejs-treeview #treeView
+                        (nodeSelected)="nodeSelecting($event!)" [fields]='field'>
+                      </ejs-treeview>
+                    </div>
+                  </div>
+                </ng-template>
+              </e-pane>
+              <e-pane>
+                <ng-template #content>
+                  <div class="list-grid">
+                    <ejs-grid #overviewgrid id='overviewgrid'
+                      [dataSource]='data'
+                      (dataStateChange)="dataStateChange($event!)" rowHeight='40'
+                      headerHeight='52' [height]='configs.height()'
+                      [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                      [enableHover]='true' [allowSorting]='false'
+                      allowResizing='true' [locale]='configs.currentLang'>
+                      <e-columns>
+                        <e-column field='userGroupId' [visible]='false'>
+                        </e-column>
+                        <e-column field='userId' [visible]='false'> </e-column>
+                        <e-column field='functionId' [visible]='false'>
+                        </e-column>
+                        <e-column field='groupFuntionId' [visible]='false'>
+                        </e-column>
+                        <!--  -->
+                        <e-column width="60" eaderTextAlign="Center"
+                          textAlign="Center" headerText="{{'[STT"
+                          clipMode="EllipsisWithTooltip">
+                          <ng-template #template let-data>
+                            <span>{{ formatStt(data.index) }}</span>
+                          </ng-template>
+                        </e-column>
+                        <e-column field='functionCode' headerTextAlign="Center"
+                          textAlign="Left" headerText="{{'[Mã Chức năng"
+                          clipMode='EllipsisWithTooltip'>
+                        </e-column>
+                        <e-column field='functionName' headerTextAlign="Center"
+                          textAlign="Left" headerText="{{'[Tên Chức năng"
+                          clipMode='EllipsisWithTooltip'>
+                        </e-column>
+                        <e-column field='groupFunctionName'
+                          headerTextAlign="Center" textAlign="Left"
+                          headerText="{{'[Tên Nhóm chức năng"
+                          clipMode='EllipsisWithTooltip'>
+                        </e-column>
+                        <e-column field='moduleName' headerTextAlign="Center"
+                          textAlign="Left" headerText="{{'[Tên Module"
+                          clipMode='EllipsisWithTooltip'></e-column>
+                        <!--  -->
+                        <e-column [isPrimaryKey]='true' width="70" field='isAdd'
+                          textAlign="Center" headerText="{{'[Thêm">
+                          <ng-template #template let-data>
+                            <ejs-checkbox [ngModel]="data.isAdd"
+                              (change)="check(data, 'isAdd',$event)">
+                            </ejs-checkbox>
+                          </ng-template>
+                        </e-column>
+                        <e-column [isPrimaryKey]='true' width="70"
+                          field='isEdit' textAlign="Center" headerText="{{'[Sửa">
+                          <ng-template #template let-data>
+                            <ejs-checkbox [ngModel]="data.isEdit"
+                              (change)="check(data, 'isEdit',$event)">
+                            </ejs-checkbox>
+                          </ng-template>
+                        </e-column>
+                        <e-column [isPrimaryKey]='true' width="70"
+                          field='isDelete' textAlign="Center" headerText="{{'[Xóa">
+                          <ng-template #template let-data>
+                            <ejs-checkbox [ngModel]="data.isDelete"
+                              (change)="check(data,'isDelete',$event)">
+                            </ejs-checkbox>
+                          </ng-template>
+                        </e-column>
+                      </e-columns>
+                    </ejs-grid>
+                  </div>
+
+                </ng-template>
+
+              </e-pane>
+            </e-panes>
+          </ejs-splitter>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

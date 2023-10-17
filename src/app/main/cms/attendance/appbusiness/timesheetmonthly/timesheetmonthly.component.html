@@ -1,0 +1,244 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Công ]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/hrms/profile/appbusiness/timesheetmonthly'>{{'[Tổng hợp công]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row treeview">
+      <div class="col-2 pt-3">
+        <!-- title -->
+        <ejs-treeview #treeView (nodeSelected)="nodeSelecting($event!)"
+          [fields]='field'>
+        </ejs-treeview>
+      </div>
+      <div class="col-10">
+        <div class="row pt-4">
+          <div class="col-sm-3">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Năm]' | translate }}</label>
+              <ejs-dropdownlist id='yearId' [dataSource]='lstYearId'
+                [(ngModel)]="model.yearId" [fields]='fields'
+                (change)='changeYear($event!)'>
+              </ejs-dropdownlist>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group vertical">
+              <label class="e-float-text required" for="monthId">{{'[Kỳ Công]' | translate }}</label>
+              <ejs-dropdownlist id='monthId' [dataSource]='lstMonthId'
+                [(ngModel)]="model.periodId" [fields]='fields'
+                [allowFiltering]='true' [filterSettings]='configs.filterOption'
+                (filtering)='onFiltering($event,lstMonthId)'
+                (change)="changeMonth($event!)">
+              </ejs-dropdownlist>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <!-- tab menu -->
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab"
+                href="#home" role="tab" aria-controls="home"
+                aria-selected="true">{{'[Bảng công gốc]' | translate }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab"
+                href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">{{'[Bảng Xử lý dữ liệu công]' | translate }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="contact-tab" data-toggle="tab"
+                href="#contact" role="tab" aria-controls="contact"
+                aria-selected="false">{{'[Bảng tổng hợp công]' | translate }}</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel"
+              aria-labelledby="home-tab">
+              1
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel"
+              aria-labelledby="profile-tab">
+              2
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel"
+              aria-labelledby="contact-tab">
+              <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data'
+                rowHeight='45' headerHeight='52' [allowPaging]='true'
+                [height]='configs.height()'
+                [pageSettings]='configs.pageSettings' [enableHover]='true'
+                [allowSorting]='true' allowResizing='true'
+                [locale]='configs.currentLang' [allowSelection]='true'
+                [allowFiltering]='true' [filterSettings]='configs.filterOption'
+                [allowTextWrap]="true" [textWrapSettings]="configs.wrapSettings"
+                [enableHover]="false">
+                <e-columns>
+                  <e-column field='id' [visible]='false' headerText='ID'
+                    [isPrimaryKey]='true' [allowEditing]="false">
+                  </e-column>
+                  <e-column field='orgName' textAlign="Left"
+                    headerTextAlign="Center" width="120" headerText="{{'[Phòng ban]' | translate }}"
+                    clipMode='EllipsisWithTooltip' isFrozen="true">
+                  </e-column>
+                  <e-column field='employeeCode' textAlign="Left"
+                    headerTextAlign="Center" headerText="{{'[Mã]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120" isFrozen="true">
+                  </e-column>
+                  <e-column field='employeeName' textAlign="Left"
+                    headerTextAlign="Center" headerText="{{'[Tên]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="150" isFrozen="true">
+                  </e-column>
+                  <e-column field='positionName' textAlign="Left"
+                    headerTextAlign="Center" headerText="{{'[Chức danh]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120" isFrozen="true">
+                  </e-column>
+                  <e-column field='TIME_STANDARD' textAlign="Right"
+                    headerTextAlign="Center"
+                    headerText="{{'[Giờ công chuẩn]' | translate }}"
+                    clipMode='EllipsisWithTooltip'>
+                  </e-column>
+                  <e-column field='workingX' textAlign="Right"
+                    headerTextAlign="Center"
+                    headerText="{{'[Công làm việc ngày thường]' | translate }}"
+                    clipMode='EllipsisWithTooltip'>
+                  </e-column>
+                  <e-column field='workingXL' textAlign="Right"
+                    headerTextAlign="Center"
+                    headerText="{{'[Công làm việc ngày nghỉ lễ]' | translate }}"
+                    clipMode='EllipsisWithTooltip'>
+                  </e-column>
+                  <!--<e-column field='workingCD' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Công chế độ]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>-->
+                  <e-column field='workingP' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Phép năm]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='workingKL' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Nghỉ không lương]' | translate }}"
+                    clipMode='EllipsisWithTooltip'>
+                  </e-column>
+                  <!--<e-column field='workingNB' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Nghỉ bù]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='workingL' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Nghỉ lễ theo quy định]' | translate }}"
+                    clipMode='EllipsisWithTooltip'>
+                  </e-column>-->
+                  <e-column field='workingCT' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Đi công tác]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='workingVR' textAlign="Right"
+                    headerTextAlign="Center"
+                    headerText="{{'[Nghỉ việc riêng có hưởng lương]' | translate }}"
+                    clipMode='EllipsisWithTooltip'>
+                  </e-column>
+                  <e-column field='workingTS' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Nghỉ thai sản]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <!--<e-column field='workingH' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Hội họp]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='fullday' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Công cả ngày]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>-->
+                  <e-column field='workingO' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Công Onsite]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='totalWorkingX' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Tổng công làm việc]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='totalWorkingN' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Tổng công nghỉ]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <!--<e-column field='WorkingDutyp' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Tổng trực chính]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='WorkingDutye1' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Tổng trực phụ 1]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='WorkingDutye2' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Tổng trực phụ 2]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='WorkingDutyo' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Tổng trực khác]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>-->
+                  <e-column field='OT_NT' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Làm thêm ngày thường]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='OT_DNT' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Làm thêm đêm ngày thường]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='OT_NN' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Làm thêm ngày nghỉ]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='OT_DNN' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Làm thêm đêm ngày nghỉ]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='OT_NL' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Làm thêm ngày lễ]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='OT_DNL' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Làm thêm đêm ngày lễ]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                  <e-column field='COUNT_ERROR' textAlign="Right"
+                    headerTextAlign="Center" headerText="{{'[Lỗi chấm công]' | translate }}"
+                    clipMode='EllipsisWithTooltip' width="120">
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- CONFIRM DELETE MODAL-->
+

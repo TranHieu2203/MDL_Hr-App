@@ -1,0 +1,47 @@
+<div class="list-grid">
+  <ejs-grid #overviewgridLstEmp id='overviewgridLstEmp'
+    [dataSource]='data'
+    (dataStateChange)="dataStateChange($event!)" rowHeight='35'
+    headerHeight='40' height='400px'
+    [allowPaging]='true' [pageSettings]='configs.pageSettings'
+    [enableHover]='true' 
+    [allowSorting]='true' allowResizing='true'
+    [locale]='configs.currentLang' [allowSelection]='true'
+    [showColumnChooser]='true'
+    [selectionSettings]='configs.selectionSettings'
+    [editSettings]='configs.editSettings'
+    [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+    <e-columns>
+      <!-- <e-column type='checkbox' [showInColumnChooser]='false'
+        [allowFiltering]='false' [allowSorting]='false' width='50'
+        textAlign="Center" [allowEditing]="false">
+      </e-column> -->
+      <e-column field='id' [showInColumnChooser]='false'
+        [visible]='false' headerText='ID' [isPrimaryKey]='true'
+        [allowEditing]="false">
+      </e-column>
+      <!--  -->
+      <e-column field='orgName' headerTextAlign="Left"
+        textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+        clipMode='EllipsisWithTooltip'></e-column>
+      <e-column field='changeTypeName' headerTextAlign="Left"
+        textAlign="Left" headerText="{{'[Loại biến động]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="230">
+        <ng-template #template let-data>
+          <a style="color: blue; cursor: pointer;" (click)="ViewRecord(data)"> {{data.changeTypeName}}</a>
+        </ng-template>
+      </e-column>
+      <e-column field='changeMonth' headerTextAlign="Center"
+        type="date"
+        [format]="{ type: 'date', format: 'MM/yyyy' }"
+        textAlign="Center" headerText="{{'[Tháng biến động]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="120"></e-column>
+      <e-column field='salaryOld' headerTextAlign="Center"
+        textAlign="Right" headerText="{{'[Hệ số kỳ trước]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="120" format='###,###,###'></e-column>
+      <e-column field='salaryNew' headerTextAlign="Center"
+        textAlign="Right" headerText="{{'[Hệ số kỳ này]' | translate }}"
+        clipMode='EllipsisWithTooltip' width="120" type='number' format='###,###,###'></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

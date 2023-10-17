@@ -1,0 +1,204 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hành chính]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/administration/business/booking'>{{'[Đặt phòng họp]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+
+      </div>
+    </div>
+
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' (dataStateChange)="dataStateChange($event!)"
+        rowHeight='37' headerHeight='47' [height]='configs.height()' [allowPaging]='true'
+        [pageSettings]='configs.pageSettings' [enableHover]='true'
+        [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+        [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+   [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+            [allowEditing]="false">
+          </e-column>
+          <e-column width="40" eaderTextAlign="Center" textAlign="Center"
+            headerText="{{'[STT]' | translate }}" clipMode="EllipsisWithTooltip">
+            <ng-template #template let-data>
+              <span>{{ formatStt(data.index) }}</span>
+            </ng-template>
+          </e-column>
+          <e-column field='roomName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Tên phòng họp]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="150"></e-column>
+          <e-column field='empName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Người yêu cầu]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='bookingDay' headerTextAlign="Center" type="date"
+            [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày đặt]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="100"></e-column>
+          <e-column field='hourFrom' headerTextAlign="Center" type="date"
+            [format]="{ type: 'date', format: 'HH:mm:ss' }" textAlign="Center" headerText="{{'[Giờ bắt đầu]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="100"></e-column>
+          <e-column field='hourTo' headerTextAlign="Center" type="date"
+            [format]="{ type: 'date', format: 'HH:mm:ss' }" textAlign="Center" headerText="{{'[Giờ kết thúc]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="100"></e-column>
+          <!--  -->
+          <e-column field='note' headerTextAlign="Center" textAlign="Left" headerText="{{'[Ghi chú]' | translate }}"
+            clipMode='EllipsisWithTooltip'></e-column>
+            <e-column field='statusId' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}" clipMode='EllipsisWithTooltip'
+            width="100">
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-warning  text-center" *ngIf="data.statusId == 1">
+                  <span>{{'[Chờ duyệt]' | translate }}</span>
+                </div>
+                <div class="status-effect text-center" *ngIf="data.statusId == 2">
+                  <span>{{'[Đã duyệt]' | translate }}</span>
+                </div>
+                <div class="status-not-effect text-center" *ngIf="data.statusId == 3">
+                  <span>{{'[Từ chối]' | translate }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+          <e-column field='statusId' textAlign="Center" headerText="{{'[Công cụ]' | translate }}" clipMode='EllipsisWithTooltip'
+          width="120">
+          <ng-template #template let-data>
+            <div class="row-tool full-width" *ngIf= "data.statusId == 1">
+                <span style="color: green; cursor: pointer;" (click)="ClickRecord(data,'accept')">Duyệt</span> |
+                <span style="color: red;cursor: pointer;"(click)="ClickRecord(data,'denied')"> Từ chối</span>
+            </div>
+            <div class="row-tool full-width" *ngIf= "data.statusId != 1">
+              <span style="color: blue; cursor: pointer;" (click)="ClickRecord(data,'view')">Xem</span>
+
+          </div>
+          </ng-template>
+        </e-column>
+            <e-column field='approveName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Người phê duyệt]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="130"></e-column>
+            <e-column field='approveDate' headerTextAlign="Center" type="date"
+            [format]="{ type: 'date', format: 'dd/MM/yyyy HH:mm:ss' }" textAlign="Center" headerText="{{'[Ngày duyệt]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="150"></e-column>
+            <e-column field='approveNote' headerTextAlign="Center" textAlign="Left" headerText="{{'[Lý do]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="100"></e-column>
+
+        </e-columns>
+      </ejs-grid>
+
+    </div>
+  </div>
+
+  <!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-tool-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span style="color: green;"  *ngIf ="flagTool == 'accept'">{{'[Duyệt]' | translate }}</span><span style="color: red;"
+    *ngIf ="flagTool == 'denied'">Từ chối</span> {{'[yêu cầu đặt phòng]' | translate }} {{model.roomName}}
+  </div>
+  <div class="col-sm-12">
+    <form name="editForm" [formGroup]="editForm" novalidate>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group ">
+            <label class=" form-label">{{'[Tên phòng họp]' | translate }}</label>
+              <input  class="form-control" type="text" formControlName="roomName"
+              [(ngModel)]="model.roomName" >
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group ">
+            <label class="form-label">{{'[Mã người yêu cầu]' | translate }}</label>
+              <input  class="form-control" type="text" formControlName="empCode"
+              [(ngModel)]="model.empCode" >
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group ">
+            <label class="form-label">{{'[Người yêu cầu]' | translate }}</label>
+              <input  class="form-control" type="text" formControlName="empName"
+              [(ngModel)]="model.empName" >
+          </div>
+        </div>
+        <div class="col-sm-4  ">
+          <div class="form-group ">
+            <label class="form-label">{{'[Phòng ban]' | translate }}</label>
+              <input  class="form-control" type="text" formControlName="orgName"
+              [(ngModel)]="model.orgName" >
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group ">
+            <label class="form-label" for="periodId">{{'[Ngày đặt]' | translate }}</label>
+              <ejs-datepicker id="bookingDay" formControlName="bookingDay"
+                format="dd/MM/yyyy" [(ngModel)]="model.bookingDay">
+              </ejs-datepicker >
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group ">
+            <label class="form-label" for="hourFrom">{{'[Giờ bắt đầu]' | translate }}</label>
+              <ejs-timepicker
+                  formControlName="hourFrom" [(ngModel)]="model.hourFrom"
+                  [format]='formatString' [step]='interval'>
+                </ejs-timepicker>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group ">
+            <label class="form-label" for="hourTo">{{'[Giờ kết thúc]' | translate }}</label>
+              <ejs-timepicker
+              formControlName="hourTo" [(ngModel)]="model.hourTo"
+              [format]='formatString' [step]='interval'>
+            </ejs-timepicker>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group ">
+            <label class="form-label" for="hourTo">{{'[Ghi chú]' | translate }}</label>
+              <textarea class="form-control"
+              formControlName="note" [(ngModel)]="model.note">
+            </textarea>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group ">
+            <label class="form-label" for="status">{{'[Trạng thái]' | translate }}</label>
+              <input  class="form-control" type="text" formControlName="status"
+              [(ngModel)]="model.statusName" >
+          </div>
+        </div>
+        <div class="col-sm-4" *ngIf = "model.statusId != 1">
+          <div class="form-group ">
+            <label class="form-label" for="approveName">{{'[Người duyệt]' | translate }}</label>
+              <input  class="form-control" type="text" formControlName="approveName"
+              [(ngModel)]="model.approveName" >
+          </div>
+        </div>
+        <div class="col-sm-4" *ngIf = "model.statusId != 1">
+          <div class="form-group ">
+            <label class="form-label" for="hourTo">{{'[Ngày duyệt]' | translate }}</label>
+              <ejs-datepicker id="approveDate" formControlName="approveDate"
+                format="dd/MM/yyyy HH:mm:ss" [(ngModel)]="model.approveDate">
+              </ejs-datepicker >
+          </div>
+        </div>
+        <div class="col-sm-12" *ngIf ="flagTool == 'denied' || model.statusId == 3">
+          <div class="form-group ">
+            <label class="form-label" for="approveNote">Lý do</label>
+              <textarea formControlName="approveNote" [(ngModel)]="model.approveNote" class="form-control" >
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="Confirm('ok')" *ngIf ="flagTool !== 'view'">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="Confirm('cancel')" *ngIf ="flagTool !== 'view'">{{'[Hủy]' | translate }}</button>
+    <button class="btn btn-primary" (click)="Confirm('cancel')"*ngIf ="flagTool == 'view'">{{'[Đóng]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

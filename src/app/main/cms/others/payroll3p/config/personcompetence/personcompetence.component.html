@@ -1,0 +1,79 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Khác ]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Lương 3P]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            {{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/others/payroll3p/config3p/jobevaluetionconfig'>{{'[Năng lực cá nhân]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)" *ngFor="let itemButton of toolbar" [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div id='container'>
+        <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+          <e-panes>
+            <e-pane size='270px' max='40%'>
+              <ng-template #content>
+                <div id='vertical_splitter' class="vertical_splitter">
+                  <div>
+                    <div class="content">
+                      <cms-app-org></cms-app-org>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </e-pane>
+            <e-pane size='270px' max='40%'>
+              <ng-template #content>
+                <div id='vertical_splitter' class="vertical_splitter">
+                  <div>
+                    <div class="content">
+                      <ejs-treeview style="overflow: auto;height: 820px;" #listTreeEmp id="default" [fields]='field'
+                      (nodeSelected)="empSelecting($event!)">
+                    </ejs-treeview>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </e-pane>
+            <e-pane>
+              <ng-template #content>
+                <div id='vertical_splitter' class="vertical_splitter">
+                  <div>
+                    <div class="content">
+                      <ejs-treeview style="overflow: auto;height: 820px;" #listCompetence id="default" 
+                      [fields]='field'   [showCheckBox]='showCheckBox'>
+                    </ejs-treeview>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </e-pane>
+          </e-panes>
+        </ejs-splitter>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->

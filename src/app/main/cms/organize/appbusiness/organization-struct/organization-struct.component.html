@@ -1,0 +1,63 @@
+<!-- <ejs-treegrid [dataSource]='data' [treeColumnIndex]='1' [sortSettings]="sortSettings" [allowFiltering]="true"
+  [allowSorting]="true" childMapping='subtasks' [allowPaging]="true" [pageSettings]='pageSettings'>
+  <e-columns>
+    <e-column field='taskID' headerText='ID' textAlign='Center' width=30></e-column>
+    <e-column field='taskName' headerText='Name' textAlign='Left' width=180></e-column>
+    <e-column field='startDate' headerText='Start Date' textAlign='Center' format='yMd' width=90></e-column>
+    <e-column field='duration' headerText='Duration' textAlign='Center' width=80></e-column>
+    <e-column field='priority' headerText='Priority' textAlign='Center' width=80></e-column>
+  </e-columns>
+</ejs-treegrid> -->
+
+
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tổ chức]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/organize/business/organization-struct'>{{'[Cơ cấu tổ chức]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+      </div>
+    </div>
+
+
+
+    <div style="width: 100%; height: 100%;">
+
+      <ejs-treegrid [dataSource]='data' [treeColumnIndex]='0' [sortSettings]="sortSettings" [allowFiltering]="true"
+        [allowSorting]="true" childMapping='children' [allowPaging]="false" [pageSettings]='pageSettings'
+        [enableCollapseAll]="true">
+        <e-columns>
+          <!-- <e-column field='ID' headerText='ID' textAlign='Center' width=30></e-column> -->
+          <e-column field='NAME' headerText="{{'[Tên phòng ban]' | translate }}" textAlign='Left' width=180></e-column>
+          <e-column field='NAME_EN' headerText="{{'[Tên phòng ban (EN)]' | translate }}" textAlign='Left' width=180></e-column>
+          <!-- <e-column field='CODE' headerText='CODE' textAlign='Left' format='yMd' width=90></e-column> -->
+          <e-column field='SHORT_NAME' headerText="{{'[Tên viết tắt]' | translate }}" textAlign='Left' format='yMd' width=90></e-column>
+          <e-column field='LEVEL_ORG' headerText="{{'[Cấp]' | translate }}" textAlign='Left' format='yMd' width=90></e-column>
+
+          <!-- <e-column type='checkbox' [allowFiltering]='false' [allowSorting]='false' field='UY_BAN' headerText='UY BAN'
+            width='60' textAlign="Center" [allowEditing]="false" [showInColumnChooser]='false'>
+          </e-column> -->
+          <e-column field='UY_BAN' headerText="{{'[Ủy ban]' | translate }}" width='60' textAlign='Center'>
+            <ng-template #template let-data>
+              <ejs-checkbox id='check{{data.UY_BAN}}' #checkbox [checked]="data.UY_BAN" [disabled]="true">
+              </ejs-checkbox>
+            </ng-template>
+          </e-column>
+
+          <!-- <e-column field='PARENT_ID' headerText='PARENT_ID' textAlign='Center' width=80></e-column> -->
+          <e-column field='CREATE_DATE' headerText="{{'[Ngày thành lập]' | translate }}" textAlign='Left' width=100></e-column>
+          <e-column field='STATUS' headerText="{{'[Trạng thái]' | translate }}" textAlign='Left' width=80></e-column>
+        </e-columns>
+      </ejs-treegrid>
+    </div>
+
+  </div>

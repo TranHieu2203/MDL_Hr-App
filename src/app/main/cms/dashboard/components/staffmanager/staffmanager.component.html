@@ -1,0 +1,71 @@
+<!--
+
+
+
+<div class="col-sm-4  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            Loại yêu cầu
+            <span class="btn-remove-widget" (click)="closeWidget('my_work')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <div class="col-sm-4 text-center m-b-15">
+                    <p class="full-width summary-analytics summary-warning">2</p>
+                    <p class="full-width summary-label">{{'[YCTD chờ phê duyệt]' | translate }}</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-success">2</p>
+                    <p class="full-width summary-label">{{'[YCTD đã phê duyệt]' | translate }}</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-error">2</p>
+                    <p class="full-width summary-label">{{'[YCTD bị từ chối]' | translate }}</p>
+                </div>
+                <div class="col-sm-4 text-center m-t-15">
+                    <p class="full-width summary-analytics summary-primary">1</p>
+                    <p class="full-width summary-label">Kế hoạch mới</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-sm-4  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="staffExchangeChart">
+                </highcharts-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-4  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="recruimentInYearChart">
+                </highcharts-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12  dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                    [Highcharts]="Highcharts" [options]="recruimentChart">
+                </highcharts-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+-->

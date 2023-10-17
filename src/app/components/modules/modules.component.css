@@ -1,0 +1,52 @@
+.module-popup { 
+    background-color: white;
+    position: absolute;
+    z-index: 1024;
+    border-radius: 10px;
+    top: 105px;
+    left: 285px;
+}
+
+.m10 {
+    margin: 10px;
+}
+
+@media screen and (max-width: 992px) {
+
+    .module-popup {
+        left: 10px !important;
+        top: 70px !important;
+    }
+}
+
+@media screen and (max-width: 260px) {
+
+    .module-popup {
+        display: none !important;
+    }
+}
+
+a:link, a:visited, a:focus {
+    outline: none;
+    text-decoration: none;
+    color: white;
+}
+
+.card-header a:link,
+.card-header a:visited, 
+.card-header a:focus {
+    color: #888 !;
+}
+
+a:hover {
+    font-size: 600 !important;
+}
+
+.row {
+    --bs-gutter-x: 0px !important;
+}
+
+.module-popup i {
+    color: white;
+    font-size: 20px;
+}

@@ -1,0 +1,250 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i
+              class="fa fa-angle-right" aria-hidden="true"> {{'[Package]' | translate }}</i>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card card-content">
+        <div class="card-main-content">
+          <form name="editForm" [formGroup]="editForm" novalidate>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="e-float-input">
+                    <input  type="text" id="code" name="code"
+                      formControlName="code" [(ngModel)]="model.code">
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text required" for="code">{{'[Mã]' | translate }}</label>
+                    <span class="input-error"
+                      *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
+                       {{'[Trường Mã Bắt buộc nhập]' | translate }}
+                </span>
+                    <span class="input-error"
+                      *ngIf="editForm.get('code')!.hasError('pattern') && !editForm.get('code')!.untouched">
+                      {{'[Mã không được chứa ký tự đặc biệt]' | translate }}</span>
+                    <span class="input-error "
+                      *ngIf="editForm.get('code')!.hasError('maxlength') && !editForm.get('code')!.untouched">
+                      {{'[Mã không được vượt quá 30 ký tự]' | translate }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="e-float-input">
+                    <input  type="text" id="name" name="name"
+                      formControlName="name" [(ngModel)]="model.name">
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text required" for="name">{{'[Tên]' | translate }}</label>
+                    <span class="input-error"
+                      *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                      {{'[Trường Tên Bắt buộc nhập]' | translate }}
+                </span>
+                    <span class="input-error "
+                      *ngIf="editForm.get('name')!.hasError('maxlength') && !editForm.get('name')!.untouched">
+                      {{'[Tên không được vượt quá 300 ký tự]' | translate }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="e-float-input">
+                    <ejs-dropdownlist id='status' [dataSource]='lstApplication'
+                      [fields]='fields' [showClearButton]="true"
+                      [(ngModel)]="model.applicationId"
+                      formControlName="applicationId" [placeholder]="''"
+                      [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstApplication )'>
+                    </ejs-dropdownlist>
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text required" for="status">{{'[Ứng dụng]' | translate }}</label>
+                    <span class="input-error"
+                      *ngIf="editForm.get('applicationId')!.hasError('required') && !editForm.get('applicationId')!.untouched">
+                      {{'[Trường Ứng dụng bắt buộc chọn]' | translate }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="e-float-input">
+                    <ejs-numerictextbox format="N0" locale="en" id="price"
+                      name="price" formControlName="price"
+                      [(ngModel)]="model.price" min="0" max="999999999">
+                    </ejs-numerictextbox>
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text" for="note">{{'[Giá]' | translate }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="e-float-input">
+                    <ejs-numerictextbox format="N0" locale="en" id="trialperiod"
+                      name="trialperiod" formControlName="trialperiod"
+                      [(ngModel)]="model.trialPeriod" min="0" max="999999999">
+                    </ejs-numerictextbox>
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text" for="note">{{'[Dùng thử]' | translate }}</label>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="e-float-input">
+                    <textarea name="note" id="note" formControlName="note"
+                      [(ngModel)]="model.note"></textarea>
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text" for="note">Ghi chú</label>
+                    <span class="input-error "
+                      *ngIf="editForm.get('note')!.hasError('maxlength') && !editForm.get('note')!.untouched">
+                      Ghi chú không được vượt quá 500 ký tự
+                    </span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </form>
+          <!-- sub toolbar -->
+          <div class="card card-content" *ngIf="flagState != 'view'">
+            <div class="card-main-content">
+              <div class="row">
+                <div class="col-2">
+                  <p>{{'[Chọn Modules]' | translate }}</p>
+                </div>
+                <div class="col-6">
+                  <ejs-multiselect [mode]='mode' [dataSource]='lstModule'
+                    [showClearButton]="true" [fields]='fields'
+                    [(ngModel)]="moduleSelected" [placeholder]="''"
+                    [allowFiltering]='true' (ngModelChange)="ChangeModules()"
+                    (filtering)='onFiltering($event,lstModule)'>
+                  </ejs-multiselect>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- grid module -->
+          <div class="card card-content">
+            <div class="card-main-content">
+              <div class="list-grid">
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data'
+                  rowHeight='45' headerHeight='52' [height]='configs.height()'
+                  [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' [allowSorting]='false'
+                  allowResizing='true' [locale]='configs.currentLang'
+                  [allowSelection]='true' [showColumnChooser]='true'>
+                  <e-columns>
+                    <!-- <e-column type='checkbox' [showInColumnChooser]='false'
+                [allowFiltering]='false' [allowSorting]='false' width='50'
+                textAlign="Center" [allowEditing]="false">
+              </e-column> -->
+                    <e-column field='id' [showInColumnChooser]='false'
+                      [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                      [allowEditing]="false"></e-column>
+                    <!--  -->
+                    <e-column width="60" eaderTextAlign="Center"
+                      textAlign="Center" headerText="{{'[STT]' | translate }}"
+                      clipMode="EllipsisWithTooltip">
+                      <ng-template #template let-data>
+                        <span>{{ formatStt(data.index) }}</span>
+                      </ng-template>
+                    </e-column>
+                    <e-column field='code' headerTextAlign="Center"
+                      textAlign="Left" headerText="{{'[Mã]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <e-column field='name' headerTextAlign="Center"
+                      textAlign="Left" headerText="{{'[Tên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <!--  -->
+                    <e-column field='applicationId' [visible]='false'>
+                    </e-column>
+                    <e-column field='appName' headerTextAlign="Center"
+                      textAlign="Left" headerText="{{'[Tên ứng dụng]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <!--  -->
+                    <e-column field='price' headerTextAlign="Center" format='N0'
+                      textAlign="Right" headerText="{{'[Giá]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='note' headerTextAlign="Center"
+                      textAlign="Left" headerText="{{'[Ghi chú]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='isActive' textAlign="Center"
+                      headerText="{{'[Trạng thái]' | translate }}" clipMode='EllipsisWithTooltip'
+                      [filter]='filterStatus'>
+                      <ng-template #template let-data>
+                        <div class="row-status full-width">
+                          <div class="status-effect text-center"
+                            *ngIf="data.isActive">
+                            <span>{{'[Hiệu lực]' | translate }}</span>
+                          </div>
+                          <div class="status-not-effect text-center"
+                            *ngIf="!data.isActive">
+                            <span>{{'[Không hiệu lực]' | translate }}</span>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default"
+      (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

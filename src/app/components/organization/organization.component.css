@@ -1,0 +1,32 @@
+.treeviewdiv {
+    padding-left: 7px;
+  }
+
+  .org-deactive {
+    background-color: yellow;
+  }
+  .treeview-div{
+    height: inherit;
+    display: block;
+    width: inherit;
+
+  }
+  .treeview-search{
+    width: 100%;
+    background: white;
+    position: sticky;
+    height: 35px;
+    z-index: 5;
+    top: 0px;
+
+  }
+  .treeview-checkbox{
+    background: white;
+    height: 35px;
+    width: 100%;
+    position: sticky;
+    bottom: 0px;
+
+  }
+  .treeview-data{
+  }

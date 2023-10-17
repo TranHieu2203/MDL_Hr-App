@@ -1,0 +1,123 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Công]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/attendance/appbusiness/overtimeconfig'>{{'[Làm thêm giờ]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info info-icon"></div>
+            <label class="title">{{'[Thiết lập]' | translate }} </label>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Số giờ làm thêm tối đa một ngày được thanh toán]' | translate }}</label>
+                <ejs-numerictextbox format="N0" locale="en"
+                  formControlName="hourMax" [(ngModel)]="model.hourMax" min="0"
+                  max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Số giờ làm thêm tối thiểu một ngày được thanh toán]' | translate }}</label>
+                <ejs-numerictextbox format="N0" locale="en"
+                  formControlName="hourMin" [(ngModel)]="model.hourMin" min="0"
+                  max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Hệ số OT ngày thường]' | translate }}</label>
+                <ejs-numerictextbox format="N1" locale="en"
+                  formControlName="factorNt" [(ngModel)]="model.factorNt"
+                  min="0" max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Hệ số OT ngày nghỉ]' | translate }}</label>
+                <ejs-numerictextbox format="N1" locale="en"
+                  formControlName="factorNn" [(ngModel)]="model.factorNn"
+                  min="0" max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Hệ số OT ngày lễ]' | translate }}</label>
+                <ejs-numerictextbox format="N1" locale="en"
+                  formControlName="factorNl" [(ngModel)]="model.factorNl"
+                  min="0" max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Hệ số OT đêm ngày thường]' | translate }}</label>
+                <ejs-numerictextbox format="N1" locale="en"
+                  formControlName="factorDnt" [(ngModel)]="model.factorDnt"
+                  min="0" max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Hệ số OT đêm ngày nghỉ]' | translate }}</label>
+                <ejs-numerictextbox format="N1" locale="en"
+                  formControlName="factorDnn" [(ngModel)]="model.factorDnn"
+                  min="0" max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required">{{'[Hệ số OT đêm ngày lễ]' | translate }}</label>
+                <ejs-numerictextbox format="N1" locale="en"
+                  formControlName="factorDnl" [(ngModel)]="model.factorDnl"
+                  min="0" max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+  </div>
+</div>
+
+
+

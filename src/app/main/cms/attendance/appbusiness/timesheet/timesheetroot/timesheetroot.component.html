@@ -1,0 +1,132 @@
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' [height]='configs.height()-200' rowHeight='37'
+  (dataStateChange)="dataStateChange($event!)" headerHeight='42' [allowPaging]='true' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' 
+  [pageSettings]='configs.pageSettings' [enableHover]='true' [allowSorting]='true' allowResizing='true'
+  [locale]='configs.currentLang' [allowSelection]='true' [selectionSettings]='selectionOptions' [allowFiltering]='true' [filterSettings]='configs.filterOption'
+  [allowTextWrap]="true" [textWrapSettings]="configs.wrapSettings" [enableHover]="false"
+  (queryCellInfo)='customiseCell($event!)'>
+  <e-columns>
+    <e-column field='EMPLOYEE_ID' [visible]='false'>
+    </e-column>
+    <e-column field='EMPLOYEE_CODE' textAlign="Left" headerTextAlign="Center" headerText="{{'[Mã]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" >
+    </e-column>
+    <e-column field='EMPLOYEE_NAME' textAlign="Left" headerTextAlign="Center" headerText="{{'[Tên]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="160" >
+    </e-column>
+    <e-column field='ORG_NAME' textAlign="Left" headerTextAlign="Center" headerText="{{'[Đơn vị]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="160" >
+    </e-column>
+    <e-column field='POSITION_NAME' textAlign="Left" headerTextAlign="Center" headerText="{{'[Chức danh]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="160" >
+    </e-column>
+    <e-column field='WORKINGDAY' headerTextAlign="Center" type="date" [format]="{ type: 'date', format: 'dd/MM/yyyy' }"
+      textAlign="Center" headerText="{{'[Ngày]' | translate }}" clipMode='EllipsisWithTooltip' 
+      width="120">
+    </e-column>
+    <e-column field='MANUAL_ID' [visible]='false'></e-column>
+    <e-column field='SHIFT_CODE' textAlign="Left" headerTextAlign="Center" headerText="{{'[Ca làm việc]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="160" >
+    </e-column>
+    <e-column field='SHIFT_HOURS_START' textAlign="Center" headerTextAlign="Center" headerText="{{'[Giờ bắt đầu]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" >
+    </e-column>
+    <e-column field='SHIFT_HOURS_STOP' textAlign="Center" headerTextAlign="Center" headerText="{{'[Giờ kết thúc]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='VALTIME1' textAlign="Center" headerTextAlign="Center" headerText="{{'[Quẹt vào]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='VALTIME4' textAlign="Center" headerTextAlign="Center" headerText="{{'[Quẹt ra]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='MANUAL_CODE' textAlign="Center" headerTextAlign="Center" headerText="{{'[Mã công]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" width="90">
+      <ng-template #template let-data>
+        <div class="row-status full-width">
+          <div class="text-center" [ngStyle]="{color: data.COLOR}">
+            <b>{{data.MANUAL_CODE}}</b>
+          </div>
+        </div>
+      </ng-template>
+    </e-column>
+    <!--
+    <e-column field='IMG_POINT4' textAlign="Center" headerTextAlign="Center" headerText="{{'[Ảnh ra]' | translate }}" width="120" hidden = "true"
+      [allowFiltering]='false'>
+      <ng-template #template let-data>
+        <div class="row-status full-width">
+          <div class="status-effect text-center">
+            <a href={{data.IMG_POINT4}} target="_blank"><img style="height: 35px;" src={{data.IMG_POINT4}}></a>
+          </div>
+        </div>
+      </ng-template>
+    </e-column>
+    <e-column field='CHECK_MAP' textAlign="Right" headerTextAlign="Center" headerText="{{'[Check map]' | translate }}" width="85" hidden = "true"
+      [allowFiltering]='false'>
+      <ng-template #template let-data>
+        <div class="row-status full-width">
+          <span (click)="CheckMap(data)">Link</span>
+        </div>
+      </ng-template>
+    </e-column>
+-->
+    <e-column field='WORKINGHOUR_SHIFT' textAlign="Right" headerTextAlign="Center" headerText="{{'[Thời gian làm việc theo ca]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='WORKINGHOUR' textAlign="Right" headerTextAlign="Center" headerText="{{'[Thời gian làm việc thực tế]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='LATE' textAlign="Right" headerTextAlign="Center" headerText="{{'[Đi muộn]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="85" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='COMEBACKOUT' textAlign="Right" headerTextAlign="Center" headerText="{{'[Về sớm]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="85" [allowFiltering]='false'>
+    </e-column>
+    
+    <e-column field='OT_WEEKDAY' textAlign="Right" headerTextAlign="Center" headerText="{{'[Số thời gian OT ngày thường]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='OT_WEEKNIGHT' textAlign="Right" headerTextAlign="Center" headerText="{{'[Số thời gian OT đêm ngày thường]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='OT_SUNDAY' textAlign="Right" headerTextAlign="Center" headerText="{{'[Số thời gian OT ngày nghỉ]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='OT_SUNNIGHT' textAlign="Right" headerTextAlign="Center" headerText="{{'[Số thời gian OT đêm ngày nghỉ]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='OT_HOLIDAY' textAlign="Right" headerTextAlign="Center" headerText="{{'[Số thời gian OT ngày lễ]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='OT_HOLIDAYNIGHT' textAlign="Right" headerTextAlign="Center" headerText="{{'[Số thời gian OT đêm ngày lễ]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120" [allowFiltering]='false'>
+    </e-column>
+    <e-column field='IS_FULLDAY' [visible]='false'></e-column>
+    <e-column field='IS_HOLIDAY' [visible]='false'></e-column>
+  </e-columns>
+</ejs-grid>
+<cms-app-modalstimesheetroot id="cms-app-modalstimesheetroot"></cms-app-modalstimesheetroot>
+<!-- 
+<modal-md id="modal-md">
+  <div class="modal-md">
+    <div class="modal-header">
+      <div>
+        <p>{{'[Check địa địa điểm chấm công]' | translate }} </p>
+      </div>
+      <div>
+        <span class="pl-2" (click)="close()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div class="row" style="height: 100%">
+        <div class="col">
+          <map-multimarker #mapcore></map-multimarker>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-background"></div>
+</modal-md> -->

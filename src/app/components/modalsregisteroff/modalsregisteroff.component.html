@@ -1,0 +1,132 @@
+<div class="modal-registeroff">
+  <div class="modal-header-registeroff">
+    <div>
+      <p>Đăng ký nghỉ</p>
+    </div>
+    <div>
+      <span (click)="maximize()"><i class="fa fa-window-maximize me-3" aria-hidden="true"></i></span>
+      <span class="pl-2" (click)="close()"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+  </div>
+  <div class="modal-content-registeroff">
+    <div class="row r-h">
+      <div class="col b-r">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Nhân viên</label>
+                <ejs-dropdownlist id="empId" [dataSource]='lstEmployee' [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="model.employeeId" formControlName="employeeId" [placeholder]="''" [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstEmployee)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('employeeId')!.hasError('required') && !editForm.get('employeeId')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+                <span class="input-error "
+                  *ngIf="editForm.get('employeeId')!.hasError('incorrect') && !editForm.get('employeeId')!.untouched">
+                  {{'[Sai định dạng]' | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">{{'[Kiểu nghỉ]' | translate }}</label>
+                <ejs-dropdownlist id="timetypeId" [dataSource]='lsttimetypeId' [fields]='fields'
+                  [showClearButton]="true" [(ngModel)]="model.timetypeId" formControlName="timetypeId"
+                  [placeholder]="''" [allowFiltering]='true' (filtering)='onFiltering($event,lsttimetypeId)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('timetypeId')!.hasError('required') && !editForm.get('timetypeId')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+                <span class="input-error "
+                  *ngIf="editForm.get('timetypeId')!.hasError('incorrect') && !editForm.get('timetypeId')!.untouched">
+                  {{'[Sai định dạng]' | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <ejs-checkbox formControlName="isFullDay" label="Nửa ngày" [(ngModel)]="model.isFullDay">
+                </ejs-checkbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical" *ngIf="model.isFullDay">
+                <label class="e-float-text">{{'[Loại nghỉ]' | translate }}</label>
+                <ejs-dropdownlist id="afterOrBefore" [dataSource]='lsttype' [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="model.afterOrBefore" formControlName="afterOrBefore" [placeholder]="''"
+                  [allowFiltering]='true' (filtering)='onFiltering($event,lsttype)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="model.isFullDay && editForm.get('afterOrBefore')!.hasError('required') && !editForm.get('afterOrBefore')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+                <span class="input-error "
+                  *ngIf="model.isFullDay && editForm.get('afterOrBefore')!.hasError('incorrect') && !editForm.get('afterOrBefore')!.untouched">
+                  {{'[Sai định dạng]' | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="dateStart">Từ
+                  ngày</label>
+                <ejs-datepicker id="dateStart" formControlName="dateStart" format="dd/MM/yyyy"
+                  [(ngModel)]="model.dateStart" (keydown)="changeDate('dateStart')" (blur)="changeDate('dateStart')"
+                  placeholder=".../.../...">
+                </ejs-datepicker>
+                <span class="input-error"
+                  *ngIf="editForm.get('dateStart')!.hasError('required') && !editForm.get('dateStart')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+                <span class="input-error "
+                  *ngIf="editForm.get('dateStart')!.hasError('incorrect') && !editForm.get('dateStart')!.untouched">
+                  {{'[Sai định dạng]' | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="dateEnd">Đến
+                  ngày</label>
+                <ejs-datepicker id="dateEnd" formControlName="dateEnd" format="dd/MM/yyyy" [(ngModel)]="model.dateEnd"
+                  (keydown)="changeDate('dateEnd')" (blur)="changeDate('dateEnd')" placeholder=".../.../...">
+                </ejs-datepicker>
+                <span class="input-error"
+                  *ngIf="editForm.get('dateEnd')!.hasError('required') && !editForm.get('dateEnd')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+                <span class="input-error "
+                  *ngIf="editForm.get('dateEnd')!.hasError('incorrect') && !editForm.get('dateEnd')!.untouched">
+                  {{'[Sai định dạng]' | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group vertical">
+                <label class="e-float-text">{{'[Lý do]' | translate }}</label>
+                <input type="text" class="form-control" formControlName="note" [(ngModel)]="model.note">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer-registeroff">
+    <div class="col-3 "></div>
+    <div class="col-9 p-l rigth-card ">
+      <button (click)="choise()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Lưu</button>
+      <button class="btn-cancel" (click)="close()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        Hủy</button>
+    </div>
+  </div>
+</div>
+<div class="modal-background"></div>

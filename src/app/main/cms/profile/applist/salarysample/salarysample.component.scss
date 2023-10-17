@@ -1,0 +1,87 @@
+cms-app-salarysample {
+ .table{
+     th{
+         vertical-align: inherit;
+         text-align: center;
+     }
+     .addRecord{
+         color: blue;
+     }
+     .addRecord:hover{
+        cursor: pointer;
+    }
+ }
+
+}
+#add-scale{
+    .v2hrm-modal
+    .v2hrm-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#edit-scale{
+    .v2hrm-modal
+    .v2hrm-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#add-rank{
+    .v2hrm-modal
+    .v2hrm-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#edit-rank{
+    .v2hrm-modal
+    .v2hrm-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#add-level{
+    .v2hrm-modal
+    .v2hrm-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#edit-level{
+    .v2hrm-modal
+    .v2hrm-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}

@@ -1,0 +1,31 @@
+cms-app-organization {
+    .group-box {
+        padding-bottom: 0px !important;
+        margin-top: 15px !important;
+    }
+
+    .img {
+        max-height: 148px;
+
+    }
+
+    .l-h {
+        line-height: 186px;
+    }
+}
+
+.app-main-content .app-container .card-center {
+    width: unset
+}
+
+.treeviewdiv {
+    padding-left: 7px;
+}
+
+.org-deactive {
+    background-color: yellow;
+}
+
+.org-selected {
+    font-weight: bold;
+}

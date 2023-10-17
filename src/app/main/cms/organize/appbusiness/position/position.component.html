@@ -1,0 +1,123 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tổ chức]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/organize/business/position'>{{'[Vị trí]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="position" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+        <e-panes>
+          <!-- <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <div id='vertical_splitter' class="vertical_splitter">
+                <div>
+                  <div class="content">
+                    <cms-app-org></cms-app-org>
+                  </div>
+                </div>
+                <div>
+                  <div class="content content-checkbox">
+                    <ejs-checkbox label="Cả nhân viên nghỉ việc" (change)="GetEmp($event!)" [checked]="false">
+                    </ejs-checkbox>
+                    <div class="bg-ter"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </e-pane> -->
+          <e-pane>
+            <ng-template #content>
+              <div class="list-grid">
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' 
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='42'
+                  [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+                  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+                  [allowFiltering]='true' [filterSettings]='configs.filterOption' [groupSettings]='groupOptions' [allowGrouping]='true' showColumnMenu='true'
+                  [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type=' checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='60' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='code' headerTextAlign="Left" textAlign="Left" headerText="{{'[Mã]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="100"></e-column>
+                    <e-column field='name' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Tên tiếng việt]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="200"></e-column>
+                    <e-column field='nameEn' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Tên tiếng anh]' | translate }}" clipMode='EllipsisWithTooltip'
+                      width="200"></e-column>
+                    <!-- <e-column field='jobname' headerTextAlign="Left" textAlign="Left" headerText="{{'[Công việc]' | translate }}"
+                        clipMode='EllipsisWithTooltip' width="200"></e-column> -->
+                    <!-- <e-column field='mastername' headerTextAlign="Left" textAlign="Left" headerText="{{'[Master]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='interimname' headerTextAlign="Left" textAlign="Left" headerText="{{'[Interim]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='lmname' headerTextAlign="Left" textAlign="Left" headerText="{{'[Quản lý trực tiếp]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column> -->
+                    <!-- <e-column field='orgname' headerTextAlign="Left" textAlign="Left" headerText="{{'[Ban/Phòng]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column> -->
+                    <e-column field='effectivedate' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Ngày hiệu lực]' | translate }}" clipMode='EllipsisWithTooltip'
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" type="date" [allowFiltering]="false">
+                    </e-column>
+                    <!--  -->
+                    <e-column field='isActiveText' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="200">
+                      <ng-template #template let-data>
+                        <div class="row-status full-width">
+                          <div class="status-effect text-center" *ngIf="data.isActive">
+                            <span>{{'[Hiệu lực]' | translate }}</span>
+                          </div>
+                          <div class="status-not-effect text-center" *ngIf="!data.isActive">
+                            <span>{{'[Không hiệu lực]' | translate }}</span>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa dữ liệu?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

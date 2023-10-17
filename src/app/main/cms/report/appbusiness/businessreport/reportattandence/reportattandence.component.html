@@ -1,0 +1,87 @@
+<div class="row form-inline" *ngIf="type==8">
+  <label class="col-xl-1 form-label required">{{'[Từ ngày]' | translate }}</label>
+  <div class="col-xl-3">
+    <ejs-datepicker format="dd/MM/yyyy" [(ngModel)]="model.fromDate" placeholder=".../.../...">
+    </ejs-datepicker>
+  </div>
+  <label class="col-xl-1 form-label required">{{'[Đến ngày]' | translate }}</label>
+  <div class="col-xl-3">
+    <ejs-datepicker format="dd/MM/yyyy" [(ngModel)]="model.toDate" placeholder=".../.../...">
+    </ejs-datepicker>
+  </div>
+</div>
+<div class="row form-inline" *ngIf="type==9 || type==10">
+  <label class="col-xl-1 form-label required">{{'[Năm]' | translate }}</label>
+  <div class="col-xl-3">
+    <ejs-dropdownlist id='yearId' [dataSource]='lstYear' [(ngModel)]="model.yearId" [fields]='fields'
+      (change)="changeYear($event!)">
+    </ejs-dropdownlist>
+  </div>
+  <label class="col-xl-1 form-label required">{{'[Kỳ công]' | translate }}</label>
+  <div class="col-xl-3">
+    <ejs-dropdownlist id='periodId' [dataSource]='lstPeriodId' [(ngModel)]="model.periodId" [fields]='fields'>
+    </ejs-dropdownlist>
+  </div>
+</div>
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' [selectionSettings]='selectionOptions'
+  (dataStateChange)="dataStateChange($event!)" rowHeight='32' headerHeight='35' [height]='configs.height()-65'
+  [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true' [allowSorting]='false'
+  allowResizing='true' [locale]='configs.currentLang' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' [groupSettings]='groupOptions'>
+  <e-columns>
+    <e-column field='stt' headerTextAlign="Center" textAlign="Center" headerText="{{'[STT]' | translate }}" clipMode='EllipsisWithTooltip'
+      width="60">
+    </e-column>
+    <e-column field='code' headerTextAlign="Center" textAlign="Center" headerText="{{'[Mã NV]' | translate }}" clipMode='EllipsisWithTooltip'
+      width="80">
+    </e-column>
+    <e-column field='fullName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+      clipMode='EllipsisWithTooltip'>
+    </e-column>
+    <e-column field='oName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Phòng ban]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='pName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Chức vụ]' | translate }}" clipMode='EllipsisWithTooltip'
+      width="120">
+    </e-column>
+    <e-column field='workingDay' headerTextAlign="Center" textAlign="Center" headerText="{{'[Ngày]' | translate }}" width="120"
+      clipMode='EllipsisWithTooltip'>
+    </e-column>
+    <e-column field='tCode' headerTextAlign="Center" textAlign="Center" headerText="{{'[Mã công]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="90">
+    </e-column>
+    <e-column field='hoursStart' headerTextAlign="Center" textAlign="Center" headerText="{{'[Giờ bắt đầu]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='hoursStop' headerTextAlign="Center" textAlign="Center" headerText="{{'[Giờ kết thúc]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='timePoint1' headerTextAlign="Left" textAlign="Left" headerText="{{'[Giờ quẹt vào]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='timePoint4' headerTextAlign="Left" textAlign="Left" headerText="{{'[Giờ quẹt ra]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='lateIn' headerTextAlign="Center" textAlign="Center" headerText="{{'[Số phút đi muộn]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='earlyOut' headerTextAlign="Center" textAlign="Center" headerText="{{'[Số phút về sớm]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='otStart' headerTextAlign="Left" textAlign="Left" headerText="{{'[Giờ bắt đầu OT]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='otEnd' headerTextAlign="Left" textAlign="Left" headerText="{{'[Giờ kết thúc OT]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='otTime' headerTextAlign="Center" textAlign="Center" headerText="{{'[Số phút OT ngày]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='otTimeNight' headerTextAlign="Center" textAlign="Center" headerText="{{'[Số phút OT đêm]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+  </e-columns>
+</ejs-grid>

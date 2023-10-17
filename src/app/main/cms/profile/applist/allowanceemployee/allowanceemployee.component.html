@@ -1,0 +1,106 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/list/allowanseemployee'>{{'[Phụ cấp nhân viên]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="allowanseemployee" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="list-grid">
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='42'
+                  [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+                  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+                  [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='60' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='employeeCode' headerTextAlign="Center" textAlign="Left" headerText="{{'[Mã nhân viên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <e-column field='employeeName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Nhân viên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <e-column field='allowanceName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Phụ cấp]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <e-column field='monney' headerTextAlign="Center" textAlign="Right" type='number'
+                      headerText="{{'[Số tiền]' | translate }}" clipMode='EllipsisWithTooltip' format='N0'>
+                    </e-column>
+                    <e-column field='dateStart' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày hiệu lực]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='dateEnd' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center"
+                      headerText="{{'[Ngày hết hiệu lực]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+
+                    <e-column field='note' headerTextAlign="Center" textAlign="Left" headerText="{{'[Ghi chú]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <!--  -->
+                    <e-column field='isActiveText' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                      <ng-template #template let-data>
+                        <div class="row-status full-width">
+                          <div class="status-effect text-center" *ngIf="data.isActive">
+                            <span>{{'[Hiệu lực]' | translate }}</span>
+                          </div>
+                          <div class="status-not-effect text-center" *ngIf="!data.isActive">
+                            <span>{{'[Không hiệu lực]' | translate }}</span>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa dữ liệu?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

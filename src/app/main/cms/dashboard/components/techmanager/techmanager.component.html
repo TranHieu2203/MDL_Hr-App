@@ -1,0 +1,185 @@
+<!-- Widget Công việc được giao-->
+<div class="col-sm-6 dash-widget" *ngIf="showHideWidget.work_assigned === true">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            Công việc được giao (3)
+            <span class="btn-remove-widget" (click)="closeWidget('work_assigned')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchWorkAssigned" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchWorkAssignedEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchWorkAssignedFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstWorkAssigned">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.work_date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.work_name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3}">
+                        <i class="fa fa-circle"></i> {{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Widget Công việc của tôi -->
+<div class="col-sm-6  dash-widget" *ngIf="showHideWidget.my_work === true">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Công việc của tôi (3)]' | translate }}
+            <span class="btn-remove-widget" (click)="closeWidget('my_work')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchMyWork" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchMyWorkEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchMyWorkFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstMyWorks">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.work_date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.work_name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3}">
+                        <i class="fa fa-circle"></i>  {{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Widget Tổng quát -->
+<div class="col-sm-6  dash-widget" *ngIf="showHideWidget.work_summary === true">
+    <div class="row full-width dash-card dash-card-small">
+        <div class="dash-card-header full-width">
+            Tổng quát
+            <span class="btn-remove-widget" (click)="closeWidget('my_work')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-summary full-width">
+            <div class="row full-width">
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-warning">2</p>
+                    <p class="full-width summary-label">Kế hoạch chờ phê duyệt</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-success">2</p>
+                    <p class="full-width summary-label">Kế hoạch đã phê duyệt</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <p class="full-width summary-analytics summary-error">2</p>
+                    <p class="full-width summary-label">Kế hoạch bị từ chối</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Widget Danh sách kế hoạch -->
+<div class="col-sm-12  dash-widget" *ngFor="let item of lstPlans">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header-bn full-width text-center">
+            Kế hoạch sản xuất {{item.code}} - {{item.name}} - {{item.farm}} - {{item.division}} - {{item.plan_phase}}
+        </div>
+        <div class="dash-card-content full-width">
+            <div class="row full-width">
+                <!-- Widget Tiến độ tuyển dụng -->
+                <div class="col-sm-6  dash-widget" *ngIf="item.is_recruitment_process === true">
+                    <div class="row full-width dash-card dash-card-normal" style="height: 338px !important;">
+                        <div class="dash-card-header full-width">
+                            Tiến độ tuyển dụng
+                        </div>
+                        <div class="dash-card-content dash-card-content-tick full-width">
+                            <div class="row full-width" *ngFor="let recruitment_item of item.recruitment_process">
+                                <div class="col-sm-4 dash-tick-label">
+                                    {{recruitment_item.name}}
+                                </div>
+                                <div class="col-sm-8" [ngClass]="recruitment_item.tick_color">
+                                    <ng5-slider [(value)]="defaultMinValue"
+                                        [(highValue)]="recruitment_item.process_value"
+                                        [options]="recruitment_item.options">
+                                    </ng5-slider>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Widget Tiến độ mua hàng -->
+                <div class="col-sm-6  dash-widget" *ngIf="item.is_purchase_process === true">
+                    <div class="row full-width dash-card dash-card-normal">
+                        <div class="dash-card-header full-width">
+                            Tiến độ mua hàng
+                        </div>
+                        <div class="dash-card-content dash-card-content-tick full-width">
+                            <div class="row full-width" *ngFor="let purchase_item of item.purchase_process">
+                                <div class="col-sm-4 dash-tick-label">
+                                    {{purchase_item.name}}
+                                </div>
+                                <div class="col-sm-8" [ngClass]="purchase_item.tick_color">
+                                    <ng5-slider [(value)]="defaultMinValue" [(highValue)]="purchase_item.process_value"
+                                        [options]="purchase_item.options">
+                                    </ng5-slider>
+                                </div>
+                            </div>
+                            <div class="row full-width order-summary">
+                                <div class="col-sm-6 text-center">
+                                    <p class="order-label">Đơn đặt hàng</p>
+                                    <p class="order-value">{{item.order_reverse}}</p>
+                                </div>
+                                <div class="col-sm-6 text-center">
+                                    <p class="order-label">Tổng giá trị</p>
+                                    <p class="order-value"><b>{{item.order_reverse_value | number}} VNĐ</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Widget Tiến độ công việc -->
+                <div class="col-sm-6  dash-widget" *ngIf="item.is_work_process === true">
+                    <div class="row full-width dash-card dash-card-normal">
+                        <div class="dash-card-header full-width">
+                            Tiến độ công việc
+                        </div>
+                        <div class="dash-card-content full-width">
+                            <!-- <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                                [Highcharts]="Highcharts" [options]="item.work_process_chart">
+                            </highcharts-chart> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Widget Tổng quan công việc -->
+                <div class="col-sm-6  dash-widget" *ngIf="item.is_work_summary === true">
+                    <div class="row full-width dash-card dash-card-normal">
+                        <div class="dash-card-header full-width">
+                            Tổng quan công việc
+                        </div>
+                        <div class="dash-card-content full-width">
+                            <!-- <highcharts-chart style="width: 100%; display: block; margin: auto; float: left;"
+                                [Highcharts]="Highcharts" [options]="item.work_summary_chart">
+                            </highcharts-chart> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

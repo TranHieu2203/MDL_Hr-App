@@ -1,0 +1,121 @@
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' rowHeight='37'
+  (dataStateChange)="dataStateChange($event!)" headerHeight='42' [allowPaging]='true'
+  [height]='configs.heightTimeSheet() - 50' [pageSettings]='configs.pageSettings' [enableHover]='true' [allowSorting]='true'
+  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [selectionSettings]='selectionOptions'
+  [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowTextWrap]="true" [textWrapSettings]="configs.wrapSettings"
+  (queryCellInfo)='customiseCell($event!)' [enableHover]="false" [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+  <e-columns>
+    <e-column field='EMPLOYEE_ID' [visible]='false'>
+    </e-column>
+    <e-column field='EMPLOYEE_CODE' textAlign="Left" headerTextAlign="Center" headerText="{{'[Mã]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='EMPLOYEE_NAME' textAlign="Left" headerTextAlign="Center" headerText="{{'[Tên]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="160">
+    </e-column>
+    <e-column field='ORG_NAME' textAlign="Left" headerTextAlign="Center" width="120" headerText="{{'[Phòng ban]' | translate }}"
+      clipMode='EllipsisWithTooltip'>
+    </e-column>
+    <e-column field='POSITION_NAME' textAlign="Left" headerTextAlign="Center" headerText="{{'[Chức danh]' | translate }}"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='DAY1' textAlign="Center" headerText="{{'[01]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY2' textAlign="Center" headerText="{{'[02]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY3' textAlign="Center" headerText="{{'[03]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY4' textAlign="Center" headerText="{{'[04]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY5' textAlign="Center" headerText="{{'[05]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY6' textAlign="Center" headerText="{{'[06]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY7' textAlign="Center" headerText="{{'[07]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY8' textAlign="Center" headerText="{{'[08]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY9' textAlign="Center" headerText="{{'[09]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY10' textAlign="Center" headerText="{{'[10]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY11' textAlign="Center" headerText="{{'[11]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY12' textAlign="Center" headerText="{{'[12]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY13' textAlign="Center" headerText="{{'[13]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY14' textAlign="Center" headerText="{{'[14]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY15' textAlign="Center" headerText="{{'[15]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY16' textAlign="Center" headerText="{{'[16]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY17' textAlign="Center" headerText="{{'[17]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY18' textAlign="Center" headerText="{{'[18]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY19' textAlign="Center" headerText="{{'[19]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY20' textAlign="Center" headerText="{{'[20]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY21' textAlign="Center" headerText="{{'[21]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY22' textAlign="Center" headerText="{{'[22]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY23' textAlign="Center" headerText="{{'[23]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY24' textAlign="Center" headerText="{{'[24]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY25' textAlign="Center" headerText="{{'[25]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY26' textAlign="Center" headerText="{{'[26]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY27' textAlign="Center" headerText="{{'[27]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY28' textAlign="Center" headerText="{{'[28]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY29' textAlign="Center" headerText="{{'[29]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY30' textAlign="Center" headerText="{{'[30]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY31' textAlign="Center" headerText="{{'[31]' | translate }}" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+  </e-columns>
+</ejs-grid>
+<cms-app-modalstimesheet id="cms-app-modalstimesheet"></cms-app-modalstimesheet>

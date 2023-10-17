@@ -1,0 +1,56 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/setting/settingmail'>{{'[Thiết lập hệ thống]' |
+              translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="sys_settingmail" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card-center">
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[THIẾT LẬP CẢNH BÁO]' | translate }} </label>
+          </div>
+          <div [formGroup]="editForm">
+            <div class="row mb-3">
+              <div class="col-sm-4" formArrayName="arrayForm" *ngFor="let model of arrayData; let i = index">
+                <div [formGroupName]="i" class="form-group  vertical">
+                  <ejs-checkbox formControlName="isActive" label="{{model.name}}" [(ngModel)]="model.isActive"
+                    (ngModelChange)="changeCheckBox(model.isActive, i)">
+                  </ejs-checkbox>
+                  <!-- <ejs-textbox locale="en" placeholder="Nhập text" formControlName="value"
+                    [(ngModel)]="model.value">
+                  </ejs-textbox> -->
+                  <ng-container>
+                    <ng-container *ngIf="i === 4">
+                      <ejs-textbox locale="en" formControlName="value" [(ngModel)]="model.value" type="password"></ejs-textbox>
+                    </ng-container>
+                    <ejs-textbox locale="en" placeholder="Nhập text" formControlName="value" [(ngModel)]="model.value" *ngIf="i !== 4"></ejs-textbox>
+                  </ng-container>
+                  <span class="input-error" *ngIf="arrayForm.controls[i].get('value')!.hasError('required') &&
+                !arrayForm.controls[i].get('value')!.untouched ">
+                    {{'[Bắt buộc]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

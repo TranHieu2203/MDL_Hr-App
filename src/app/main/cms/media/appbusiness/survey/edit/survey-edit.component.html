@@ -1,0 +1,126 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Truyền thông]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/media/survey'>{{'[Thông tin cuộc khảo sát]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="survey-edit" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[Thông tin]' | translate }} </label>
+          </div>
+          <!--  -->
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">{{'[Câu hỏi bình chọn]' | translate }}</label>
+                <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name" maxlength="100">
+                <span class="input-error"
+                  *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                  {{'[Bắt buộc nhập]' | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">{{'[Thời hạn bình chọn]' | translate }}</label>
+                <ejs-datepicker id="expire" formControlName="expire" format="dd/MM/yyyy" [(ngModel)]="model.expire"
+                  (keydown)="changeDate('expire')" (blur)="changeDate('expire')" placeholder=".../.../...">
+                </ejs-datepicker>
+                <span class="input-error"
+                  *ngIf="editForm.get('expire')!.hasError('incorrect') && !editForm.get('expire')!.untouched">
+                  {{'[Sai định dạng]' | translate }}
+                </span>
+                <span class="input-error"
+                  *ngIf="editForm.get('expire')!.hasError('required') && !editForm.get('expire')!.untouched ">
+                  {{'[Bắt buộc nhập]' | translate }}</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="col-sm-12">
+                <div class="form-group vertical">
+                  <ejs-checkbox formControlName="isMultiple" label="{{'[Cho phép chọn nhiều phương án]' | translate }}"
+                    [(ngModel)]="model.isMultiple ">
+                  </ejs-checkbox>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group vertical">
+                  <ejs-checkbox formControlName="isAddAnswer" label="{{'[Cho phép thêm câu trả lời]' | translate }}"
+                    [(ngModel)]="model.isAddAnswer ">
+                  </ejs-checkbox>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 ">
+              <div class="col-sm-12 row" formArrayName="answerForm" *ngFor="let ans of arrAnswer; let i = index">
+                <div [formGroupName]="i" class="form-group  vertical col-sm-9" style="display: flex;">
+                  <input class="form-control" type="text" formControlName="answer" [(ngModel)]="ans.answer"
+                    maxlength="250" placeholder="Nhập câu trả lời">
+                  <i class="fa fa-times" style="cursor: pointer;color:red" (click)="Remove(i)"
+                    *ngIf="flagState$.value != 'view'"></i>
+                  <span class="input-error"
+                    *ngIf="answerForm.controls[i].get('answer')!.hasError('required') && !answerForm.controls[i].get('answer')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}</span>
+                </div>
+                <div class="col-sm-3" style="margin: auto;cursor: pointer;" (click)="ViewDetail(ans)"
+                  *ngIf="flagState$.value != 'new'">
+                  ({{ans.vote}})
+                </div>
+              </div>
+
+            </div>
+            <div class="col-sm-2 addAnswer" *ngIf="flagState$.value != 'view'">
+              <span (click)="ClickAdd()">+ Thêm</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="employees">
+  <div style="text-align: end; cursor: pointer;" (click)="CloseEmp()">x</div>
+  <div class="row full-width v2hrm-modal-header">
+    {{titlePopup}}
+  </div>
+  <div class="row" *ngFor="let item of lstEmp">
+    <div class="avatar col-sm-3">
+      <img [src]="item.avatar" alt="avatar" width="40px" height="40px" style="border-radius: 50%;">
+    </div>
+    <div class="name col-sm-9">
+      {{item.name}}
+    </div>
+  </div>
+
+</v2hrm-confirm-modal>

@@ -1,0 +1,104 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/hrms/profile/configsys/salarytype'>{{'[Bảng lương]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+           <!-- Search -->
+     <div class="app-toolbar toolbar-search">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum row" style="width: 100%;">
+          <div class="brackcrum col-sm-1">
+            <i class="fa fa-search" aria-hidden="true"></i>{{'[Tìm kiếm]' | translate }}
+          </div>
+          <div class="col-sm-2">
+                <ejs-dropdownlist id="area" [dataSource]='lstArea'
+                  [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="search.areaId" [ngModelOptions]="{standalone: true}"
+                  [placeholder]="''" [allowFiltering]='true' (ngModelChange)= "Search()"
+                  (filtering)='onFiltering($event,lstArea)'>
+                </ejs-dropdownlist>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+        (dataStateChange)="dataStateChange($event!)" rowHeight='37'
+        headerHeight='42' [height]='configs.height()' [allowPaging]='true'
+        [pageSettings]='configs.pageSettings' [enableHover]='true'
+        (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+        allowResizing='true' [locale]='configs.currentLang'
+        [allowSelection]='true' [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='60'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+
+          <e-column field='code' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Mã bảng lương]' | translate }}" clipMode='EllipsisWithTooltip'
+            width="120"></e-column>
+          <e-column field='name' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Tên bảng lương]' | translate }}" clipMode='EllipsisWithTooltip'
+            width="120"></e-column>
+
+          <e-column field='note' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Ghi chú]' | translate }}" clipMode='EllipsisWithTooltip'>
+          </e-column>
+
+          <!--  -->
+          <e-column field='isActive' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+            clipMode='EllipsisWithTooltip' width="120">
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-effect text-center" *ngIf="data.isActive">
+                  <span>{{'[Hiệu lực]' | translate }}</span>
+                </div>
+                <div class="status-not-effect text-center"
+                  *ngIf="!data.isActive">
+                  <span>{{'[Không hiệu lực]' | translate }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

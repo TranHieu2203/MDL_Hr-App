@@ -1,0 +1,24 @@
+<div *ngIf="!newlayoutVersion">
+ 
+  <div class="left-slider-bar">
+      <app-sidebar  *ngIf="appConfig.showLayout === 'true'"></app-sidebar>
+    </div>
+  <div class="main">
+    <div class="toolbar" *ngIf="appConfig.showLayout === 'true'">
+      <app-toolbar [logoTemplate]="logoTemplate"></app-toolbar>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- <app-tan-layout-v1 *ngIf="newlayoutVersion" 
+  [items]="navigation" 
+  [backgroundColor]="'white'"
+  [logoTemplate]="logoTemplate"
+  ></app-tan-layout-v1> -->
+
+<ng-template #logoTemplate>
+  <div class="app-logo">
+    <!-- <img src="../../../assets/images/logo_no_padding.svg" class="app-logo-image"> -->
+  </div>
+</ng-template>

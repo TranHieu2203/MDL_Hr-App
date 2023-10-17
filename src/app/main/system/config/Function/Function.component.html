@@ -1,0 +1,91 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Trang chủ]' | translate }} <i
+              class="fa fa-angle-right" aria-hidden="true"> {{'[Hệ thống]' | translate }}</i>
+              <i
+              class="fa fa-angle-right" aria-hidden="true"> {{'[Danh mục chức năng]' | translate }}</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card card-content">
+        <div class="card-main-content">
+          <div class="list-grid">
+            <ejs-grid #overviewgrid id='overviewgrid'
+              [dataSource]='data | async'
+              (dataStateChange)="dataStateChange($event!)" rowHeight='45'
+              headerHeight='52' [height]='configs.height()' [allowPaging]='true'
+              [pageSettings]='configs.pageSettings' [enableHover]='true'
+               [allowSorting]='false'
+              allowResizing='true' [locale]='configs.currentLang'
+              [allowSelection]='true' [showColumnChooser]='true'
+              [selectionSettings]='configs.selectionSettings'
+              [editSettings]='configs.editSettings'
+              (rowSelecting)="setButtonStatus($event!)"
+              (rowDeselecting)="setButtonStatus($event!)">
+              <e-columns>
+                
+                <e-column field='id' [showInColumnChooser]='false'
+                  [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                  [allowEditing]="false"></e-column>
+                <!--  -->
+                <e-column width="60" eaderTextAlign="Center" textAlign="Center"
+                  headerText="STT" clipMode="EllipsisWithTooltip">
+                  <ng-template #template let-data>
+                    <span>{{ formatStt(data.index) }}</span>
+                  </ng-template>
+                </e-column>
+                <e-column field='code' headerTextAlign="Center" textAlign="Left"
+                  headerText="Mã" clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='name' headerTextAlign="Center" textAlign="Left"
+                  headerText="Tên" clipMode='EllipsisWithTooltip'></e-column>
+                <!--  -->
+                <e-column field='states' headerTextAlign="Center"
+                  textAlign="Left" headerText="{{States]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='groupName' headerTextAlign="Center"
+                  textAlign="Left" headerText="{{Nhóm chức năng]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='moduleName' headerTextAlign="Center"
+                  textAlign="Left" headerText="{{'[Module]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <!--  -->
+                <e-column field='appId' [visible]='false'></e-column>
+                <e-column field='appName' headerTextAlign="Center"
+                  textAlign="Left" headerText="{{'[Tên ứng dụng]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <!--  -->
+                <e-column field='isActive' textAlign="Center"
+                  headerText="Trạng thái" clipMode='EllipsisWithTooltip'>
+                  <ng-template #template let-data>
+                    <div class="row-status full-width">
+                      <div class="status-effect text-center"
+                        *ngIf="data.isActive">
+                        <span>{{'[Hiệu lực]' | translate }}</span>
+                      </div>
+                      <div class="status-not-effect text-center"
+                        *ngIf="!data.isActive">
+                        <span>{{'[Không hiệu lực]' | translate }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

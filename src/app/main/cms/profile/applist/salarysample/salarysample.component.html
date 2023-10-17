@@ -1,0 +1,442 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/list/salaryrank'>{{'[Thang bảng lương]' | translate
+              }}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="app-content">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <!-- <th scope="col" rowspan="2">STT</th> -->
+            <th scope="col" rowspan="2">{{'[Thang lương]' | translate }} <span (click)="AddRecord('scale')"
+                class="addRecord">+</span></th>
+            <th scope="col" rowspan="2">{{'[Ngạch lương]' | translate }} <span (click)="AddRecord('rank')"
+                class="addRecord">+</span></th>
+            <th scope="col" [attr.colspan]="salaryLevelNum">Bậc lương <span (click)="AddRecord('level')"
+                class="addRecord">+</span></th>
+          </tr>
+          <tr>
+            <th scope="col" *ngFor="let item of lstSalaryLevel">{{item.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rank of lstSalaryRanks">
+            <!-- <th scope="row" [attr.colspan]="rank.countRank" *ngIf="rank.isShow">{{rank.stt}}</th> -->
+            <td scope="row" [attr.rowspan]="rank.countRank" *ngIf="rank.isShow" (dblclick)="EditRecord('scale',rank)">
+              {{rank.nameScale}}</td>
+            <td scope="row" (dblclick)="EditRecord('rank',rank)">{{rank.name}}</td>
+            <td scope="row" *ngFor="let level of rank.lstlevel"><span
+                (dblclick)="EditRecord('level',level)">{{level.monney | number}}</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- add scale-->
+<v2hrm-confirm-modal id="add-scale">
+  <div class="row full-width v2hrm-modal-header">
+    <form name="editForm" [formGroup]="scaleForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info v-icon"></div>
+          <label class="title">{{'[Thông tin]' | translate }}</label>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Mã]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="code" [(ngModel)]="scaleModel.code"
+                maxlength="31" readonly>
+              <span class="input-error"
+                *ngIf="scaleForm.get('code')!.hasError('required') && !scaleForm.get('code')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+              <span class="input-error "
+                *ngIf="scaleForm.get('code')!.hasError('incorrect') && !scaleForm.get('code')!.untouched">
+                {{'[ Sai định dạng]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="name" [(ngModel)]="scaleModel.name"
+                maxlength="51">
+              <span class="input-error"
+                *ngIf="scaleForm.get('name')!.hasError('required') && !scaleForm.get('name')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Thứ tự]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="order" [(ngModel)]="scaleModel.orders"
+                maxlength="51">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Ghi
+                chú]' | translate }}</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="scaleModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmAddScale('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmAddScale('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<!-- edit scale-->
+<v2hrm-confirm-modal id="edit-scale">
+  <div class="row full-width v2hrm-modal-header">
+    <form name="editForm" [formGroup]="scaleForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info v-icon"></div>
+          <label class="title">{{'[Thông tin]' | translate }}</label>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Mã]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="code" [(ngModel)]="scaleModel.code"
+                maxlength="31" readonly>
+              <span class="input-error"
+                *ngIf="scaleForm.get('code')!.hasError('required') && !scaleForm.get('code')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+              <span class="input-error "
+                *ngIf="scaleForm.get('code')!.hasError('incorrect') && !scaleForm.get('code')!.untouched">
+                {{'[ Sai định dạng]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="name" [(ngModel)]="scaleModel.name"
+                maxlength="51">
+              <span class="input-error"
+                *ngIf="scaleForm.get('name')!.hasError('required') && !scaleForm.get('name')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Thứ tự]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="order" [(ngModel)]="scaleModel.orders"
+                maxlength="51">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Ghi
+                chú]' | translate }}</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="scaleModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmEdit('ok','scale')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmEdit('cancel','scale')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- add rank-->
+<v2hrm-confirm-modal id="add-rank">
+  <div class="row full-width v2hrm-modal-header">
+    <form name="editForm" [formGroup]="rankForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info v-icon"></div>
+          <label class="title">{{'[Thông tin]' | translate }}</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Mã]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="code" [(ngModel)]="rankModel.code"
+                maxlength="31">
+              <span class="input-error"
+                *ngIf="rankForm.get('code')!.hasError('required') && !rankForm.get('code')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="name" [(ngModel)]="rankModel.name"
+                maxlength="51">
+              <span class="input-error"
+                *ngIf="rankForm.get('name')!.hasError('required') && !rankForm.get('name')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Thang lương]' | translate }}</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryScaleId' [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="rankModel.salaryScaleId" formControlName="salaryScaleId" [placeholder]="''"
+                [allowFiltering]='true' (filtering)='onFiltering($event,lstSalaryScaleId)'>
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="rankForm.get('salaryScaleId')!.hasError('required') && !rankForm.get('salaryScaleId')!.untouched">
+                {{'[Bắt buộc chọn]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Số thứ tự]' | translate }}</label>
+              <ejs-numerictextbox format="N0" locale="en" name="orders" formControlName="orders"
+                [(ngModel)]="rankModel.orders" min="0" max="999999999">
+              </ejs-numerictextbox>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text " for="name">{{'[Ghi chú]' | translate }}</label>
+              <textarea class="form-control" type="text" formControlName="note" [(ngModel)]="rankModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmAddRank('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmAddRank('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<!-- edit rank-->
+<v2hrm-confirm-modal id="edit-rank">
+  <div class="row full-width v2hrm-modal-header">
+    <form name="editForm" [formGroup]="rankForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info v-icon"></div>
+          <label class="title">{{'[Thông tin]' | translate }}</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Mã]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="code" [(ngModel)]="rankModel.code" maxlength="31"
+                readonly>
+              <span class="input-error"
+                *ngIf="rankForm.get('code')!.hasError('required') && !rankForm.get('code')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+              <span class="input-error "
+                *ngIf="rankForm.get('code')!.hasError('incorrect') && !rankForm.get('code')!.untouched">
+                {{'[ Sai định dạng]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="name" [(ngModel)]="rankModel.name"
+                maxlength="51">
+              <span class="input-error"
+                *ngIf="rankForm.get('name')!.hasError('required') && !rankForm.get('name')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Thang lương]' | translate }}</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryScaleId' [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="rankModel.salaryScaleId" formControlName="salaryScaleId" [placeholder]="''"
+                [allowFiltering]='true' (filtering)='onFiltering($event,lstSalaryScaleId)'>
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="rankForm.get('salaryScaleId')!.hasError('required') && !rankForm.get('salaryScaleId')!.untouched">
+                {{'[Bắt buộc chọn]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Số thứ tự]' | translate }}</label>
+              <ejs-numerictextbox format="N0" locale="en" name="orders" formControlName="orders"
+                [(ngModel)]="rankModel.orders" min="0" max="999999999">
+              </ejs-numerictextbox>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text " for="name">{{'[Ghi chú]' | translate }}</label>
+              <textarea class="form-control" type="text" formControlName="note" [(ngModel)]="rankModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmEdit('ok','rank')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmEdit('cancel','rank')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- add level-->
+<v2hrm-confirm-modal id="add-level">
+  <div class="row full-width v2hrm-modal-header">
+    <form name="editForm" [formGroup]="levelForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info v-icon"></div>
+          <label class="title">{{'[Thông tin]' | translate }}</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Mã]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="code" [(ngModel)]="levelModel.code"
+                maxlength="31">
+              <span class="input-error"
+                *ngIf="levelForm.get('code')!.hasError('required') && !levelForm.get('code')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+              <span class="input-error "
+                *ngIf="levelForm.get('code')!.hasError('incorrect') && !levelForm.get('code')!.untouched">
+                {{'[ Sai định dạng]' | translate }}</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-grou vertical">
+              <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+              <input class="form-control" type="text" formControlName="name" [(ngModel)]="levelModel.name"
+                maxlength="51">
+              <span class="input-error"
+                *ngIf="levelForm.get('name')!.hasError('required') && !levelForm.get('name')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Thang lương]' | translate }}</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryScaleId' [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="levelModel.salaryScaleId" formControlName="salaryScaleId" [placeholder]="''"
+                [allowFiltering]='true' (filtering)='onFiltering($event,lstSalaryScaleId)'
+                (change)="changeSalaryScale($event!)">
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="levelForm.get('salaryScaleId')!.hasError('required') && !levelForm.get('salaryScaleId')!.untouched">
+                {{'[Bắt buộc chọn]' | translate }}</span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Ngạch lương]' | translate }}</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryRankId' [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="levelModel.salaryRankId" formControlName="salaryRankId" [placeholder]="''"
+                [allowFiltering]='true' (filtering)='onFiltering($event,lstSalaryRankId)'>
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="levelForm.get('salaryRankId')!.hasError('required') && !levelForm.get('salaryRankId')!.untouched">
+                {{'[Bắt buộc chọn]' | translate }}</span>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Số tiền]' | translate }}</label>
+              <ejs-numerictextbox format="N0" locale="en" name="monney" formControlName="monney"
+                [(ngModel)]="levelModel.monney" min="0" max="999999999">
+              </ejs-numerictextbox>
+              <span class="input-error"
+                *ngIf="levelForm.get('monney')!.hasError('required') && !levelForm.get('monney')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Số thứ tự]' | translate }}</label>
+              <ejs-numerictextbox format="N0" locale="en" name="orders" formControlName="orders"
+                [(ngModel)]="levelModel.orders" min="0" max="999999999">
+              </ejs-numerictextbox>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">{{'[Ghi
+                chú]' | translate }}</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="levelModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmAddLevel('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmAddLevel('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<!-- edit level-->
+<v2hrm-confirm-modal id="edit-level">
+  <div class="row full-width v2hrm-modal-header">
+    <form name="editForm" [formGroup]="levelForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info v-icon"></div>
+          <label class="title">{{'[Thông tin]' | translate }}</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">{{'[Số tiền]' | translate }}</label>
+              <ejs-numerictextbox format="N0" locale="en" name="monney" formControlName="monney"
+                [(ngModel)]="levelModel.monney" min="0" max="999999999">
+              </ejs-numerictextbox>
+              <span class="input-error"
+                *ngIf="levelForm.get('monney')!.hasError('required') && !levelForm.get('monney')!.untouched">
+                {{'[Bắt buộc nhập]' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmEdit('ok','level')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmEdit('cancel','level')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

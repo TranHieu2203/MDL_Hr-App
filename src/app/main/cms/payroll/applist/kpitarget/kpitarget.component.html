@@ -1,0 +1,89 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/payroll/list/kpitarget'>{{'[Phần tử KPI]' | translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="kpitarget" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="row">
+        <div class="col-sm-2 b-r">
+          <div>
+            <ejs-treeview #listGroup id="default" (nodeSelected)="groupSelecting($event!)">
+            </ejs-treeview>
+          </div>
+        </div>
+        <div class="col-sm-10 p-l">
+          <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+            (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='42' [height]='configs.height()'
+            [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+            (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true' allowResizing='true'
+            [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+            [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+            (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption' 
+            showColumnMenu='true' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+            <e-columns>
+              <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                width='60' textAlign="Center" [allowEditing]="false">
+              </e-column>
+              <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                [allowEditing]="false">
+              </e-column>
+              <e-column field='code' headerTextAlign="Left" textAlign="Left" headerText="{{'[Mã]' | translate }}" 
+                clipMode='EllipsisWithTooltip' width='90'></e-column>
+              <e-column field='name' headerTextAlign="Left" textAlign="Left" headerText="{{'[Tên]' | translate }}" 
+                clipMode='EllipsisWithTooltip'></e-column>
+              <e-column field='unit' headerTextAlign="Left" textAlign="Left" headerText="{{'[Đơn vị tính]' | translate }}" 
+                clipMode='EllipsisWithTooltip'></e-column>
+              <e-column field='salaryElement' headerTextAlign="Left" textAlign="Left" headerText="{{'[Phần tử lương]' | translate }}" 
+                clipMode='EllipsisWithTooltip'></e-column>
+              <e-column [isPrimaryKey]='true' width="120" field='isPaySalary' textAlign="Center"
+                headerText="{{'[Thiết lập công thức]' | translate }}">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isPaySalary" (change)="check(data, 'isPaySalary',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <e-column [isPrimaryKey]='true' width="100" field='isImportKpi' textAlign="Center"
+                headerText="{{'[Dữ liệu Import]' | translate }}">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isImportKpi" (change)="check(data, 'isImportKpi',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <e-column field='orders' headerTextAlign="Center" textAlign="Center" headerText="{{'[Thứ tự]' | translate }}" 
+                clipMode='EllipsisWithTooltip' width='60'></e-column>
+              <e-column field='isActive' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}" clipMode='EllipsisWithTooltip'
+                width='100'>
+                <ng-template #template let-data>
+                  <div class="row-status full-width">
+                    <div class="status-effect text-center" *ngIf="data.isActive">
+                      <span>{{'[Hiệu lực]' | translate }}</span>
+                    </div>
+                    <div class="status-not-effect text-center" *ngIf="!data.isActive">
+                      <span>{{'[Không hiệu lực]' | translate }}</span>
+                    </div>
+                  </div>
+                </ng-template>
+              </e-column>
+            </e-columns>
+          </ejs-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+.tooltipcomponent {
+    position: fixed !important;
+    z-index: 1000000;
+    background-color:antiquewhite;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 3px 6px;
+    margin-top: 5px;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 8px #979797;
+}
+
+.theme-dark .tooltipcomponent {
+    background-color:gray;
+    box-shadow: 0 8px 8px black;
+}
+.theme-dark .tooltipcomponent::before {
+    border-bottom: 5px solid gray;
+}
+
+.tooltipcomponent::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid antiquewhite;
+    position: absolute;
+    left: calc(50% - 5px);
+    top: -5px;
+}

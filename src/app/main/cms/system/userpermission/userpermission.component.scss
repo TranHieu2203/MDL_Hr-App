@@ -1,0 +1,26 @@
+cms-app-userpermission {
+  .app-content {
+    background-color: #fff;
+  }
+  .e-treeview .e-ul {
+    padding: 0 20px;
+  }
+  #default {
+    margin-left: -30px;
+  }
+  .right-content {
+    padding-left: 0px;
+    border-left: 1px solid #ccc;
+  }
+  .app-main-content .app-container .nav-tabs {
+    border-radius: unset;
+    border-top: none;
+    border-left: none;
+  }
+  .pt-2 {
+    padding-right: 0px;
+  }
+  .e-headercelldiv{
+    padding-left: 3px!important;
+  }
+}

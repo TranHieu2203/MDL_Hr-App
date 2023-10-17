@@ -1,0 +1,26 @@
+<div id="treview-div">
+    <div class="treeview-search">
+        <ejs-maskedtextbox #maskObj id="search" [placeholder]="'[Search]'|translate" (change)="searchNodes($event)"
+            showClearButton="true" showClearButton="true"></ejs-maskedtextbox>
+    </div>
+    <div class="treeview-data">
+        <ejs-treeview #treeView (nodeSelected)="nodeSelecting($event!)" [fields]='field' [showCheckBox]='showCheckBox'>
+            <ng-template #nodeTemplate="" let-data="">
+                <div>
+                    <div class="treeviewdiv" [ngClass]="{'org-deactive':data.STATUS==='Deactive'}">
+                        <div class="nodetext">
+                            <span id="{{data.ID}}" [ngClass]="{'text-bold':data.hightLight}"
+                                class="treeName">{{data.NAME}}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ejs-treeview>
+    </div>
+
+    <div class="treeview-checkbox">
+        <ejs-checkbox label="Hiển thị cả đơn vị giải thể" (change)="isDissoCheck($event)">
+        </ejs-checkbox>
+
+    </div>
+</div>

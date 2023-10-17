@@ -1,0 +1,62 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/sys/configsys/mailsetting'>{{'[Thiết lập mẫu mail]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="mailsetting" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+        (dataStateChange)="dataStateChange($event!)" rowHeight='37'
+        headerHeight='42' [height]='configs.height()' [allowPaging]='true'
+        [pageSettings]='configs.pageSettings' [enableHover]='true'
+        (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+        allowResizing='true' [locale]='configs.currentLang'
+        [allowSelection]='true' [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='60'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+
+
+          <e-column field='code' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Mã]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='name' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Tên mẫu]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='subjectMail' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Tiêu đề mail]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='mailCC' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Mail CC]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='mailBCC' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Mail BCC]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          
+        </e-columns>
+      </ejs-grid>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

@@ -1,0 +1,144 @@
+$specialWidth: 280px;
+@use "/src/app/variables.scss";
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.curent-text {
+    font-weight: bold;
+    color: variables.$primary-background-text;
+    padding-left: 10px;
+}
+
+.app-slider-header {
+    height: 55px;
+    background: variables.$primary-background;
+    // box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 20px;
+    // border-bottom: 1px solid #ebebeb;
+
+    .logo-image {
+        width: 68px;
+        float: left;
+        border: none;
+        height: 40px;
+        margin-left: 10px;
+        line-height: 36px;
+    }
+}
+
+.app-sidebar-menu {
+    padding: 0;
+    height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    .app-sidebar {
+        margin: 0;
+        list-style: none;
+        padding: 5px 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: variables.$primary-background;
+        width: 280px;
+        height: calc(100vh - 54px);
+        border-right: 1px solid #ebebeb;
+
+        .app-sidebar-item {
+            width: $specialWidth;
+            font-size: 14px;
+            line-height: 16px;
+            min-height: 48px;
+            cursor: pointer;
+
+            .app-sidebar-main-item {
+                text-decoration: none;
+                color: variables.$primary-background-text;
+                font-size: 14px;
+                display: block;
+                height: 48px;
+                font-weight: 700;
+                padding: 18px 20px;
+
+                .sidebar-icon {
+                    margin-right: 15px;
+                    line-height: 16px;
+                }
+
+                .submenu-icon {
+                    float: right;
+                }
+
+            }
+
+            .app-sidebar-main-item[aria-expanded="false"] {
+                .submenu-icon::after {
+                    content: "\f0da";
+                    font-family: FontAwesome;
+                    display: inline;
+                    text-align: right;
+                    padding-left: 10px;
+                }
+            }
+
+            .app-sidebar-main-item[aria-expanded="true"] {
+                .submenu-icon::after {
+                    content: "\f0d7";
+                    font-family: FontAwesome;
+                    display: inline;
+                    text-align: right;
+                    padding-left: 10px;
+                }
+            }
+        }
+
+        .app-sidebar-main-item.active,
+        .app-sidebar-main-item:hover {
+            background: variables.$primary-button-hover;
+            color: variables.$primary-button-text;
+        }
+    }
+
+    .app-sidebar :hover {}
+
+    .nav-disable {
+        pointer-events: none;
+        cursor: block;
+        opacity: 0.5;
+    }
+
+    .nav-disable::after {
+        background-image: url('../../../../assets/images/slider-bar/lock.svg');
+        background-size: 10px 10px;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        content: "";
+
+    }
+}

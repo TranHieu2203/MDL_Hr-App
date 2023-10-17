@@ -1,0 +1,46 @@
+<div class="list-grid">
+  <ejs-grid #overviewgridLstEmp id='overviewgridLstEmp' [dataSource]='data'
+    (dataStateChange)="dataStateChange($event!)" rowHeight='32' headerHeight='35'
+    height='100%' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+    [enableHover]='true' [allowSorting]='false' allowResizing='true'
+    [locale]='configs.currentLang'>
+    <e-columns>
+      <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='50' textAlign="Center" [allowEditing]="false">
+      </e-column>
+      <e-column width="60" eaderTextAlign="Center" textAlign="Center"
+        headerText="{{'[STT]' | translate }}" clipMode="EllipsisWithTooltip">
+        <ng-template #template let-data>
+          <span>{{ formatStt(data.index) }}</span>
+        </ng-template>
+      </e-column>
+      <e-column field='employeeCode' textAlign="Left"
+        headerText="{{'[Mã nhân viên]' | translate }}" clipMode='EllipsisWithTooltip'>
+      </e-column>
+      <e-column field='employeeName'  textAlign="Left"
+        headerText="{{'[Họ và tên]' | translate }}" clipMode='EllipsisWithTooltip'>
+      </e-column>
+      <e-column field='positionName' textAlign="Left"
+        headerText="{{'[Vị trí]' | translate }}" clipMode='EllipsisWithTooltip'>
+      </e-column>
+      <e-column field='orgName' textAlign="Left"
+        headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+      
+      <!--  -->
+      <e-column field='workStatusId' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+        clipMode='EllipsisWithTooltip'>
+        <ng-template #template let-data>
+          <div class="row-status full-width">
+            <div class="status-effect text-center" *ngIf="data.workStatusId !=2">
+              <span>{{'[Đang làm việc]' | translate }}</span>
+            </div>
+            <div class="status-not-effect text-center"
+              *ngIf="data.workStatusId==2">
+              <span>{{'[Nghỉ việc]' | translate }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

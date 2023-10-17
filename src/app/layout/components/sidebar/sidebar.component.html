@@ -1,0 +1,68 @@
+<div class="app-sidebar-menu">
+    <div class="app-slider-header">
+        <a routerLink="/hrms/dashboard"><i class="">
+                <img class="app-sidebar-logo-img" src="{{urlLogo}}" alt=''
+                    style=" width:180px;   padding: 15px 0px 10px 15px;" />
+            </i>
+
+        </a>
+        <a class="btn" style="right:40px;margin-top:10px" (click)="toggleSidebar()">
+            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M3.33301 5.5H16.6663V7.16667H3.33301V5.5ZM3.33301 9.66667H16.6663V11.3333H3.33301V9.66667ZM3.33301 13.8333H16.6663V15.5H3.33301V13.8333Z"
+                    fill="#707C8C"></path>
+            </svg>
+        </a>
+    </div>
+
+    <ul class="app-sidebar">
+        <div class="btn" (click)="menuBack()" aria-disabled="true" *ngIf="curentType&&curentType!=='module'">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="curent-text">{{curentText}}</span>
+        </div>
+        <li class="app-sidebar-item level-1" *ngFor="let item of listModule"
+            [ngStyle]="{display: !curentType||(curentType&&curentType=='module') ? 'block' : 'none'}">
+            <a class="app-sidebar-main-item" *ngIf="!curentType||(curentType&&curentType=='module')"
+                [ngClass]="{'nav-disable': (item.children[0].children.length == 0 && item.children[1].children.length == 0 && item.children[2].children.length == 0)}"
+                (click)="choseModule(item.id)">
+                <span class="sidebar-icon">
+                    <img src="../../../../assets/images/slider-bar/{{item.icon}}.svg" />
+                    <i class="fa fa-{{item.icon}}"></i>
+                </span>
+                <span class="sidebar-name">
+                    {{item.title}}
+                </span>
+            </a>
+        </li>
+        <li class="app-sidebar-item level-2"
+            [ngStyle]="{display: !curentType||(curentType&&curentType=='group') ? 'block' : 'none'}">
+            <ul *ngFor="let item of listGroup">
+                <a class="app-sidebar-main-item" [class.active]="_router.url.indexOf(item.url) === 0"
+                    (click)="choseGroup(item.id)" *ngIf="item.children.length>0">
+                    <span class="sidebar-icon">
+                        <!-- <img src="../../../../assets/images/slider-bar/{{item.icon}}.svg"  /> -->
+                        <i class="fa fa-{{item.icon}}"></i>
+
+                    </span>
+                    <span class="sidebar-name">
+                        {{item.title}}
+                    </span>
+                </a>
+            </ul>
+        </li>
+        <li class="app-sidebar-item level-3">
+            <ul *ngFor="let item of listItem">
+                <a class="app-sidebar-main-item" [class.active]="_router.url == (item.url)" [routerLink]="[item.url]"
+                    (click)="choseItem(item.id)">
+                    <span class="sidebar-icon">
+                        <!-- <img src="../../../../assets/images/slider-bar/{{item.icon}}.svg"  /> -->
+                        <i class="fa fa-{{item.icon}}"></i>
+
+                    </span>
+                    <span class="sidebar-name">
+                        {{item.title}}
+                    </span>
+                </a>
+            </ul>
+        </li>
+    </ul>
+</div>

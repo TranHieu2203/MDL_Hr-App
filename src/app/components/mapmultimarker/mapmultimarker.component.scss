@@ -1,0 +1,21 @@
+cms-area-edit {
+  agm-map {
+    height: 500px;
+    width: 100%;
+  }
+  button.btn.btn-choose {
+    font-size: 12px !important;
+    padding: 0;
+    width: 100%;
+    background: #2095f4 !important;
+    padding: 6px !important;
+    color: #fff;
+    outline: none !important;
+    border: none;
+    box-shadow: none !important;
+    margin-top: 15px;
+  }
+  .btn-choose {
+    margin-top: 0px !important;
+  }
+}

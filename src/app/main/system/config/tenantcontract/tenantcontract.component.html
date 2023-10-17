@@ -1,0 +1,95 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"> {{'[Quản lý hợp đồng]' | translate }}</i>
+
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="tenantcontract" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card card-content">
+        <div class="card-main-content">
+          <div class="list-grid">
+            <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+              (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='47' [height]='configs.height()'
+              [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+              (recordDoubleClick)="viewRecord($event!)" [allowSorting]='false' allowResizing='true'
+              [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+              [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+              (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+              [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+              <e-columns>
+                <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                  width='30' textAlign="Center" [allowEditing]="false">
+                </e-column>
+                <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                  [isPrimaryKey]='true' [allowEditing]="false"></e-column>
+                <!--  -->
+                <e-column width="50" eaderTextAlign="Center" textAlign="Center" headerText="{{'[STT]'|translate}}"
+                  clipMode="EllipsisWithTooltip">
+                  <ng-template #template let-data>
+                    <span>{{ formatStt(data.index) }}</span>
+                  </ng-template>
+                </e-column>               
+                <e-column field='tenantName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Tên Công ty]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='ownerName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Người đại diện]'|translate}}"
+                  clipMode='EllipsisWithTooltip' width="100"></e-column>
+                <e-column field='email' headerTextAlign="Left" textAlign="Left" headerText="{{'[Email" width="100]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='phone' headerTextAlign="Left" textAlign="Left" headerText="{{'[Phone" width="100]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+
+                <e-column field='address' headerTextAlign="Left" textAlign="Left" headerText="{{'[Địa chỉ" width="150]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+
+                <e-column field='packageName' headerTextAlign="Left" textAlign="Left" headerText="{{'[Gói đăng ký]'|translate}}"
+                  width="120" clipMode='EllipsisWithTooltip'></e-column>
+                <e-column field='dateExpire' headerTextAlign="Center" type="date"
+                  [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày hết hạn" width="100]'|translate}}"
+                  clipMode='EllipsisWithTooltip' [allowFiltering]='false'>
+                </e-column>
+                <e-column field='totalPrice' headerTextAlign="Center" textAlign="Right" headerText="{{'[Thành tiền]'|translate}}" type='number' format='N0' width="100]'|translate}}"
+                  clipMode='EllipsisWithTooltip'></e-column>
+                <!--  -->
+                <e-column field='isActive' textAlign="Center" headerText="{{'[Trạng thái]'|translate}}" clipMode='EllipsisWithTooltip' width="100">
+                  <ng-template #template let-data>
+                    <div class="row-status full-width">
+                      <div class="status-effect text-center" *ngIf="data.isActive">
+                        <span>{{'[Hiệu lực]' | translate }}</span>
+                      </div>
+                      <div class="status-not-effect text-center" *ngIf="!data.isActive">
+                        <span>{{'[Không hiệu lực]' | translate }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </e-column>
+                <e-column field="tools" textAlign="Center" headerText="{{'[Công cụ]'|translate}}"width="120" headerTextAlign="Center">
+                  <ng-template #template let-data>
+                    <span class="view action-record" style="color: blue; cursor: pointer"
+                      (click)="clickRecord(data, 'renew')">{{'[Gia hạn]' | translate }}</span>
+                    <span class="view btn-edit" style="color: orange; cursor: pointer"
+                      (click)="clickRecord(data, 'upgrade')">
+                      | {{'[Nâng cấp]' | translate }}</span>
+                  </ng-template>
+                </e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->

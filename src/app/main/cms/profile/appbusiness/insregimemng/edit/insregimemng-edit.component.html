@@ -1,0 +1,276 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Bảo hiểm]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/insregimemng'>{{'[Quản lý hưởng chế độ bảo
+              hiểm]' | translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="insregimemng" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <!-- Thông tin hợp đồng -->
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin chung]' | translate }}</label>
+            </div>
+            <div class="row">
+              <!-- mã nhân viên -->
+              <div class="col-sm-4">
+                <div class="form-group vertical-flex">
+                  <label class="e-float-text required" for="employeeCode">{{'[Mã nhân viên]' | translate }}</label>
+                  <input formControlName="employeeCode" [(ngModel)]="model.employeeCode" type="text"
+                    class="form-control">
+                  <div class="input-group-append">
+                    <button class="btn btn-search" type="button" (click)="choiseEmp()"></button>
+                  </div>
+                  <span class="input-error"
+                    *ngIf="editForm.get('employeeCode')!.hasError('required') && !editForm.get('employeeCode')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!-- họ và tên -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="fullname">{{'[Họ và Tên]' | translate }}</label>
+                  <input type="text" formControlName="employeeName" class="form-control"
+                    [(ngModel)]="model.employeeName" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Phòng ban -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="orgId">{{'[Phòng ban]' | translate }}</label>
+                  <input type="text" formControlName="orgName" class="form-control" [(ngModel)]="model.orgName" readonly>
+                </div>
+              </div>
+              <!-- Chức danh -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="positionId">{{'[Chức danh]' | translate }}</label>
+                  <input type="text" formControlName="positionName" class="form-control" [ngModel]="model.positionName" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Thông tin bảo hiểm -->
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin hưởng chế độ]' | translate }}</label>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="regimeTypeId">{{'[Loại chế độ hưởng]' | translate }}</label>
+                  <ejs-dropdownlist id='regimeTypeId' [dataSource]='lstregimeTypeId' formControlName="regimeTypeId"
+                    [showClearButton]="true" (change)="calculate()" [(ngModel)]="model.regimeTypeId" [fields]='fields'
+                    [allowFiltering]='true' (filtering)='onFiltering($event,lstregimeTypeId)'>
+                  </ejs-dropdownlist>
+                  <!-- <span class="input-error"
+                    *ngIf="editForm.get('bhxhStatusId')!.hasError('required') && !editForm.get('bhxhStatusId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span> -->
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="ngayhachtoan">{{'[Từ ngày]' | translate }}</label>
+                  <ejs-datepicker id="startDate" format="dd/MM/yyyy" [(ngModel)]="model.startDate"
+                    (keydown)="changeDateNoRequire1('startDate')" (change)="changeDateNoRequire1('startDate')" 
+                    formControlName="startDate" placeholder=".../.../...">
+                  </ejs-datepicker>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="ngayhachtoan">{{'[Đến ngày]' | translate }}</label>
+                  <ejs-datepicker id="endDate" format="dd/MM/yyyy" [(ngModel)]="model.endDate"
+                    (keydown)="changeDateNoRequire1('endDate')" (change)="changeDateNoRequire1('endDate')" 
+                    formControlName="endDate" placeholder=".../.../...">
+                  </ejs-datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="dayCount">{{'[Số ngày tính]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="dayCount" formControlName="dayCount"
+                    [(ngModel)]="model.dayCount" (change)="calculate()">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="cumulativeDay">{{'[Số ngày lũy kế]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="cumulativeDay" formControlName="cumulativeDay"
+                    [(ngModel)]="model.cumulativeDay">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="ngayhachtoan">{{'[Ngày BH chi trả]' | translate }}</label>
+                  <ejs-datepicker id="dateApproveIns" format="dd/MM/yyyy" [(ngModel)]="model.dateApproveIns"
+                    (keydown)="changeDateNoRequire('dateApproveIns')" (change)="changeDateNoRequire('dateApproveIns')"
+                    formControlName="dateApproveIns" placeholder=".../.../...">
+                  </ejs-datepicker>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="childCount">{{'[Số con]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="childCount" formControlName="childCount"
+                    [(ngModel)]="model.childCount" (change)="calculate()">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="salIns">{{'[Lương tính BHXH]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="salIns" formControlName="salIns"
+                    [(ngModel)]="model.salIns">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="salAllowance">{{'[Số tiền được hưởng trợ cấp]' | translate
+                    }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="salAllowance" formControlName="salAllowance"
+                    [(ngModel)]="model.salAllowance">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="moneyApproveIns">{{'[Tiền BH chi trả]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="moneyApproveIns" formControlName="moneyApproveIns"
+                    [(ngModel)]="model.moneyApproveIns">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="dayApproveIns">{{'[Số ngày BH chi trả]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="dayApproveIns" formControlName="dayApproveIns"
+                    [(ngModel)]="model.dayApproveIns">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="payType">{{'[Hình thức thanh toán]' | translate }}</label>
+                  <ejs-dropdownlist id='' [dataSource]='lstpayType' formControlName="payType" [showClearButton]="true"
+                    [(ngModel)]="model.payType" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstpayType)'>
+                  </ejs-dropdownlist>
+                  <!-- <span class="input-error"
+                    *ngIf="editForm.get('bhxhStatusId')!.hasError('required') && !editForm.get('bhxhStatusId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span> -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="ngayhachtoan">{{'[Đợt khai báo]' | translate }}</label>
+                  <ejs-datepicker id="periodDate" format="dd/MM/yyyy" [(ngModel)]="model.periodDate"
+                    (keydown)="changeDateNoRequire('periodDate')" (change)="changeDateNoRequire('periodDate')"
+                    formControlName="periodDate" placeholder=".../.../...">
+                  </ejs-datepicker>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ghi chú -->
+
+            <!-- <div class="row">
+
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="regimeTypeId">{{'[Loại chế độ bảo hiểm]' | translate }}</label>
+                  <ejs-dropdownlist id='regimeTypeId'
+                    [dataSource]='lstregimeTypeId'
+                    formControlName="regimeTypeId" [showClearButton]="true"
+                    [(ngModel)]="model.regimeTypeId" [fields]='fields'
+                    [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstregimeTypeId)'>
+                  </ejs-dropdownlist>
+                  
+                </div>
+              </div>
+            </div> -->
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">Đồng
+      ý</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

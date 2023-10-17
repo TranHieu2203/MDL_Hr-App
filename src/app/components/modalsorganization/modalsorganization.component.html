@@ -1,0 +1,50 @@
+<div class="modal-organization">
+  <div class="modal-header-org">
+    <div>
+      <p>Chọn phòng ban</p>
+    </div>
+    <div>
+      <span (click)="maximize()"><i class="fa fa-window-restore me-3" aria-hidden="true"></i></span>
+      <span class="pl-2" (click)="close()"><i class="fa fa-window-close" aria-hidden="true"></i></span>
+    </div>
+  </div>
+  <div class="modal-content-org">
+    <div class="treeview-search">
+      <ejs-maskedtextbox #maskObj id="search" [placeholder]="'[Search]'|translate" (change)="searchNodes($event)"
+          showClearButton="true" showClearButton="true"></ejs-maskedtextbox>
+    </div>
+    <div id='treeparent'>
+      <ejs-treeview #treeView id="default" [fields]='field' (nodeSelected)="nodeSelecting($event!)"
+        [showCheckBox]='selectionOptions'>
+        <ng-template #nodeTemplate="" let-data="">
+          <div>
+            <div class="treeviewdiv" [ngClass]="{'org-deactive':data.STATUS==='Deactive'}">
+              <div class="nodetext">
+                <span class="treeName">{{data.NAME}}</span>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ejs-treeview>
+    </div>
+  </div>
+  <div class="modal-footer-org">
+
+
+
+    <div class="col-5 " style="    padding: 25px 0px 0px 10px;    ">
+      <ejs-checkbox label="Hiển thị cả đơn vị giải thể" (change)="isDissoCheck($event)">
+      </ejs-checkbox>
+
+    </div>
+    <div class="col-7 p-l rigth-card ">
+      <button class="btn-choose" (click)="choiseOrg()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Chọn</button>
+      <button class="btn-cancel" (click)="close()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        Hủy</button>
+    </div>
+  </div>
+</div>
+<div class="modal-background"></div>

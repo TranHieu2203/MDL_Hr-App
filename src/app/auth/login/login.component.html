@@ -1,0 +1,77 @@
+<div class="login-bg">
+</div>
+<div class="login-logo-wrapper">
+</div>
+
+<div class="form-copyright-block">
+
+
+  <div class="form-wrapper container pt-5">
+    <div class="row">
+      <div class="col-6 col-sm-6">
+        <div class="v2Hrm-logo-wrapper">
+          <img src="../../../assets/images/auth/logo.jpg" width="190px">
+        </div>
+      </div>
+      <div class="col-6 col-sm-6 d-flex justify-content-end">
+        <ejs-dropdownlist id='moduleId' [(ngModel)]="model.lang" [dataSource]='languagesList' [fields]='fields'
+          (change)="switchLang($event)" style=" 
+        width: 150px;     
+    ">
+        </ejs-dropdownlist>
+      </div>
+      <div class="col-sm-12 text-center mt-5">
+        <h2 class="display-6 login-text fw-bold">HỆ THỐNG QUẢN TRỊ TỔNG THỂ NGUỒN NHÂN LỰC</h2>
+      </div>
+    </div>
+
+
+    <div class="login-form custom-login-component px-3 mb-5 pt-3">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <div class="user-wrapper">
+          <span><i class="feather-user login-icon user-icon"></i></span>
+          <input type="text" class="user form-control" placeholder="{{'login.userName' |translate}}"
+            formControlName="username" required="true">
+        </div>
+
+        <div class="password-wrapper">
+          <span><i class="feather-lock login-icon lock-icon"></i></span>
+          <span><i class="login-icon eye-icon" [class.feather-eye]="!showPassword"
+              [class.feather-eye-off]="showPassword" (click)="toggleShowPassword()"></i></span>
+          <input [type]="passwordInputType" class="password form-control" placeholder="{{'login.passWord' |translate}}"
+            formControlName="password" required="true">
+        </div>
+
+        <div class="w-100p flex-between last-input-line mt-3">
+          <div class="remember-block">
+            <input type="checkbox" class="remember" formControlName="remember" value="true">
+            <span>{{'login.remember'|translate}}</span>
+          </div>
+          <a class="forgot-text">{{'login.forgot' | translate}}</a>
+        </div>
+        <span>
+          <input *ngIf="!processing" type="submit" value="{{'login.login'|translate}}" class="submit">
+          <div *ngIf="processing" style="padding-left:170px" class="loading">...</div>
+        </span>
+
+        <div class="w-100 d-flex justify-content-center my-3">
+          <button class="btn btn-lg text-center mb-3"> <span class="ms-2">http://smartmdl.com.vn</span></button>
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+
+
+
+  </div>
+
+
+
+
+
+</div>

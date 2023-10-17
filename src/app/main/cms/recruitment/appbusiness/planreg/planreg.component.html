@@ -1,0 +1,176 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tuyển dụng]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/recruitment/business/planreg'>{{'[Định biên nhân sự]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="planreg" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <div id='vertical_splitter' class="vertical_splitter">
+                <div>
+                  <div class="content">
+                    <cms-app-org></cms-app-org>
+                  </div>
+                </div>
+                <div>
+                  <div class="content content-checkbox">
+                    <ejs-checkbox label="Cả nhân viên nghỉ việc" (change)="GetEmp($event!)" [checked]="false">
+                    </ejs-checkbox>
+                    <div class="bg-ter"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="list-grid">
+                <!-- <form class="searchFrom" name="searchFrom" [formGroup]="searchFrom" novalidate
+                  style="padding-bottom: 10px;">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <label class="e-float-text" for="fromDate">{{'[Từ ngày]' | translate }}</label>
+                        <ejs-datepicker id="fromDate" format="dd/MM/yyyy" [(ngModel)]="model.fromDate"
+                          (keydown)="changeDate('fromDate')" value="model.fromDate" (blur)="changeDate('fromDate')"
+                          formControlName="fromDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <label class="e-float-text" for="toDate">{{'[Đến ngày]' | translate }}</label>
+                        <ejs-datepicker id="toDate" format="dd/MM/yyyy" [(ngModel)]="model.toDate"
+                          (keydown)="changeDate('toDate')" value="model.toDate" (blur)="changeDate('toDate')"
+                          formControlName="toDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <button ejs-button cssClass="e-info" (click)="getListData()"><i aria-hidden="true"
+                            class="fa fa-search"></i> Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form> -->
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='35' headerHeight='40'
+                  [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+                  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+                  (rowSelected)='rowSelected($event)' (rowDeselected)="rowSelected($event)" [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='40' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='typeId' [showInColumnChooser]='false' [visible]='false' headerText='typeId'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+
+                    <e-column field='orgName' headerTextAlign="Left" textAlign="Left"
+                      headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip'>
+                      <ng-template #template let-data>
+
+                        <ejs-tooltip #tooltip id='tooltip' [content]='configs.getTooltip(data.orgDesc)' cssClass="ttbg"
+                          [position]='"BottomCenter"' target=".circletool" [showTipPointer]='false'>
+                          <div id="box">
+                            <div id='1' class="circletool">{{data.orgName}} </div>
+                            <br />
+                          </div>
+                        </ejs-tooltip>
+
+                      </ng-template>
+                    </e-column>
+                    <e-column field='positionName' textAlign="Left" headerText="{{'[Vị trí công việc]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <e-column field='year' textAlign="Left" headerText="{{'[Năm]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="100">
+                    </e-column>
+                    <e-column field='t1' textAlign="Center" headerText="{{'[Tháng 1]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t2' textAlign="Center" headerText="{{'[Tháng 2]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t3' textAlign="Center" headerText="{{'[Tháng 3]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t4' textAlign="Center" headerText="{{'[Tháng 4]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t5' textAlign="Center" headerText="{{'[Tháng 5]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t6' textAlign="Center" headerText="{{'[Tháng 6]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t7' textAlign="Center" headerText="{{'[Tháng 7]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t8' textAlign="Center" headerText="{{'[Tháng 8]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t9' textAlign="Center" headerText="{{'[Tháng 9]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t10' textAlign="Center" headerText="{{'[Tháng 10]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t11' textAlign="Center" headerText="{{'[Tháng 11]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                    <e-column field='t12' textAlign="Center" headerText="{{'[Tháng 12]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                      <e-column field='countCurrent' textAlign="Center" headerText="{{'[Số lượng hiện tại]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120' type='number' format='N0'></e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+
+<input id="file" type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile($event!)' />
+<v2hrm-confirm-modal id="confirm-import-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Xác nhận Import]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmImport('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmImport('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa dữ liệu?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

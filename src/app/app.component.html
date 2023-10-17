@@ -1,0 +1,5 @@
+<app-layout></app-layout>
+<ng2-toasty [position]="'top-center'"></ng2-toasty>
+<div class="loading-overlay" *ngIf="spinnerService.visibility | async">
+   <img class="loading-icon" src="/assets/images/1485.gif" />
+</div>

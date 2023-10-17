@@ -1,0 +1,274 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Công ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/attendance/list/salaryperiod'>{{'[Kỳ lương]' | translate
+              }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="salaryperiodedit" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="app-content">
+
+      <div class="card-center">
+        <div class="row">
+          <form name="editForm" [formGroup]="editForm" novalidate>
+            <div class="group-box">
+              <!-- title -->
+              <div class="card-head">
+                <div class="icon-info v-icon"></div>
+                <label class="title">{{'[Thông tin]' | translate }}</label>
+              </div>
+              <!--  -->
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group  vertical">
+                    <label class="e-float-text required">{{'[Năm]' | translate }}</label>
+                    <ejs-numerictextbox name="year" formControlName="year" [(ngModel)]="model.year" min="2000"
+                      max="2050" format='####'>
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                      *ngIf="editForm.get('year')!.hasError('required') && !editForm.get('year')!.untouched">
+                      {{'[Bắt buộc nhập]' | translate }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group  vertical">
+                    <label class="e-float-text required">{{'[Tháng]' | translate }}</label>
+                    <ejs-numerictextbox name="month" formControlName="month" [(ngModel)]="model.month" min="1" max="12"
+                      format='####'>
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                      *ngIf="editForm.get('month')!.hasError('required') && !editForm.get('month')!.untouched">
+                      {{'[Bắt buộc nhập]' | translate }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group vertical">
+                    <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name"
+                      maxlength="51">
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+                    <span class="input-error"
+                      *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                      {{'[Bắt buộc nhập]' | translate }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Ngày bắt đầu]' | translate }}</label>
+                    <ejs-datepicker id="dateStart" format="dd/MM/yyyy" [(ngModel)]="model.dateStart"
+                      (keydown)="changeDate('dateStart')" (blur)="changeDate('dateStart')" formControlName="dateStart"
+                      placeholder=".../.../...">
+                    </ejs-datepicker>
+                    <span class="input-error"
+                      *ngIf="editForm.get('dateStart')!.hasError('required') && !editForm.get('dateStart')!.untouched">
+                      {{'[Bắt buộc chọn]' | translate }}
+                    </span>
+                    <span class="input-error"
+                      *ngIf="editForm.get('dateStart')!.hasError('incorrect') && !editForm.get('dateStart')!.untouched">
+                      {{'[Sai định dạng]' | translate }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Ngày kết thúc]' | translate }}</label>
+                    <ejs-datepicker id="dateEnd" format="dd/MM/yyyy" [(ngModel)]="model.dateEnd"
+                      (keydown)="changeDate('dateEnd')" (blur)="changeDate('dateEnd')" formControlName="dateEnd"
+                      placeholder=".../.../...">
+                    </ejs-datepicker>
+                    <span class="e-float-line"></span>
+                    <span class="input-error"
+                      *ngIf="editForm.get('dateEnd')!.hasError('required') && !editForm.get('dateEnd')!.untouched">
+                      {{'[Bắt buộc chọn]' | translate }}
+                    </span>
+                    <span class="input-error"
+                      *ngIf="editForm.get('dateEnd')!.hasError('incorrect') && !editForm.get('dateEnd')!.untouched">
+                      {{'[Sai định dạng]' | translate }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-sm-2">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Ngày công chuẩn]' | translate }}</label>
+                    <ejs-numerictextbox name="standardWorking" formControlName="standardWorking"
+                      [(ngModel)]="model.standardWorking" min="0" max="999999999">
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                      *ngIf="editForm.get('standardWorking')!.hasError('required') && !editForm.get('standardWorking')!.untouched">
+                      {{'[Bắt buộc nhập]' | translate }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-sm-2">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Giờ công chuẩn]' | translate }}</label>
+                    <ejs-numerictextbox name="standardTime" formControlName="standardTime"
+                      [(ngModel)]="model.standardTime" min="0" max="999999999">
+                    </ejs-numerictextbox>
+                    <span class="input-error"
+                      *ngIf="editForm.get('standardTime')!.hasError('required') && !editForm.get('standardTime')!.untouched">
+                      {{'[Bắt buộc nhập]' | translate }}
+                    </span>
+                  </div>
+                </div>
+
+
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Ghi chú]' | translate }}</label>
+                    <textarea class="form-control" formControlName="note" [(ngModel)]="model.note" id="note"
+                      rows="2"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info info-icon"></div>
+              <label class="title">{{'[Thiết lập Công chuẩn theo phòng ban]' | translate }}</label>
+            </div>
+            <div class="row">
+              <button class="btn btn-info" type="button" (click)="choiseOrg()">Chọn phòng ban</button>
+              <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' rowHeight='37' headerHeight='42'
+                [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                [enableHover]='true' [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang'
+                [allowSelection]='true' [selectionSettings]='configs.selectionSettings'
+                [editSettings]='configs.editSettings' [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+                <e-columns>
+                  <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                    [isPrimaryKey]='true' [allowEditing]="false">
+                  </e-column>
+                  <e-column field='name' headerTextAlign="Left" textAlign="Left"
+                    headerText="{{'[Phòng ban]'|translate}}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+                  <e-column field='workingStandard' textAlign="Center" headerText="{{'[Ngày công chuẩn]'|translate}}"
+                    clipMode='EllipsisWithTooltip' width='110'>
+                    <ng-template #template let-data>
+                      <ejs-numerictextbox name="workingStandard" min="0" enableRtl=true
+                        [(ngModel)]="data.workingStandard" format="N1" (change)="changeWorking($event,data.index)">
+                      </ejs-numerictextbox>
+                    </ng-template>
+                  </e-column>
+                  <e-column field='standardTime' textAlign="Center" headerText="{{'[Giờ công chuẩn]'|translate}}"
+                    clipMode='EllipsisWithTooltip' width='110'>
+                    <ng-template #template let-data>
+                      <ejs-numerictextbox name="standardTime" min="0" enableRtl=true [(ngModel)]="data.standardTime"
+                        format="N1" (change)="changeWorkingTime($event,data.index)">
+                      </ejs-numerictextbox>
+                    </ng-template>
+                  </e-column>
+                  <e-column field='tool' headerTextAlign="Center" [allowFiltering]='false' textAlign="Center"
+                    headerText="Xóa" width="20">
+                    <ng-template #template let-data>
+                      <span (click)="Remove(data.index)" style="cursor: pointer; color: red;"> <i class="fa fa-trash"
+                          aria-hidden="true" aria-colindex=""></i></span>
+                    </ng-template>
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </div>
+          </div>
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info info-icon"></div>
+              <label class="title">{{'[Thiết lập Công chuẩn theo nhân viên]' | translate }}</label>
+            </div>
+            <div class="row">
+              <button class="btn btn-info" type="button" (click)="choiseEmp()">{{'[Chọn nhân viên]' | translate
+                }}</button>
+              <ejs-grid #overviewgemp id='overviewgemp' [dataSource]='dataEmp' rowHeight='37' headerHeight='42'
+                [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                [enableHover]='true' [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang'
+                [allowSelection]='true' [selectionSettings]='configs.selectionSettings'
+                [editSettings]='configs.editSettings' [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+                <e-columns>
+                  <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                    [isPrimaryKey]='true' [allowEditing]="false">
+                  </e-column>
+                  <e-column field='code' headerTextAlign="Left" textAlign="Left"
+                    headerText="{{'[Mã Nhân viên]'|translate}}" clipMode='EllipsisWithTooltip' width="100"></e-column>
+                  <e-column field='name' headerTextAlign="Left" textAlign="Left" headerText="{{'[Họ tên]'|translate}}"
+                    clipMode='EllipsisWithTooltip' width="100"></e-column>
+                  <e-column field='orgName' headerTextAlign="Left" textAlign="Left"
+                    headerText="{{'[Phòng ban]'|translate}}" clipMode='EllipsisWithTooltip'></e-column>
+                  <e-column field='positionName' headerTextAlign="Left" textAlign="Left"
+                    headerText="{{'[Chức danh]'|translate}}" clipMode='EllipsisWithTooltip' width='120'></e-column>
+                  <e-column field='workingStandard' textAlign="Center" headerText="{{'[Ngày công chuẩn]'|translate}}"
+                    clipMode='EllipsisWithTooltip' width='120'>
+                    <ng-template #template let-data>
+                      <ejs-numerictextbox name="workingStandard" min="0" enableRtl=true
+                        [(ngModel)]="data.workingStandard" format="N1" (change)="changeWorkingEmp($event,data.index)">
+                      </ejs-numerictextbox>
+                    </ng-template>
+                  </e-column>
+                  <e-column field='standardTime' textAlign="Center" headerText="{{'[Giờ công chuẩn]'|translate}}"
+                    clipMode='EllipsisWithTooltip' width='120'>
+                    <ng-template #template let-data>
+                      <ejs-numerictextbox name="standardTime" min="0" enableRtl=true [(ngModel)]="data.standardTime"
+                        format="N1" (change)="changeWorkingTimeEmp($event,data.index)">
+                      </ejs-numerictextbox>
+                    </ng-template>
+                  </e-column>
+                  <e-column field='tool' headerTextAlign="Center" [allowFiltering]='false' textAlign="Center"
+                    headerText="[Xóa" width="50">
+                    <ng-template #template let-data>
+                      <span (click)="RemoveEmp(data.index)" style="cursor: pointer; color: red;"> <i class="fa fa-trash"
+                          aria-hidden="true" aria-colindex=""></i></span>
+                    </ng-template>
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cms-app-modals-org id="cms-app-modals-org">
+</cms-app-modals-org>
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

@@ -1,0 +1,62 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Khác ]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Lương 3P]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            {{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/others/payroll3p/config3p/jobevaluetionconfig'>{{'[Năng lực vị trí]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="row">
+        <div class="col-sm-3 pt-2">
+          <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='dataPosition'
+           rowHeight='40' [height]='configs.height()'
+          headerHeight='52'  [allowFiltering]='true' [filterSettings]='configs.filterOption' (rowSelecting)="RowSelect($event!)"
+          [enableHover]='true' [allowSorting]='false' allowResizing='true'
+          [locale]='configs.currentLang'> 
+          <e-columns>
+            <e-column field='NAME' headerTextAlign="Center"
+              textAlign="Left" headerText="{{'[Tên Chức năng]' | translate }}"
+              clipMode='EllipsisWithTooltip' width="110">
+            </e-column>
+            <e-column field='MARK' headerTextAlign="Center"
+              textAlign="Center" headerText="{{'[Điểm]' | translate }}"
+              clipMode='EllipsisWithTooltip' width="50">
+            </e-column>
+          </e-columns>
+        </ejs-grid>
+        </div>
+        <div class="col-sm-9 pt-2">
+          <div class="tab-content" id="myTabContent">
+            <ejs-treeview #treeView [fields]='field' style="max-height: 813px; overflow: auto;"
+            [showCheckBox]='showCheckBox'>
+          </ejs-treeview>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,144 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Năng lực]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/capacity/list/competencyperiod'>{{'[Kỳ đánh giá Job rank]' |
+              translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="competencyperiod" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <!--main-content -->
+    <div class="app-content">
+
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box">
+            <!-- title -->
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }}</label>
+            </div>
+            <!--  -->
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Năm]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="year" formControlName="year"
+                    [(ngModel)]="model.year" min="0" max="999999999">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('year')!.hasError('required') && !editForm.get('year')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+
+              <!--  -->
+
+
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Loại]' | translate }}</label>
+                  <ejs-dropdownlist [dataSource]='lsttypePeriod' [fields]='fields' [showClearButton]="true"
+                    [(ngModel)]="model.typePeriod" formControlName="typePeriod" [placeholder]="''"
+                    [allowFiltering]='true' (filtering)='onFiltering($event,lsttypePeriod)'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('typePeriod')!.hasError('required') && !editForm.get('typePeriod')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name"
+                    maxlength="51">
+                  <span class="input-error"
+                    *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Ngày bắt đầu]' | translate }}</label>
+                  <ejs-datepicker id="startDate" format="dd/MM/yyyy" [(ngModel)]="model.startDate"
+                    formControlName="startDate" placeholder=".../.../..." readonly>
+                  </ejs-datepicker>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Ngày kết thúc]' | translate }}</label>
+                  <ejs-datepicker id="endDate" format="dd/MM/yyyy" [(ngModel)]="model.endDate" formControlName="endDate"
+                    placeholder=".../.../..." readonly>
+                  </ejs-datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="name">{{'[Ghi chú]' | translate }}</label>
+                  <textarea class="form-control" type="text" formControlName="note" [(ngModel)]="model.note"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

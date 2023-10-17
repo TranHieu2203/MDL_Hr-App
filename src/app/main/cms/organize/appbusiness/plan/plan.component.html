@@ -1,0 +1,187 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tổ chức]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/organize/business/plan'>{{'[Hoạch định]' | translate }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <form name="editForm" [formGroup]="editForm" novalidate>                               
+        <div class="group-box" formGroupName="model">
+          <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+            <e-panes>          
+              <e-pane>
+                <ng-template #content>               
+                    <div class="list-grid">
+                      <div class="row">
+                        <div class="col-md-5">
+                            <!--  Tìm kiếm -->
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group vertical">
+                                  <div class="row">
+                                      <label class="e-float-text">{{'[Tìm kiếm]' | translate }}</label>
+                                      <input  class="form-control" type="text" formControlName="textboxSearch" [(ngModel)]="model.textboxSearch" [placeholder]="'Mã vị trí/Tên vị trí/Mã NV/Tên NV'">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--  Ghế -->
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group vertical">
+                                  <div class="row">
+                                      <label class="e-float-text">{{'[Ghế]' | translate }}</label>
+                                      <ejs-multiselect id='chairId' [dataSource]='lstChair' [placeholder]="'Mời chọn ghế'" 
+                                        mode='CheckBox' [showDropDownIcon]='true' showSelectAll='true' [fields]='fields' [(ngModel)]="model.chairId"
+                                        formControlName="chairId" selectAllText="Chọn tất cả">
+                                      </ejs-multiselect>                               
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--  Phòng ban - orgIdSearch-->
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group vertical">
+                                  <div class="row">
+                                      <label class="e-float-text">{{'[Phòng ban]' | translate }}</label>
+                                      <ejs-dropdownlist id='orgIdSearch' [itemTemplate]='itemTemplate' [dataSource]='lstOrgId'
+                                       formControlName="orgIdSearchText" [(ngModel)]="model.orgIdSearchText">
+                                        <ng-template #itemTemplate>
+                                            <ejs-treegrid  #treegridOrganization id='treegridOrganization' [dataSource]='lstOrgId' [treeColumnIndex]='0' 
+                                            [sortSettings]="sortSettings" [allowFiltering]="false"
+                                            [allowSorting]="false" childMapping='orgChildren' [allowPaging]="false" [pageSettings]='pageSettings'
+                                            [enableCollapseAll]="true" (rowDataBound)='rowOrgDataBound($event!)' (rowSelecting)="rowSelecting($event!)">
+                                              <e-columns>
+                                                <e-column field='name' headerText='Phòng ban' textAlign='Left'></e-column>
+                                              </e-columns>
+                                            </ejs-treegrid>
+                                        </ng-template>
+                                      </ejs-dropdownlist>                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                          (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='42' [height]='configs.height()'
+                          [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+                          [allowSorting]='true' allowResizing='true'
+                          [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                          [selectionSettings]='configs.selectionSettings'[allowFiltering]='true' [filterSettings]='configs.filterOption' [allowRowDragAndDrop]='true'
+                          [rowDropSettings]='rowDropOptions' (queryCellInfo)='cellDataBound($event!)' showColumnMenu='true'
+                          >
+                        <e-columns>
+                            <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                              width='60' textAlign="Center" [allowEditing]="false">
+                            </e-column>
+                            <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='id' [isPrimaryKey]='true'
+                              [allowEditing]="false">
+                            </e-column>
+                            <e-column field='color' [visible]='false'></e-column>
+                            <e-column field='isowner' [visible]='false'></e-column>
+                            <e-column field='code' headerTextAlign="Left" textAlign="Left" headerText="{{'[Mã vị trí]' | translate }}"
+                              clipMode='EllipsisWithTooltip' width="100"></e-column>
+                            <e-column field='name' headerTextAlign="Left" textAlign="Left" headerText="{{'[Vị trí công việc]' | translate }}"
+                              clipMode='EllipsisWithTooltip' width="200"></e-column>
+                            <e-column field='mastername' headerTextAlign="Left" textAlign="Left" headerText="{{'[Master]' | translate }}"
+                              clipMode='EllipsisWithTooltip' width="200"></e-column>
+                              <e-column field='interimname' headerTextAlign="Left" textAlign="Left" headerText="{{'[Interim]' | translate }}"
+                                clipMode='EllipsisWithTooltip' width="200"></e-column>
+                          </e-columns>
+                          </ejs-grid>
+                        </div>
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-5">
+                            <!--  Tìm kiếm -->
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group vertical">
+                                  <div class="row">
+                                      <label class="e-float-text">{{'[Tìm kiếm]' | translate }}</label>
+                                      <input  class="form-control" type="text" formControlName="orgId2Search" [(ngModel)]="model.orgId2Search" [placeholder]="'Mã vị trí/Tên vị trí/Mã NV/Tên NV'">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--  Ghế -->
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group vertical">
+                                  <div class="row">
+                                      <label class="e-float-text">{{'[Ghế]' | translate }}</label>      
+                                      <ejs-multiselect id='chair2Id' [dataSource]='lstChair' [placeholder]="'Mời chọn ghế'" 
+                                        mode='CheckBox' [showDropDownIcon]='true' showSelectAll='true' [fields]='fields' [(ngModel)]="model.chair2Id"
+                                        formControlName="chair2Id" selectAllText="Chọn tất cả" >
+                                      </ejs-multiselect>                                 
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <ejs-grid #overviewgrid2 id='overviewgrid2' [dataSource]='data2' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                          (dataStateChange)="dataStateChange2($event!)" rowHeight='37' headerHeight='42' [height]='configs.height()'
+                          [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+                          [allowSorting]='true' allowResizing='true'
+                          [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                          [selectionSettings]='configs.selectionSettings'  [allowFiltering]='true' [filterSettings]='configs.filterOption'[allowRowDragAndDrop]='true'
+                          [rowDropSettings]='destRowDropOptions' (queryCellInfo)='cellDataBound2($event!)' showColumnMenu='true'>
+                          <e-columns>
+                            <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                              width='60' textAlign="Center" [allowEditing]="false">
+                            </e-column>
+                            <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='Id' [isPrimaryKey]='true'
+                              [allowEditing]="false">
+                            </e-column>
+                            <e-column field='color' [visible]='false'></e-column>
+                            <e-column field='isowner' [visible]='false'></e-column>
+                            <e-column field='code' headerTextAlign="Left" textAlign="Left" headerText="{{'[Mã vị trí]' | translate }}"
+                              clipMode='EllipsisWithTooltip' width="100"></e-column>
+                            <e-column field='name' headerTextAlign="Left" textAlign="Left" headerText="{{'[Vị trí công việc]' | translate }}"
+                              clipMode='EllipsisWithTooltip' width="200"></e-column>
+                            <e-column field='mastername' headerTextAlign="Left" textAlign="Left" headerText="{{'[Master]' | translate }}"
+                              clipMode='EllipsisWithTooltip' width="200"></e-column>
+                              <e-column field='interimname' headerTextAlign="Left" textAlign="Left" headerText="{{'[Interim]' | translate }}"
+                                clipMode='EllipsisWithTooltip' width="200"></e-column>
+                          </e-columns>
+                          </ejs-grid>
+                        </div>
+                      </div>
+                    </div> 
+                </ng-template>
+              </e-pane>
+            </e-panes>
+          </ejs-splitter>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa dữ liệu?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

@@ -1,0 +1,133 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tổ chức]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/organize/business/job'>{{'[Công việc]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="job-edit" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <!--main-content -->
+
+    <div class="app-content">
+
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box">
+
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }}</label>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Mã]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="code" [(ngModel)]="model.code"
+                    maxlength="100">
+                  <span class="input-error"
+                    *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Loại hưởng]' | translate }}</label>
+                  <ejs-dropdownlist id='typeId' [dataSource]='lstTypeId' formControlName="typeId"
+                    [showClearButton]="true" [(ngModel)]="model.typeId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstTypeId)'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('typeId')!.hasError('required') && !editForm.get('typeId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Tên tiếng việt]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="nameVN" [(ngModel)]="model.nameVN"
+                    maxlength="100">
+                  <span class="input-error"
+                    *ngIf="editForm.get('nameVN')!.hasError('required') && !editForm.get('nameVN')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Tên tiếng anh]' | translate }}</label>
+                  <input class="form-control" type="text" formControlName="nameEN" [(ngModel)]="model.nameEN"
+                    maxlength="100">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="col-sm-8">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Mô tả công việc]' | translate }}</label>
+                  <textarea class="form-control" type="text" formControlName="note" [(ngModel)]="model.note"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- (actionComplete)="actionComplete($event!)" (contextMenuClick)="contextMenuClick($event!)"
+    (dataStateChange)="dataStateChange($event!)" (dataSourceChanged)="dataSourceChanged($event!)" -->
+
+      <!-- đÓNG TẠM LẠI-->
+      <!-- <div class="card-center">
+        <ejs-treegrid [dataSource]="jobFuntion" height="470" childMapping='children' [enableCollapseAll]="true"
+          [treeColumnIndex]='1' [toolbar]='toolbarOptions' [editSettings]='editSettings'>
+          <e-columns>
+            <e-column field="id" headerText="{{'[ID" width="120" textAlign="Left" isPrimaryKey="true" type="number"
+              [allowEditing]='false'>
+            </e-column>
+            <e-column field="name" headerText="{{'[Chức năng" width="225" textAlign="Left"></e-column>
+            <e-column field="nameEN" headerText="{{'[Chức năng EN" width="225" textAlign="Left"></e-column>
+
+            <e-column field='functionID' headerText='Thước đo' width='180' editType='dropdownedit'
+              [edit]='priorityParams' textAlign="Left">
+            </e-column>
+
+            MỞ RA THÌ NHỚ ĐÓNG ĐOẠN TỪ ĐÂY LẠI, VÌ NÓ K CÓ
+            <e-column field="StartDate" headerText="{{'[Start Date" width="150" format="yMd" type="datetime"
+            editType="datepickeredit"></e-column>
+          <e-column field="Duration" headerText="{{'[Duration" type="number" textAlign="Right" width="130"
+            editType="numericedit">
+          </e-column>
+          <e-column field="Progress" headerText="{{'[Progress" type="number" textAlign="Right" width="130"
+            editType="numericedit">
+          </e-column>
+          </e-columns>
+        </ejs-treegrid>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+<style>
+  .e-dlg-overlay {
+    z-index: 1 !important;
+  }
+</style>

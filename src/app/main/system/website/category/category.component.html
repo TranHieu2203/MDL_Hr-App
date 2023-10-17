@@ -1,0 +1,89 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i
+              class="fa fa-angle-right" aria-hidden="true">{{'[Website]' | translate }}</i>
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/sys/website/list/category'>{{'[Danh mục tin]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data'
+        rowHeight='37' headerHeight='42' [height]='configs.height()'
+        [allowPaging]='true' [pageSettings]='configs.pageSettings'
+        [enableHover]='true' (recordDoubleClick)="viewRecord($event!)"
+        [allowSorting]='true' allowResizing='true'
+        [locale]='configs.currentLang' [allowSelection]='true'
+        [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='60'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='_id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+          <!--  -->
+          <e-column field='title' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Tiêu đề]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='title_url' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Url]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+
+          <e-column field='description' headerTextAlign="Center"
+            textAlign="Left" headerText="{{'[Mô tả]' | translate }}"
+            clipMode='EllipsisWithTooltip'>
+          </e-column>
+         
+          <e-column field='create_by' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Người tạo]' | translate }}" clipMode='EllipsisWithTooltip' width='100'>
+          </e-column>
+          <e-column field='date_create' headerTextAlign="Center"
+            textAlign="Left" headerText="{{'[Ngày tạo]' | translate }}" width='60'
+            clipMode='EllipsisWithTooltip'>
+          </e-column>
+          
+          <e-column field='status' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+            clipMode='EllipsisWithTooltip' width='100'>
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-effect text-center" *ngIf="data.status">
+                  <span>{{'[Hiệu lực]' | translate }}</span>
+                </div>
+                <div class="status-not-effect text-center" *ngIf="!data.status">
+                  <span>{{'[Không hiệu lực]' | translate }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

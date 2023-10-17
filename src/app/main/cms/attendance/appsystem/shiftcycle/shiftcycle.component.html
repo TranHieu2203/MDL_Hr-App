@@ -1,0 +1,159 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Công]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/attendance/appbusiness/shiftcycle'>{{'[Lịch trình ca làm việc]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info info-icon"></div>
+            <label class="title">{{'[Thiết lập]' | translate }} </label>
+          </div>
+          <!--  -->
+          <div class="row treeview">
+            <div class="col-4">
+              <ejs-treeview #treeView (nodeSelected)="nodeSelecting($event!)"
+                [fields]='field'>
+              </ejs-treeview>
+            </div>
+            <div class="col-8">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Thứ 2]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="monId" id='monId'
+                      [dataSource]='lstShift' [showClearButton]="true"
+                      [(ngModel)]="model.monId" [fields]='fields'
+                      [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                    *ngIf="editForm.get('monId')!.hasError('required') && !editForm.get('monId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Thứ 3]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="tueId"  id='tueId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.tueId"
+                      [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                    *ngIf="editForm.get('tueId')!.hasError('required') && !editForm.get('tueId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Thứ 4]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="wedId"  id='wedId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.wedId"
+                      [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                    *ngIf="editForm.get('wedId')!.hasError('required') && !editForm.get('wedId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Thứ 5]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="thuId"  id='thuId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.thuId"
+                      [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                    *ngIf="editForm.get('thuId')!.hasError('required') && !editForm.get('thuId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Thứ 6]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="friId"  id='friId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.friId"
+                      [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                    *ngIf="editForm.get('friId')!.hasError('required') && !editForm.get('friId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Thứ 7]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="satId"  id='satId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.satId"
+                      [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                    *ngIf="editForm.get('satId')!.hasError('required') && !editForm.get('satId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">{{'[Chủ nhật]' | translate }}</label>
+                    <ejs-dropdownlist formControlName="sunId"  id='sunId' [dataSource]='lstShift'
+                      [showClearButton]="true" [(ngModel)]="model.sunId"
+                      [fields]='fields' [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstShift)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                    *ngIf="editForm.get('sunId')!.hasError('required') && !editForm.get('sunId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+  </div>
+</div>
+
+
+<!-- CONFIRM DELETE MODAL-->
+

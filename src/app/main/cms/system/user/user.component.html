@@ -1,0 +1,169 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/system/user'>{{'[Tài khoản]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="user" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="row">
+        <div class="col-sm-2 pt-2">
+          <div>
+            <ejs-treeview #listTreeObj id="default" (nodeSelected)="userSelecting($event!)">
+            </ejs-treeview>
+          </div>
+        </div>
+        <div class="col-sm-10 pt-2">
+
+          <div class="card card-content">
+            <div class="card-main-content">
+              <div class="list-grid">
+                <form class="searchFrom" name="searchFrom" [formGroup]="searchFrom" novalidate
+                  style="padding-bottom: 10px;">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group vertical">
+                        <label class="e-float-text" for="userName">{{'[Tài khoản]' | translate }}</label>
+                        <input formControlName="userName" [(ngModel)]="model.userName" type="text" class="form-control"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group vertical">
+                        <label class="e-float-text" for="code">{{'[Mã nhân viên]' | translate }}</label>
+                        <input formControlName="code" [(ngModel)]="model.code" type="text" class="form-control"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group vertical">
+                        <label class="e-float-text" for="fullName">{{'[Tên nhân viên]' | translate }}</label>
+                        <input formControlName="fullName" [(ngModel)]="model.fullName" type="text" class="form-control"
+                        >
+                      </div>
+                    </div>
+                    
+                    <!-- <div class="col-sm-3">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">{{'[Nhóm tài khoản]' | translate }}</label>
+                        <ejs-dropdownlist [dataSource]='lstGroup' [fields]='fields' [showClearButton]="true"
+                          [(ngModel)]="model.groupId" formControlName="groupId" [placeholder]="''"
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstGroup)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div> -->
+                    <div class="col-sm-3">
+                      <div class="form-group vertical">
+                        <button ejs-button cssClass="e-info" (click)="getListData1()"><i aria-hidden="true"
+                            class="fa fa-search"></i> Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' showColumnMenu='true'
+                  (dataStateChange)="dataStateChange($event!)" [rowHeight]='35' headerHeight='40' [allowPaging]='true'
+                  [pageSettings]='configs.pageSettings' [height]='configs.height()' [enableHover]='true'
+                  (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true' allowResizing='true'
+                  [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+                  [allowFiltering]='false' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='40' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false"></e-column>
+                    <!--  -->
+                    <e-column width="40" HeaderTextAlign="Center" textAlign="Center"
+                      headerText="{{'[STT]' | translate }}" clipMode="EllipsisWithTooltip" [allowFiltering]='false'>
+                      <ng-template #template let-data>
+                        <span>{{ formatStt(data.index) }}</span>
+                      </ng-template>
+                    </e-column>
+                    <!--  -->
+                    <e-column field='userName' textAlign="Left" headerText="{{'[Tài khoản]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='code' textAlign="Left" headerText="{{'[Mã NV]' | translate }}"
+                      headerTextAlign="Center" textAlign="Center" clipMode='EllipsisWithTooltip' width="90"></e-column>
+                    <e-column field='fullName' textAlign="Left" headerText="{{'[Họ tên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='groupName' textAlign="Left" headerText="{{'[Nhóm tài khoản]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    <e-column field='isWebApp' width="70" field='isView' textAlign="Center"
+                      headerText="{{'[Web App]' | translate }}">
+                      <ng-template #template let-data>
+                        <ejs-checkbox [ngModel]="data.isWebApp" [disabled]="true">
+                        </ejs-checkbox>
+                      </ng-template>
+                    </e-column>
+                    <e-column field='isPortal' width="80" field='isView' textAlign="Center"
+                      headerText="{{'[Portal]' | translate }}">
+                      <ng-template #template let-data>
+                        <ejs-checkbox [ngModel]="data.isPortal" [disabled]="true">
+                        </ejs-checkbox>
+                      </ng-template>
+                    </e-column>
+
+                    <!--  -->
+                    <e-column field='lock' headerTextAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+                      clipMode='EllipsisWithTooltip' [filter]='filterStatus' width="100">
+                      <ng-template #template let-data>
+                        <div class="row-status full-width">
+                          <div class="status-effect" *ngIf="!data.lock">
+                            <span>{{'[Hoạt động]' | translate }}</span>
+                          </div>
+                          <div class="status-not-effect" *ngIf="data.lock">
+                            <span>{{'[Khóa]' | translate }}</span>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input id="file" type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile($event!)' />
+<v2hrm-confirm-modal id="confirm-import-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Xác nhận Import]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmImport('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmImport('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa không ?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

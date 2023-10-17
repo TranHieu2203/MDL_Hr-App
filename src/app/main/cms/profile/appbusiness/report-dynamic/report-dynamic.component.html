@@ -1,0 +1,95 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Thiết lập]' | translate}}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/report-dynamic'>{{'[Báo cáo tùy chỉnh]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="report-dynamic" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <h4>1: {{'[Chọn báo cáo]' | translate }}</h4>
+                  <ejs-dropdownlist #dropdownlist  id='reportId' [dataSource]='lstReportDynamic'  (change)="changeReport($event)"
+                    [showClearButton]="true" [(ngModel)]="model.id" [fields]='fields' placeholder="1: {{'[Chọn báo cáo]'|translate}}"
+                    [allowFiltering]='true' (filtering)='onFiltering($event,lstReportDynamic)'>
+                  </ejs-dropdownlist>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <h4>{{'[Lưu mẫu báo cáo]' | translate }}</h4>
+                  <input  id="reportName" class="form-control" [(ngModel)] ="model.reportName"placeholder="{{'[Nhập tên báo cáo]'|translate}}">
+                </div>
+              </div>
+            </div>
+            <div >
+              <div class="drag-drop-wrapper mt-3 " >
+                <div class="row">
+                  <div class="listbox-control1 col-sm-3">
+                    <h4>2: {{'[Danh sách cột dữ liệu]'|translate}}</h4>
+                    <ejs-listbox #listbox1 [dataSource]="groupFields" [allowDragAndDrop]="true" [fields]="setfield" scope="combined-list" height="290px"></ejs-listbox>
+                    </div>
+                    <div class="listbox-control2 col-sm-3">
+                      <h4>2: {{'[Danh sách cột dữ liệu được chọn]'|translate}}</h4>
+                      <ejs-listbox #listbox2 [dataSource]="groupFieldsSelected" [allowDragAndDrop]="true" [fields]="setfield" scope="combined-list" height="290px"></ejs-listbox>
+                    </div>
+                    <div class="col-sm-6">
+                      <h4>3: {{'[Thiết lập điều kiện]'|translate}}</h4>
+                      <ejs-querybuilder #querybuilder width="100%"  
+                      cssClass="row" 
+                      [columns]="filter"  
+                      [locale]='configs.currentLang' 
+                      [rule]="importRules" (ruleChange)="updateRule($event)" (created)="change()">
+                      </ejs-querybuilder>`
+       
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <h4>{{'[Mẫu báo cáo đã lưu]'|translate}}</h4>
+                <ejs-listview #listview id='sample-list' [dataSource]='dataReportDynamic' (select)='onSelectListReportDynamic($event)'></ejs-listview>
+              </div>
+              <div class="col-sm-9">
+                <h4>{{'[Preview]'|translate}}</h4>
+                <div>
+                  <ejs-spreadsheet #spreadsheet height="100%" width="100%" allowSave="true" 
+                  allowOpen="false" allowFreezePane=true 
+                  [allowFreezePane]=true  
+                  [showRibbon]="true" 
+                  openUrl='https://services.syncfusion.com/angular/production/api/spreadsheet/open'
+                  saveUrl='https://services.syncfusion.com/angular/production/api/spreadsheet/save'>
+                  
+                  </ejs-spreadsheet>         
+                </div>
+              </div>
+            </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>

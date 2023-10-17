@@ -1,0 +1,273 @@
+<div class="app-main-content">
+  <div class="app-container">
+
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tuyển dụng]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/recruitment/business/planreg'>{{'[Định biên nhân sự]' | translate
+              }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="planreg" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin quyết định]' | translate }}</label>
+            </div>
+
+            <div class="row">
+              <!-- Phòng ban -->
+              <div class="col-sm-4">
+                <div class="form-group vertical-flex">
+                  <label class="e-float-text required" for="orgId">{{'[Phòng ban]' | translate }}</label>
+                  <input formControlName="orgId" [(ngModel)]="model.orgName" type="text" class="form-control" readonly>
+                  <div class="input-group-append">
+                    <button class="btn btn-search" type="button" (click)="choiseOrg()"></button>
+                  </div>
+                  <span class="input-error"
+                    *ngIf="editForm.get('orgId')!.hasError('required') && !editForm.get('orgId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Vị trí công việc]' | translate }}</label>
+                  <ejs-dropdownlist id='positionId' [dataSource]='lstPositionId' formControlName="positionId"
+                    [showClearButton]="true" [(ngModel)]="model.positionId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstPositionId)' (change)='changePosition($event!)'
+                    popupWidth='800px' [headerTemplate]='headerTemplate' [itemTemplate]='itemTemplate'>
+                    <ng-template #itemTemplate="" let-data="">
+                      <div class="cbo-item">
+                        <div class="row">
+                          <div class="col-sm-6">{{data.name}}</div>
+                          <div class="col-sm-3">{{data.master}}</div>
+                          <div class="col-sm-3">{{data.interim}}</div>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template #headerTemplate="" let-data="">
+                      <div class="cbo-item cbo-item-header"
+                        style="font-weight: 700; text-align: center;padding-top: 5px;border-bottom: 2px solid rgba(0,0,0,0.2);">
+                        <div class="row">
+                          <div class="col-sm-6">{{'[Vị trí]' | translate }}</div>
+                          <div class="col-sm-3">{{'[Master]' | translate }}</div>
+                          <div class="col-sm-3">{{'[Interim]' | translate }}</div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('positionId')!.hasError('required') && !editForm.get('positionId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="group-box">
+
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin lương]' | translate }}</label>
+            </div>
+
+            <div class="row">
+
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="year">{{'[Năm]' | translate }}</label>
+                  <ejs-numerictextbox locale="en" name="year" formControlName="year" [(ngModel)]="model.year" min="0"
+                    max="9999" format='####' (ngModelChange)="calculateDateRange()">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('year')!.hasError('required') && !editForm.get('year')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="countCurrent">{{'[Số lượng hiện tại]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="countCurrent" formControlName="countCurrent"
+                    [(ngModel)]="model.countCurrent" min="0" max="999999999">
+                  </ejs-numerictextbox>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Từ tháng]' | translate }}</label>
+                  <ejs-datepicker id="fromMonth" format="MM/yyyy" [(ngModel)]="model.fromMonth" (ngModelChange)="changeMonth()"
+                    (keydown)="changeDate('fromMonth')" (blur)="changeDate('fromMonth')"
+                    formControlName="fromMonth" placeholder=".../..." [min]="minDate" [max]="maxDate">
+                  </ejs-datepicker>
+                  <span class="input-error"
+                    *ngIf="editForm.get('fromMonth')!.hasError('required') && !editForm.get('fromMonth')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}</span>
+                  
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Đến tháng]' | translate }}</label>
+                  <ejs-datepicker id="toMonth" format="MM/yyyy" [(ngModel)]="model.toMonth" (ngModelChange)="changeMonth()"
+                    (keydown)="changeDate('toMonth')" (blur)="changeDate('toMonth')"
+                    formControlName="toMonth" placeholder=".../..." [min]="minDate" [max]="maxDate">
+                  </ejs-datepicker>
+                  <span class="input-error"
+                    *ngIf="editForm.get('toMonth')!.hasError('required') && !editForm.get('toMonth')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" *ngIf="1 >= from && 1 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="t1">{{'[Tháng 1]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t1" formControlName="t1" [(ngModel)]="model.t1"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="2 >= from && 2 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="t2">{{'[Tháng 2]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t2" formControlName="t2" [(ngModel)]="model.t2"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="3 >= from && 3 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="t3">{{'[Tháng 3]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t3" formControlName="t3" [(ngModel)]="model.t3"
+                    min="0" max="100">
+                  </ejs-numerictextbox>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" *ngIf="4 >= from && 4 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="t4">{{'[Tháng 4]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t4" formControlName="t4" [(ngModel)]="model.t4"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="5 >= from && 5 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="t5">{{'[Tháng 5]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t5" formControlName="t5" [(ngModel)]="model.t5"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="6 >= from && 6 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="t6">{{'[Tháng 6]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t6" formControlName="t6" [(ngModel)]="model.t6"
+                    min="0" max="100">
+                  </ejs-numerictextbox>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-sm-4" *ngIf="7 >= from && 7 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="t7">{{'[Tháng 7]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t7" formControlName="t7" [(ngModel)]="model.t7"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+
+                </div>
+              </div>
+
+              <div class="col-sm-4" *ngIf="8 >= from && 8 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="t8">{{'[Tháng 8]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t8" formControlName="t8" [(ngModel)]="model.t8"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="9 >= from && 9 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="t9">{{'[Tháng 9]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t9" formControlName="t9" [(ngModel)]="model.t9"
+                    min="0" max="100">
+                  </ejs-numerictextbox>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" *ngIf="10 >= from && 10 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="t10">{{'[Tháng 10]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t10" formControlName="t10" [(ngModel)]="model.t10"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="11 >= from && 11 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="t11">{{'[Tháng 11]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t11" formControlName="t11" [(ngModel)]="model.t11"
+                    min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="12 >= from && 12 <= to">
+                <div class="form-group vertical">
+                  <label class="e-float-text " for="t12">{{'[Tháng 12]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="t12" formControlName="t12" [(ngModel)]="model.t12"
+                    min="0" max="100">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<cms-app-modals-org id="cms-app-modals-org">
+</cms-app-modals-org>
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

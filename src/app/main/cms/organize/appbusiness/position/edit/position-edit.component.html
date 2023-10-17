@@ -1,0 +1,849 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tổ chức]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/organize/business/position'>{{'[Chi tiết vị trí công việc]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="position" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="app-content">
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+          <div class="group-box" formGroupName="model">
+            <div class="card-head">
+              <div class="icon-info info-icon"></div>
+              <label class="title">{{'[Thông tin]' | translate }} </label>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required">{{'[Tên]' | translate }}</label>
+                      <input  class="form-control" type="text" formControlName="name" [(ngModel)]="model.name">
+                      <span class="input-error"
+                        *ngIf="editForm.controls['model'].get('name')!.hasError('required') && !editForm.controls['model'].get('name')!.untouched  ">
+                        {{'[Bắt buộc nhập]' | translate }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text">{{'[Tên EN]' | translate }}</label>
+                      <input  class="form-control" type="text" formControlName="nameEn" [(ngModel)]="model.nameEn">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- Ngày hiệu lực -->
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required">{{'[Ngày hiệu lực]' | translate }}</label>
+                      <ejs-datepicker id="effectivedate" format="dd/MM/yyyy" [(ngModel)]="model.effectivedate"
+                        (keydown)="changeDate('effectivedate')" (blur)="changeDate('effectivedate')"
+                        formControlName="effectivedate" placeholder=".../.../...">
+                      </ejs-datepicker>
+                      <span class="input-error"
+                        *ngIf="editForm.controls['model'].get('effectivedate')!.hasError('required') && !editForm.controls['model'].get('effectivedate')!.untouched">
+                        {{'[Bắt buộc chọn]' | translate }}
+                      </span>
+                      <span class="input-error"
+                        *ngIf="editForm.controls['model'].get('effectivedate')!.hasError('required') && !editForm.controls['model'].get('effectivedate')!.untouched">
+                       {{'[Sai định dạng]' | translate }} 
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group vertical">
+                    <label class="e-float-text required">Nhóm chức
+                      danh</label>
+                    <ejs-dropdownlist [dataSource]='lstGroupId' [fields]='fields'
+                      [showClearButton]="true" [(ngModel)]="model.groupId"
+                      formControlName="groupId" [placeholder]="''"
+                      [allowFiltering]='true'
+                      (filtering)='onFiltering($event,lstParentId)'>
+                    </ejs-dropdownlist>
+                    <span class="input-error"
+                      *ngIf="editForm.get('groupId')!.hasError('required') && !editForm.get('groupId')!.untouched">
+                      Bắt buộc chọn
+                    </span>
+                  </div>
+                </div>
+              </div> -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required">{{'[Mã vị trí]' | translate }}</label>
+                      <input  class="form-control" type="text" formControlName="code" [(ngModel)]="model.code"
+                        maxlength="31">
+                      <span class="input-error"
+                        *ngIf="editForm.controls['model'].get('code')!.hasError('required') && !editForm.controls['model'].get('code')!.untouched">
+                        {{'[Bắt buộc nhập]' | translate }}</span>
+                      <span class="input-error "
+                        *ngIf="editForm.controls['model'].get('code')!.hasError('required') && !editForm.controls['model'].get('code')!.untouched">
+                       {{'[Sai định dạng]' | translate }} 
+                      </span>
+                    </div>
+                  </div>
+                  <!--
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Mô tả công việc</label>
+                    <textarea class="form-control"   formControlName="jobDesc" [(ngModel)]="model.jobDesc"
+                      id="textarea" rows="3"></textarea>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group vertical">
+                    <label class="e-float-text">{{'[Ghi
+                      chú</label>
+                    <textarea class="form-control"  formControlName="note" [(ngModel)]="model.note"
+                      id="textarea" rows="3"></textarea>
+                  </div>
+                </div> -->
+                </div>
+                <!-- Công việc -->
+                <div class="row" style="display: none;">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text">{{'[Công việc]' | translate }}</label>
+                      <ejs-dropdownlist [dataSource]='lstJobId' [fields]='fields' [showClearButton]="true"
+                        [(ngModel)]="model.jobid" formControlName="jobid" [placeholder]="''" [allowFiltering]='true'
+                        (filtering)='onFiltering($event,lstJobId)'>
+                      </ejs-dropdownlist>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required">{{'[Chức danh]' | translate }}</label>
+                      <ejs-dropdownlist [dataSource]='lsttitleId' [fields]='fields' [showClearButton]="true"
+                        [(ngModel)]="model.titleId" formControlName="titleId" [placeholder]="''" [allowFiltering]='true'
+                        (filtering)='onFiltering($event,lsttitleId)'>
+                      </ejs-dropdownlist>
+                      <span class="input-error"
+                        *ngIf="editForm.controls['model'].get('titleId')!.hasError('required') && !editForm.controls['model'].get('titleId')!.untouched">
+                        {{'[Bắt buộc chọn]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Thời gian làm việc -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text">{{'[Thời gian làm việc]' | translate }}</label>
+                      <ejs-dropdownlist [dataSource]='lstWorkingTimeID' [fields]='fields' [showClearButton]="true"
+                        [(ngModel)]="model.workingtime" formControlName="workingtime" [placeholder]="''"
+                        [allowFiltering]='true' (filtering)='onFiltering($event,lstWorkingTimeID)'>
+                      </ejs-dropdownlist>
+                    </div>
+                  </div>
+                </div>
+                <!-- Phòng ban -->
+                <!-- <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical-flex">
+                      <label class="e-float-text required" for="orgid">{{'[Ban/Phòng]' | translate }}</label>
+                      <input  formControlName="orgid" [(ngModel)]="model.orgname" type="text" class="form-control"
+                        readonly>
+                      <div class="input-group-append">
+                        <button class="btn btn-search" type="button" (click)="choiseOrg()"></button>
+                      </div>
+                      <span class="input-error"
+                        *ngIf="editForm.controls['model'].get('orgid')!.hasError('required') && !editForm.controls['model'].get('orgid')!.untouched">
+                        {{'[Trường Ban/Phòng bắt buộc chọn]' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- Trưởng đơn vị, Kế hoạch, Non Physical  -->
+                <div class="row" style = "display: none;">
+                  <!-- Trưởng đơn vị  -->
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="e-float-input">
+                        <ejs-checkbox formControlName="isowner" label="{{'[Trưởng đơn vị]' | translate }}" [(ngModel)]="model.isowner">
+                        </ejs-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Kế hoạch  -->
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="e-float-input">
+                        <ejs-checkbox formControlName="isplan" label="{{'[Kế hoạch]' | translate }}" [(ngModel)]="model.isplan">
+                        </ejs-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Non Physical	 -->
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="e-float-input">
+                        <ejs-checkbox formControlName="isnonphysical" label="{{'[Non Physical]' | translate }}"
+                          [(ngModel)]="model.isnonphysical">
+                        </ejs-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6" style="display: none;">
+                <div class="row">
+                  <!-- Vị trí quản lý trực tiếp -->
+                  <div class="col-sm-12">
+                    <div class="form-group vertical-flex">
+                      <label class="e-float-text">{{'[Vị trí quản lý trực tiếp]' | translate }}</label>
+                      <input  formControlName="lm" [ngModel]="model.lmposition" type="text" class="form-control"
+                        readonly>
+                      <div class="input-group-append">
+                        <button class="btn btn-search" type="button" (click)="choiseQLTT()"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- Quản lý trực tiếp -->
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text" for="lmname">{{'[Quản lý trực tiếp]' | translate }}</label>
+                      <input  class="form-control" type="text" formControlName="lmname" [ngModel]="model.lmname"
+                        readonly>
+                    </div>
+                  </div>
+                </div>
+                <!-- Vị trí quản lý gián tiếp -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical-flex">
+                      <label class="e-float-text">{{'[Vị trí quản lý gián tiếp]' | translate }}</label>
+                      <input  formControlName="csm" [ngModel]="model.csmposition" type="text" class="form-control"
+                        readonly>
+                      <div class="input-group-append">
+                        <button class="btn btn-search" type="button" (click)="choiseQLGT()"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Quản lý gián tiếp -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text" for="csmname">{{'[Quản lý gián tiếp]' | translate }}</label>
+                      <input  class="form-control" type="text" formControlName="csmname" [ngModel]="model.csmname"
+                        readonly>
+                    </div>
+                  </div>
+                </div>
+                <!-- Master -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text" for="mastername">{{'[Master]' | translate }}</label>
+                      <input  class="form-control" type="text" formControlName="mastername" [ngModel]="model.mastername"
+                        readonly>
+                    </div>
+                  </div>
+                </div>
+                <!-- Interim -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text" for="interimname">{{'[Interim]' | translate }}</label>
+                      <input  class="form-control" type="text" formControlName="interimname"
+                        [ngModel]="model.interimname" readonly>
+                    </div>
+                  </div>
+                </div>
+                <!-- Thạng thái -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text">{{'[Trạng thái]' | translate }}</label>
+                      <ejs-dropdownlist [dataSource]='lstStatusID' [fields]='fields' [showClearButton]="true"
+                        [(ngModel)]="model.isActive" formControlName="isActive" [placeholder]="''"
+                        [allowFiltering]='true' (filtering)='onFiltering($event,lstParentId)'>
+                      </ejs-dropdownlist>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="group-box" formGroupName="positionDesc">
+            <div class="card-head">
+              <div class="icon-info info-icon"></div>
+              <label class="title">{{'[Mô tả công việc]' | translate }}</label>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <!-- I. Mục đích công việc -->
+                <label class="item-head">I. {{'[Mục đích công việc]' | translate }}</label>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <label class="e-float-text">1.</label>
+                          <input  class="form-control" type="text" formControlName="jobtarget1"
+                            [(ngModel)]="positionDesc.jobtarget1">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <label class="e-float-text">2.</label>
+                          <input  class="form-control" type="text" formControlName="jobtarget2"
+                            [(ngModel)]="positionDesc.jobtarget2">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+
+                          <label class="e-float-text">3.</label>
+
+
+                          <input  class="form-control" type="text" formControlName="jobtarget3"
+                            [(ngModel)]="positionDesc.jobtarget3">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+
+                          <label class="e-float-text">4.</label>
+
+
+                          <input  class="form-control" type="text" formControlName="jobtarget4"
+                            [(ngModel)]="positionDesc.jobtarget4">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+
+                          <label class="e-float-text">5.</label>
+
+
+                          <input  class="form-control" type="text" formControlName="jobtarget5"
+                            [(ngModel)]="positionDesc.jobtarget5">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+
+                          <label class="e-float-text">6.</label>
+
+
+                          <input  class="form-control" type="text" formControlName="jobtarget6"
+                            [(ngModel)]="positionDesc.jobtarget6">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="item-head">II. {{'[Tiêu chuẩn vị trí]' | translate }}</label>
+                <!-- Trình độ chuyên môn	 -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+                          <!-- <label class="lb">Trình độ chuyên môn</label> -->
+                          <label class="e-float-text">{{'[Trình độ chuyên môn]' | translate }}</label>
+
+                          <ejs-dropdownlist [dataSource]='lstTdcmID' [fields]='fields' [showClearButton]="true"
+                            [(ngModel)]="positionDesc.tdcm" formControlName="tdcm" [placeholder]="''"
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstParentId)'>
+                          </ejs-dropdownlist>
+
+                      </div>
+                  </div>
+                </div>
+                <!-- Chuyên ngành đào tạo -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+                          <!-- <span class="lb">Chuyên ngành đào tạo</span> -->
+                          <label class="e-float-text">{{'[Chuyên ngành đào tạo]' | translate }}</label>
+
+                          <input  class="form-control" type="text" formControlName="major"
+                            [(ngModel)]="positionDesc.major">
+
+                      </div>
+
+                  </div>
+                </div>
+                <!-- Kinh nghiệm làm việc -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+                          <!-- <span class="lb">Kinh nghiệm làm việc</span> -->
+                          <label class="e-float-text">{{'[Kinh nghiệm làm việc]' | translate }}</label>
+   
+                          <input  class="form-control" type="text" formControlName="workexp"
+                            [(ngModel)]="positionDesc.workexp">
+
+                    </div>
+                  </div>
+                </div>
+                <!-- Trình độ ngoại ngữ -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+                          <!-- <label class="lb">Trình độ ngoại ngữ</label> -->
+                          <label class="e-float-text">{{'[Trình độ ngoại ngữ]' | translate }}</label>
+
+                          <ejs-dropdownlist [dataSource]='lstLanguageID' [fields]='fields' [showClearButton]="true"
+                            [(ngModel)]="positionDesc.language" formControlName="language" [placeholder]="''"
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstParentId)'>
+                          </ejs-dropdownlist>
+
+                      </div>
+
+                  </div>
+                </div>
+                <!-- Trình độ tin học/phần mềm -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+                          <!-- <label class="lb">Trình độ tin học/phần mềm</label> -->
+                          <label class="e-float-text">{{'[Trình độ tin học/phần mềm]' | translate }}</label>
+
+                          <ejs-dropdownlist [dataSource]='lstComputerID' [fields]='fields' [showClearButton]="true"
+                            [(ngModel)]="positionDesc.computer" formControlName="computer" [placeholder]="''"
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstParentId)'>
+                          </ejs-dropdownlist>
+
+
+                    </div>
+                  </div>
+                </div>
+                <!-- Các kỹ năng hỗ trợ -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+                          <!-- <span class="lb">Các kỹ năng hỗ trợ</span> -->
+                          <label class="e-float-text">{{'[Các kỹ năng hỗ trợ]' | translate }}</label>
+
+                          <input  class="form-control" type="text" formControlName="supportskill"
+                            [(ngModel)]="positionDesc.supportskill">
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+
+                <!-- III.1 Quan hệ tương tác -->
+                <label class="item-head">III.1 {{'[Quan hệ tương tác]' | translate }}</label>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+                          <!-- <span class="lb">Nội bộ</span> -->
+                          <label class="e-float-text">{{'[Nội bộ]' | translate }}</label>
+
+  
+                          <input  class="form-control" type="text" formControlName="internal1"
+                            [(ngModel)]="positionDesc.internal1">
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+
+                          <input  class="form-control" type="text" formControlName="internal2"
+                            [(ngModel)]="positionDesc.internal2">
+
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+                        
+
+                          <input  class="form-control" type="text" formControlName="internal3"
+                            [(ngModel)]="positionDesc.internal3">
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="item-head"></label>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+
+                          <!-- <span class="lb">Bên ngoài</span> -->
+                          <label class="e-float-text">{{'[Bên ngoài]' | translate }}</label>
+
+                          <input  class="form-control" type="text" formControlName="internal1"
+                            [(ngModel)]="positionDesc.outside1">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+                        
+
+                          <input  class="form-control" type="text" formControlName="outside2"
+                            [(ngModel)]="positionDesc.outside2">
+
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+
+
+                          <input  class="form-control" type="text" formControlName="outside3"
+                            [(ngModel)]="positionDesc.outside3">
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <!-- III.2.1 Trách nhiệm -->
+                <label class="item-head">III.2.1 {{'[Trách nhiệm]' | translate }}</label>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span></span>
+                        </div>
+                        <div class="col-sm-3">
+                          <span>{{'[Trách nhiệm]' | translate }}</span>
+                        </div>
+                        <div class="col-sm-5">
+                          <span>{{'[Trách nhiệm cụ thể]' | translate }}</span>
+                        </div>
+                        <div class="col-sm-3">
+                          <span>{{'[Kết quả đầu ra]' | translate }}</span>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">1</span>
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="responsibility1"
+                            [(ngModel)]="positionDesc.responsibility1">
+                        </div>
+                        <div class="col-sm-5">
+                          <input  class="form-control" type="text" formControlName="detailresponsibility1"
+                            [(ngModel)]="positionDesc.detailresponsibility1">
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="outresult1"
+                            [(ngModel)]="positionDesc.outresult1">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">2</span>
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="responsibility2"
+                            [(ngModel)]="positionDesc.responsibility2">
+                        </div>
+                        <div class="col-sm-5">
+                          <input  class="form-control" type="text" formControlName="detailresponsibility2"
+                            [(ngModel)]="positionDesc.detailresponsibility2">
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="outresult2"
+                            [(ngModel)]="positionDesc.outresult2">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">3</span>
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="responsibility3"
+                            [(ngModel)]="positionDesc.responsibility3">
+                        </div>
+                        <div class="col-sm-5">
+                          <input  class="form-control" type="text" formControlName="detailresponsibility3"
+                            [(ngModel)]="positionDesc.detailresponsibility3">
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="outresult3"
+                            [(ngModel)]="positionDesc.outresult3">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">4</span>
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="responsibility4"
+                            [(ngModel)]="positionDesc.responsibility4">
+                        </div>
+                        <div class="col-sm-5">
+                          <input  class="form-control" type="text" formControlName="detailresponsibility4"
+                            [(ngModel)]="positionDesc.detailresponsibility4">
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="outresult4"
+                            [(ngModel)]="positionDesc.outresult4">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">5</span>
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="responsibility5"
+                            [(ngModel)]="positionDesc.responsibility5">
+                        </div>
+                        <div class="col-sm-5">
+                          <input  class="form-control" type="text" formControlName="detailresponsibility5"
+                            [(ngModel)]="positionDesc.detailresponsibility5">
+                        </div>
+                        <div class="col-sm-3">
+                          <input  class="form-control" type="text" formControlName="outresult5"
+                            [(ngModel)]="positionDesc.outresult5">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+                <!-- III.2.2 Quyền hạn -->
+                <label class="item-head">III.2.2 {{'[Quyền hạn]' | translate }}</label>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">1</span>
+                        </div>
+                        <div class="col-sm-11">
+                          <input  class="form-control" type="text" formControlName="permission1"
+                            [(ngModel)]="positionDesc.permission1">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">2</span>
+                        </div>
+                        <div class="col-sm-11">
+                          <input  class="form-control" type="text" formControlName="permission2"
+                            [(ngModel)]="positionDesc.permission2">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">3</span>
+                        </div>
+                        <div class="col-sm-11">
+                          <input  class="form-control" type="text" formControlName="permission3"
+                            [(ngModel)]="positionDesc.permission3">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">4</span>
+                        </div>
+                        <div class="col-sm-11">
+                          <input  class="form-control" type="text" formControlName="permission4"
+                            [(ngModel)]="positionDesc.permission4">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">5</span>
+                        </div>
+                        <div class="col-sm-11">
+                          <input  class="form-control" type="text" formControlName="permission5"
+                            [(ngModel)]="positionDesc.permission5">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <div class="row">
+                        <div class="col-sm-1">
+                          <span class="lb">6</span>
+                        </div>
+                        <div class="col-sm-11">
+                          <input  class="form-control" type="text" formControlName="permission6"
+                            [(ngModel)]="positionDesc.permission6">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<cms-app-modals-org id="cms-app-modals-org">
+</cms-app-modals-org>
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmBack('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DIRECT MODAL-->
+<v2hrm-confirm-modal id="confirm-direct-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default">{{'[Hủy]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

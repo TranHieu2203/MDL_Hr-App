@@ -1,0 +1,79 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Truyền thông]' | translate }} 
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/media/internalblog'>{{'[Tin tức nội bộ]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="internalblog" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+        rowHeight='37' headerHeight='42' [height]='configs.height()'
+        [allowPaging]='true' [pageSettings]='configs.pageSettings'
+        [enableHover]='true' (recordDoubleClick)="viewRecord($event!)"
+        [allowSorting]='true' allowResizing='true'
+        [locale]='configs.currentLang' [allowSelection]='true'
+        [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='60'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='_id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+          <!--  -->
+          <e-column field='themeName' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Chủ đề]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+       
+
+          <e-column field='description' headerTextAlign="Center"
+            textAlign="Left" headerText="{{'[Mô tả]' | translate }}"
+            clipMode='EllipsisWithTooltip'>
+          </e-column>
+          <!-- <e-column field='create_by' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[create_by" clipMode='EllipsisWithTooltip'>
+          </e-column>
+          <e-column field='date_create' headerTextAlign="Center"
+            textAlign="Left" headerText="{{'[date_create"
+            clipMode='EllipsisWithTooltip'>
+          </e-column>
+          <e-column field='orders' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Thứ tự" clipMode='EllipsisWithTooltip'>
+          </e-column> -->
+          <!--  -->
+          <e-column field='isActive' textAlign="Center" headerText="{{'[Trạng thái]' | translate }}"
+            clipMode='EllipsisWithTooltip'>
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-effect text-center" *ngIf="data.isActive">
+                  <span>{{'[Hiệu lực]' | translate }}</span>
+                </div>
+                <div class="status-not-effect text-center" *ngIf="!data.isActive">
+                  <span>{{'[Không hiệu lực]' | translate }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

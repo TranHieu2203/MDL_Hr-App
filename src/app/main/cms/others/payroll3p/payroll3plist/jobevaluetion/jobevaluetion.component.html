@@ -1,0 +1,97 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Khác ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Lương 3P]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            Danh mục
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/setting/organization'>{{'[Năng lực vị trí]' | translate
+              }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)" *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='500px' min='30%' max='40%'>
+            <ng-template #content>
+              <div class="row">
+                <div class="col">
+                  <ejs-treeview #treeView (nodeSelected)="nodeSelecting($event!)" [fields]='field'>
+                  </ejs-treeview>
+                </div>
+              </div>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="card-center">
+                <form name="editForm" [formGroup]="editForm" novalidate>
+                  <div class="group-box">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Thông tin]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Năng lực cha]' | translate }}</label>
+                          <input class="form-control" type="text" readonly formControlName="parentName"
+                            [(ngModel)]="model.parentName">
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text require">{{'[Tên năng lực]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name">
+                          <span class="input-error"
+                            *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                            {{'[Bắt buộc nhập]' | translate }}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Điểm năng lực]' | translate }}</label>
+                          <input class="form-control" type="number" formControlName="mark" [(ngModel)]="model.mark">
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ghi chú]' | translate }}</label>
+                          <textarea class="form-control" formControlName="note" [(ngModel)]="model.note"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>

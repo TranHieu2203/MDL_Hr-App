@@ -1,0 +1,402 @@
+<div class="app-main-content">
+  <div class="app-container">
+
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/decision'>{{'[Quyết định thay đổi thông tin nhân
+              sự]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="decision" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="card-center">
+        <form name="editForm" [formGroup]="editForm" novalidate>
+
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin quyết định]' | translate }}</label>
+            </div>
+            <div class="row">
+              <!-- mã nhân viên -->
+              <div class="col-sm-4">
+                <div class="form-group vertical-flex">
+                  <label class="e-float-text required">{{'[Mã nhân viên]' | translate }}</label>
+                  <input class="form-control" [ngModel]="model.employeeCode" formControlName="employeeCode" type="text"
+                    readonly>
+                  <div class="input-group-append">
+                    <button class="btn btn-search" type="button" (click)="choiseEmp()"></button>
+                  </div>
+                </div>
+              </div>
+              <!-- họ và tên -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Họ và Tên]' | translate }}</label>
+                  <input type="text" class="form-control" formControlName="employeeName"
+                    [(ngModel)]="model.employeeName" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Phòng ban -->
+              <div class="col-sm-4">
+                <div class="form-group vertical-flex">
+                  <label class="e-float-text required" for="orgId">{{'[Phòng ban]' | translate }}</label>
+                  <input formControlName="orgId" [(ngModel)]="model.orgName" type="text" class="form-control" readonly>
+                  <div class="input-group-append">
+                    <button class="btn btn-search" type="button" (click)="choiseOrg()"></button>
+                  </div>
+                  <span class="input-error"
+                    *ngIf="editForm.get('orgId')!.hasError('required') && !editForm.get('orgId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!-- Đơn vị -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Đơn vị]' | translate }}</label>
+                  <input type="text" class="form-control" formControlName="orgParentName"
+                    [(ngModel)]="model.orgParentName" readonly>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Vị trí công việc]' | translate }}</label>
+                  <ejs-dropdownlist id='positionId' [dataSource]='lstPositionId' formControlName="positionId"
+                    [showClearButton]="true" [(ngModel)]="model.positionId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstPositionId)' (change)='changePosition($event!)'
+                    popupWidth='800px' [headerTemplate]='headerTemplate' [itemTemplate]='itemTemplate'>
+                    <ng-template #itemTemplate="" let-data="">
+                      <div class="cbo-item">
+                        <div class="row">
+                          <div class="col-sm-6">{{data.name}}</div>
+                          <div class="col-sm-3">{{data.master}}</div>
+                          <div class="col-sm-3">{{data.interim}}</div>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template #headerTemplate="" let-data="">
+                      <div class="cbo-item cbo-item-header"
+                        style="font-weight: 700; text-align: center;padding-top: 5px;border-bottom: 2px solid rgba(0,0,0,0.2);">
+                        <div class="row">
+                          <div class="col-sm-6">{{'[Vị trí]' | translate }}</div>
+                          <div class="col-sm-3">{{'[Master]' | translate }}</div>
+                          <div class="col-sm-3">{{'[Interim]' | translate }}</div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('positionId')!.hasError('required') && !editForm.get('positionId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Loại quyết định  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="typeId">{{'[Loại quyết định]' | translate }}</label>
+                  <ejs-dropdownlist id='typeId' [dataSource]='lstDecisionTypeId' formControlName="typeId"
+                    [showClearButton]="true" [(ngModel)]="model.typeId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstDecisionTypeId)' (change)="changeDecisionType($event!)">
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('typeId')!.hasError('required') && !editForm.get('typeId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!--Ngày bắt đầu  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <ejs-datepicker id="effectDate" format="dd/MM/yyyy" [(ngModel)]="model.effectDate"
+                    (keydown)="changeDate('effectDate')" (blur)="changeDate('effectDate')" formControlName="effectDate"
+                    placeholder=".../.../...">
+                  </ejs-datepicker>
+                  <label class="e-float-text required" for="ngayhachtoan">{{'[Ngày hiệu lực]' | translate }}</label>
+                  <span class="input-error"
+                    *ngIf="editForm.get('effectDate')!.hasError('required') && !editForm.get('effectDate')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                  <span class="input-error"
+                    *ngIf="editForm.get('effectDate')!.hasError('incorrect') && !editForm.get('effectDate')!.untouched">
+                    {{'[Sai định dạng]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!-- Số quyết định -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="decisionNo">{{'[Số quyết định]' | translate }}</label>
+                  <input type="text" formControlName="decisionNo" class="form-control" [(ngModel)]="model.decisionNo">
+                  <span class="input-error"
+                    *ngIf="editForm.get('decisionNo')!.hasError('required') && !editForm.get('decisionNo')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="group-box">
+            <!-- Thông tin lương -->
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin lương]' | translate }}</label>
+            </div>
+            <div class="row">
+              <!--Bảng lương  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="salaryTypeId">{{'[Bảng
+                    lương]' | translate }}</label>
+                  <ejs-dropdownlist id='salaryTypeId' [dataSource]='lstsalaryTypeId' formControlName="salaryTypeId"
+                    [showClearButton]="true" [(ngModel)]="model.salaryTypeId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstsalaryTypeId)'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('salaryTypeId')!.hasError('required') && !editForm.get('salaryTypeId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!--Thang lương  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="salaryScaleId">{{'[Thang lương]' | translate }}</label>
+                  <ejs-dropdownlist id='salaryScaleId' [dataSource]='lstsalaryScaleId' formControlName="salaryScaleId"
+                    [showClearButton]="true" [(ngModel)]="model.salaryScaleId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstsalaryScaleId)' (change)="changeSalaryScale($event!)">
+                  </ejs-dropdownlist>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!--Ngạch lương  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="salaryRankId">{{'[Ngạch lương]' | translate }}</label>
+                  <ejs-dropdownlist id='salaryRankId' [dataSource]='lstsalaryRankId' formControlName="salaryRankId"
+                    [showClearButton]="true" [(ngModel)]="model.salaryRankId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstsalaryRankId)' (change)="changeSalaryRank($event!)">
+                  </ejs-dropdownlist>
+                </div>
+              </div>
+              <!--Bậc lương  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="salaryLevelId">{{'[Bậc lương]' | translate }}</label>
+                  <ejs-dropdownlist id='salaryLevelId' [dataSource]='lstsalaryLevelId' formControlName="salaryLevelId"
+                    [showClearButton]="true" [(ngModel)]="model.salaryLevelId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstsalaryLevelId)' (change)="changeSalaryLevel($event!)">
+                  </ejs-dropdownlist>
+                </div>
+              </div>
+              <!-- Hệ số -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="coefficient">{{'[Hệ số]' | translate }}</label>
+                  <ejs-numerictextbox format="N2" locale="en" name="coefficient" formControlName="coefficient"
+                    [(ngModel)]="model.coefficient" min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Hưởng lương -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="SalPercent">{{'[Hưởng lương (%)]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="levelCommend" formControlName="salPercent"
+                    [(ngModel)]="model.salPercent" min="0" max="100">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('salPercent')!.hasError('required') && !editForm.get('salPercent')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!-- Lương cơ bản -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="SalBasic">{{'[Lương cơ bản]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="levelCommend" formControlName="salBasic"
+                    [(ngModel)]="model.salBasic" min="0" max="999999999" (blur)="calculateSum()">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('salBasic')!.hasError('required') && !editForm.get('salBasic')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!-- Lương P2 -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="SalaryP2">{{'[Thưởng HTCV(P2)]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="levelCommend" formControlName="salaryP2"
+                    [(ngModel)]="model.salaryP2" min="0" max="999999999" (blur)="calculateSum()">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div class="row">
+              <!-- Lương P3 -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="SalaryP3">{{'[Thưởng SP-DV(P3)]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="levelCommend" formControlName="salaryP3"
+                    [(ngModel)]="model.salaryP3" min="0" max="999999999" (blur)="calculateSum()">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+              <!-- Lương KPI -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="SalaryKpi">{{'[Lương KPI]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="levelCommend" formControlName="salaryKpi"
+                    [(ngModel)]="model.salaryKpi" min="0" max="999999999" (blur)="calculateSum()">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+
+              <!-- Lương đóng BH -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text" for="SalaryIns">{{'[Lương đóng BH]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="levelCommend" formControlName="salaryIns"
+                    [(ngModel)]="model.salaryIns" min="0" max="999999999">
+                  </ejs-numerictextbox>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+
+              <!-- Tổng lương -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="SalTotal">{{'[Tổng lương]' | translate }}</label>
+                  <ejs-numerictextbox format="N0" locale="en" name="levelCommend" formControlName="salTotal"
+                    [(ngModel)]="model.salTotal" min="0" max="999999999">
+                  </ejs-numerictextbox>
+                  <span class="input-error"
+                    *ngIf="editForm.get('salTotal')!.hasError('required') && !editForm.get('salTotal')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="group-box">
+            <div class="card-head">
+              <div class="icon-info v-icon"></div>
+              <label class="title">{{'[Thông tin phê duyệt]' | translate }}</label>
+            </div>
+            <div class="row">
+              <!-- Người ký -->
+              <div class="col-sm-4">
+                <div class="form-group vertical-flex">
+                  <label class="e-float-text required">{{'[Người ký]' | translate }}</label>
+                  <input formControlName="signId" [(ngModel)]="model.signerName" type="text" class="form-control"
+                    readonly>
+                  <div class="input-group-append">
+                    <button class="btn btn-search" type="button" (click)="choiseSigner()"></button>
+                  </div>
+                  <span class="input-error"
+                    *ngIf="editForm.get('signId')!.hasError('required') && !editForm.get('signId')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!-- Chức danh -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required">{{'[Vị trí công việc]' | translate }}</label>
+                  <input type="text" formControlName="signerPosition" class="form-control"
+                    [(ngModel)]="model.signerPosition" readonly>
+                </div>
+              </div>
+              <!--Ngày ký  -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="signDate">{{'[Ngày ký]' | translate }}</label>
+                  <ejs-datepicker id="signDate" format="dd/MM/yyyy" [(ngModel)]="model.signDate"
+                    (keydown)="changeDate('signDate')" (blur)="changeDate('signDate')" formControlName="signDate"
+                    placeholder=".../.../...">
+                  </ejs-datepicker>
+                  <span class="input-error"
+                    *ngIf="editForm.get('signDate')!.hasError('required') && !editForm.get('signDate')!.untouched">
+                    {{'[Bắt buộc nhập]' | translate }}
+                  </span>
+                  <span class="input-error"
+                    *ngIf="editForm.get('signDate')!.hasError('incorrect') && !editForm.get('signDate')!.untouched">
+                    {{'[Sai định dạng]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Ghi chú -->
+              <div class="col-sm-12">
+                <div class="form-group vertical">
+                  <textarea class="form-control" formControlName="note" [(ngModel)]="model.note"></textarea>
+                  <label class="e-float-text " for="note">{{'[Ghi chú]' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!--Trạng thái -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required" for="statusId">{{'[Trạng thái]' | translate }}</label>
+                  <ejs-dropdownlist id='statusId' [dataSource]='lstStatusId' formControlName="statusId"
+                    [showClearButton]="true" [(ngModel)]="model.statusId" [fields]='fields' [allowFiltering]='true'
+                    (filtering)='onFiltering($event,lstStatusId)'>
+                  </ejs-dropdownlist>
+                  <span class="input-error"
+                    *ngIf="editForm.get('statusId')!.hasError('required') && !editForm.get('statusId')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<cms-app-modals-org id="cms-app-modals-org">
+</cms-app-modals-org>
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

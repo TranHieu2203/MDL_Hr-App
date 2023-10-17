@@ -1,0 +1,112 @@
+cms-app-modalsposition {
+  display: none;
+  
+  .modal-position {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 250;
+    /* enables scrolling for tall modals */
+    overflow: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1100px;
+    height: 650px;
+    border-radius: 0px;
+    
+    .p-l {
+      padding-left: 0px;
+    }
+    .e-grid {
+      font-family: "v2hrm-font" !important;
+      border: none;
+    }
+    input.e-input,
+    textarea.e-input,
+    .e-input-group,
+    .e-input-group.e-control-wrapper {
+      font-family: "v2hrm-font" !important;
+      font-size: 13px;
+      color: #607d95;
+    }
+    .e-pager {
+      font-size: 13px !important;
+    }
+  }
+  .modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 200;
+  }
+  .modal-header-position {
+    height: 40px;
+    background: #ff6d00!important;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    align-items: center;
+    p {
+      margin: 0px;
+    }
+  }
+  .modal-footer-position {
+    background: white;
+    height: 56px;
+    display: flex;
+    position: absolute;
+    width: 100%;
+
+    i {
+      margin-right: 5px;
+    }
+    .terminate {
+      padding: 15px 0 0 15px;
+    }
+  }
+  .modal-content-position {
+    background: white;
+    height: 80%;
+    .r-h {
+      height: 100%;
+    }
+    .list-grid {
+      height: 100%;
+    }
+    .e-pagerdropdown {
+      width: 66px !important;
+    }
+    
+  }
+  span:hover {
+    cursor: pointer;
+  }
+  .e-gridpager.e-control.e-pager.e-lib {
+    padding: 6px !important;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+  .e-pager, .e-pagercontainer {
+    background-color: #f2f2f2 !important;
+  }
+  .e-pager div.e-icons {
+    color: #000 !important;
+    background-color: #f2f2f2 !important;
+  }
+  
+}

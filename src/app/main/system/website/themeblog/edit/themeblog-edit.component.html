@@ -1,0 +1,88 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"> Portal</i>
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/sys/website/themeblog'>{{'[Chủ đề]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)" *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[Thông tin]' | translate }} </label>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <button class="btn btn-primary" type="button" (click)="ChooseBackground()">{{'[Chọn Backgound]' |
+                  translate }}</button>
+                <input #file type="file" id="file" name="file" style="display:none" accept="image/*"
+                  data-max-size="5120" (change)="uploadImg(file.files)">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required">{{'[Màu chữ]' | translate }}</label>
+                <ejs-dropdownlist id="color" [dataSource]='lstColor' [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="model.color" formControlName="color" [placeholder]="''" [allowFiltering]='true'
+                  (ngModelChange)="ChangeColor()">
+                </ejs-dropdownlist>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required">{{'[Tên chủ đề]' | translate }}</label>
+                <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name" maxlength="51">
+              </div>
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text">{{'[Xem thử:]' | translate }}</label>
+                <div class="form-control" id="preview"
+                  style="height: 194px;background-size: 100%;background-repeat: no-repeat;border-radius: 10px;">
+                  <p class="content-theme">Nội dung tiêu đề ...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

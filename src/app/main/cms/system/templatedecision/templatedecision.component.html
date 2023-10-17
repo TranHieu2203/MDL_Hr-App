@@ -1,0 +1,68 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Thiết lập]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/system/templatedecision'>{{'[Cấu hình số quyết định tự sinh]' | translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="templatedecision" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+
+
+      <div class="card card-content">
+        <div class="card-main-content">
+          <div class="list-grid">
+            
+            <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+              (dataStateChange)="dataStateChange($event!)" rowHeight='37' headerHeight='42' [height]='configs.height()'
+              [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true'
+              (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true' allowResizing='true'
+              [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+              [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+              (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+              [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+              <e-columns>
+                <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false' [allowSorting]='false'
+                  width='60' textAlign="Center" [allowEditing]="false">
+                </e-column>
+                <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                  [isPrimaryKey]='true' [allowEditing]="false">
+                </e-column>
+
+                <!-- <e-column width="60" eaderTextAlign="Center" textAlign="Center" headerText="{{'[STT]' | translate }}"
+                  clipMode="EllipsisWithTooltip">
+                  <ng-template #template let-data>
+                    <span>{{ formatStt(data.index) }}</span>
+                  </ng-template>
+                </e-column> -->
+                <e-column field='typeName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Phân loại]' | translate }}"
+                  clipMode='EllipsisWithTooltip' width="120"></e-column>
+                <e-column field='decisionName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Loại HĐ/QĐ]' | translate }}"
+                  clipMode='EllipsisWithTooltip' width="120"></e-column>
+                <e-column field='templateCode' headerTextAlign="Center" textAlign="Left"
+                  headerText="{{'[Cấu trúc]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+                <e-column field='name' headerTextAlign="Center" textAlign="Left"
+                  headerText="{{'[Tên]' | translate }}" clipMode='EllipsisWithTooltip'
+                  width="120"></e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->

@@ -1,0 +1,55 @@
+
+export class CompanyInfo {
+  id?: number;
+  nameVN?: string;
+  nameEN?: string;
+  orgId?: number; 
+  orgCode?: string;
+  orgName?: string;
+  gpkdAddress?: string;
+  regionId?: number;
+  regionName?: string;
+  phoneNumber?: string;
+  workAddress?: string;
+  insUnit?: number;
+  insUnitName?: string;
+  provinceId?: number;
+  provinceName?: string;
+  districtId?: number;
+  districtName?: string;
+  wardId?: number;
+  wardName?: string;
+  fileLogo?: string;
+  bankAccount?: string;
+  bankId?: number;
+  bankName?: string;
+  bankBranchId?: number;
+  bankBranchName?: string;
+  bankBranch?: string
+  fileHeader?: string;
+  pitCode?: string;
+  pitCodeChange?: string;
+  pitCodeDate?: Date;
+  FileFooter?: string;
+  representativeId?: number;
+  representativeName?: string;
+  representativeNation?: string;
+  representativePosition?: string;
+  signId?: number;
+  signName?: string;
+  signPosition?: string;
+  signNation?: string;
+  pitCodePlace?: string;
+  gpkdNo?: string;
+  gpkdDate?: Date;
+  website?: string;
+  fax?: string;
+  note?: string;
+
+  isActive?: boolean;
+  isActiveName?: string;
+  createBy?: string;
+  updatedBy?: string;
+  createDate?: Date;
+  updatedDate?: Date;
+}

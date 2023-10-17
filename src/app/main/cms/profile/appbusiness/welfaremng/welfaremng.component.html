@@ -1,0 +1,87 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- app-toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/welfaremng'>{{'[Thông tin phúc lợi]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="welfaremng" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="list-grid">
+                <ejs-grid #overviewgrid id='overviewgrid' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='35' headerHeight='40'
+                  [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+                  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+                  [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='50' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    
+                    <e-column field='employeeCode' headerTextAlign="Center" textAlign="Left" headerText="{{'[Mã nhân viên]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="130"></e-column>
+                    <e-column field='employeeName' headerTextAlign="Center" textAlign="Left" headerText="{{'[Tên nhân viên]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="130"></e-column>
+                    <e-column field='welfareListName' headerTextAlign="Center" textAlign="Left"
+                      headerText="{{'[Loại phúc lợi]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+                    <e-column field='money' headerTextAlign="Center" textAlign="Left" headerText="{{'[Số tiền]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="50"></e-column>
+                    <e-column field='isTax' headerTextAlign="Center" textAlign="Left" headerText="{{'[Tính thuế]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="90">
+                      <ng-template #template let-data>
+                        <ejs-checkbox [ngModel]="data.isTax" [disabled]="true">
+                        </ejs-checkbox>
+                      </ng-template>
+                    </e-column>
+
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa dữ liệu?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

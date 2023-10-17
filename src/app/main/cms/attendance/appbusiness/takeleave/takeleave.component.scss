@@ -1,0 +1,15 @@
+cms-takeleave {
+    .e-grid .e-headercelldiv
+    {
+        white-space: normal !important;
+    }
+    .e-grid .e-frozenheader > .e-table,
+    .e-grid .e-frozencontent > .e-table,
+    .e-grid .e-frozenheader .e-virtualtable > .e-table,
+    .e-grid .e-frozencontent .e-virtualtable > .e-table {
+    border: none;
+    }
+    .e-columnheader {
+        height: 48px !important;
+    }
+}

@@ -1,0 +1,1033 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hồ sơ]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/staffprofile-change'>{{'[Phê duyệt Sơ yếu lý lịch]' |
+              translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="staffprofile-change" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div class="card-md">
+        <div class="row">
+          <div id="img-card">
+            <div class="group-box">
+              <ejs-tooltip  target="#target">
+                <div id="target" onclick="javascript:document.getElementById('avatar').click();">
+                  <img *ngIf="!model.avatar"
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    class="img-avatar" />
+                  <img *ngIf="model.avatar" [src]='model.avatar' class="img-avatar" style="object-fit: cover;" />
+                </div>
+              </ejs-tooltip>
+
+              <div class="emp-info">
+                <div>
+                  <label class="fullname"><a class="link-history">{{model.fullname}}</a></label>
+                </div>
+                <div>
+                  <p>{{model.positionName}}</p>
+                </div>
+                <hr>
+                <div>
+                  <p class="email"><i class="fa fa-envelope-o" style="color: #737373;"></i><span
+                      style="color: #1d9bf0; padding-left: 10px;">{{model.workEmail}}</span>
+                  </p>
+                </div>
+                <div>
+                  <p><i class="fa fa-phone" style="color: #737373;"></i>
+                    <span style="color: #1d9bf0; padding-left: 10px;">{{model.mobilePhone}}</span>
+                  </p>
+                </div>
+                <hr>
+                <div>
+                  <p style="color: #737373;">{{'[Phòng ban]' | translate }}</p>
+                  <p>{{model.orgName}}</p>
+                </div>
+                <div>
+                  <p style="color: #737373;">{{'[Người quản lý]' | translate }}</p>
+                  <p>{{model.orgManager}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-sm-9 offset-3">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a (click)="changeTab(1)" class="nav-link active" data-toggle="tab" href="#home">{{'[Sơ yếu lý lịch]' |
+                  translate }}</a>
+              </li>
+              <li class="nav-item">
+                <a (click)="changeTab(2)" class="nav-link" data-toggle="tab" href="#profile">Thông tin phụ</a>
+              </li>
+              <li class="nav-item">
+                <a (click)="changeTab(3)" class="nav-link" data-toggle="tab" href="#education">{{'[Trình độ văn hoá]' |
+                  translate }}</a>
+              </li>
+              <li class="nav-item">
+                <a (click)="changeTab(4)" class="nav-link" data-toggle="tab" href="#user">{{'[TK ngân hàn]' | translate
+                  }}g</a>
+              </li>
+            </ul>
+            <form name="editForm" [formGroup]="editForm" novalidate>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <!-- Thông tin hiên tại -->
+                  <div class="group-box" formGroupName="currentinfor">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Thông tin hiện tại]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Mã nhân viên]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="code" [(ngModel)]="model.code"
+                            readonly>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Họ và tên đệm]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="firstName"
+                            [(ngModel)]="model.firstName" (ngModelChange)="changeName()" readonly
+                            [ngClass]="{'highlight': compareText(model.firstName?.toString(),modelCompare.firstName?.toString()) && modelCompare !== null}">
+
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Tên]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="lastName"
+                            [(ngModel)]="model.lastName" (ngModelChange)="changeName()" readonly
+                            [ngClass]="{'highlight': compareText(model.lastName?.toString(),modelCompare.lastName?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <!-- Phòng ban -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical-flex">
+                          <label class="e-float-text required">{{'[Phòng ban]' | translate }}</label>
+                          <input formControlName="orgName" [(ngModel)]="model.orgName" type="text" class="form-control"
+                          [ngClass]="{'highlight': compareText(model.orgName?.toString(),modelCompare.orgName?.toString()) && modelCompare !== null}"
+                            readonly>
+                        </div>
+                      </div>
+
+                      <!--Chức vụ  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical-flex">
+                          <label class="e-float-text required">{{'[Vị trí công việc]' | translate }}</label>
+                          <input formControlName="positionName" [(ngModel)]="model.positionName" type="text"
+                            class="form-control"
+                            [ngClass]="{'highlight': compareText(model.positionName?.toString(),modelCompare.positionName?.toString()) && modelCompare !== null}"
+                            readonly>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Kinh nghiệm]' | translate }}</label>
+                          <ejs-dropdownlist id='experienceId' [dataSource]='lstExperienceId'
+                            formControlName="experienceId" [showClearButton]="true" [(ngModel)]="model.experienceId"
+                            [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstExperienceId)'
+                            [ngClass]="{'highlight': model.experienceId !== modelCompare.experienceId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class = "row">
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Mã số thuế cá nhân]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="taxCode" [(ngModel)]="model.taxCode">
+                          <!-- <span class="input-error"
+                          *ngIf="editForm.controls['currentinfor'].get('taxCode')!.hasError('required') && !editForm.controls['currentinfor'].get('taxCode')!.untouched">
+                          {{'[Bắt buộc nhập]' | translate }}</span> -->
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text required">{{'[Nơi làm việc]' | translate }}</label>
+                          <ejs-dropdownlist id='placeId' [dataSource]='lstPlaceId' formControlName="placeId"
+                            [showClearButton]="true" [(ngModel)]="model.placeId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstPlaceId)'>
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['currentinfor'].get('placeId')!.hasError('required') && !editForm.controls['currentinfor'].get('placeId')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--- Thông tin cá nhân -->
+                  <div class="group-box" formGroupName="infor">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Thông tin cá nhân]' | translate }}</label>
+                    </div>
+                    <!--  -->
+                    <div class="row">
+                      <!--Ngày sinh  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày sinh]' | translate }}</label>
+                          <ejs-datepicker id="birthDate" format="dd/MM/yyyy" [(ngModel)]="model.birthDate"
+                            (keydown)="changeDate('birthDate')" (blur)="changeDate('birthDate')"
+                            formControlName="birthDate" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.birthDate !== modelCompare.birthDate && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['infor'].get('birthDate')!.hasError('') && !editForm.controls['infor'].get('birthDate')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['infor'].get('birthDate')!.hasError('incorrect') && !editForm.controls['infor'].get('birthDate')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Giới tính  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Giới tính]' | translate }}</label>
+                          <ejs-dropdownlist id='genderId' [dataSource]='lstGenderId' formControlName="genderId"
+                            [showClearButton]="true" [(ngModel)]="model.genderId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstGenderId)'
+                            [ngClass]="{'highlight': model.genderId !== modelCompare.genderId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['infor'].get('genderId')!.hasError('') && !editForm.controls['infor'].get('genderId')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!-- Nơi sinh -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Nơi sinh]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="birthPlace"
+                            [(ngModel)]="model.birthPlace"
+                            [ngClass]="{'highlight': compareText(model.birthPlace?.toString(),modelCompare.birthPlace?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <!-- CMNN/TCC -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số CMND/Căn cước]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="idNo" [(ngModel)]="model.idNo"
+                            maxlength="12"
+                            [ngClass]="{'highlight': compareText(model.idNo?.toString(),modelCompare.idNo?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                      <!--Ngày cấp  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày cấp]' | translate }}</label>
+                          <ejs-datepicker id="idDate" format="dd/MM/yyyy" [(ngModel)]="model.idDate"
+                            (keydown)="changeDate('idDate')" (blur)="changeDate('idDate')" formControlName="idDate"
+                            placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.idDate !== modelCompare.idDate && modelCompare !== null}">
+                          </ejs-datepicker>
+                        </div>
+                      </div>
+                      <!-- Nơi cấp-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Nơi cấp]' | translate }}</label>
+                          <input class="form-control" type="text" class="form-control" formControlName="idPlace"
+                            [(ngModel)]="model.idPlace"
+                            [ngClass]="{'highlight': compareText(model.idPlace?.toString(),modelCompare.idPlace?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class = "row">
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số CMND/Căn cước cũ]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="idNoOld" [(ngModel)]="model.idNoOld"
+                            maxlength="12">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <!--Quốc tịch  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Quốc tịch]' | translate }}</label>
+                          <ejs-dropdownlist id='nationalityId' [dataSource]='lstNationalityId'
+                            formControlName="nationalityId" [showClearButton]="true" [(ngModel)]="model.nationalityId"
+                            [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstNationalityId)'
+                            [ngClass]="{'highlight': model.nationalityId !== modelCompare.nationalityId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Dân tộc  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Dân tộc]' | translate }}</label>
+                          <ejs-dropdownlist id='nativeId' [dataSource]='lstNativeId' formControlName="nativeId"
+                            [showClearButton]="true" [(ngModel)]="model.nativeId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstNativeId)'
+                            [ngClass]="{'highlight': model.nativeId !== modelCompare.nativeId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Tôn giáo  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Tôn giáo]' | translate }}</label>
+                          <ejs-dropdownlist id='religionId' [dataSource]='lstReligionId' formControlName="religionId"
+                            [showClearButton]="true" [(ngModel)]="model.religionId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstReligionId)'
+                            [ngClass]="{'highlight': model.religionId !== modelCompare.religionId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <!--Tình trạng hôn nhân  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Tình trạng hôn nhân]' | translate }}</label>
+                          <ejs-dropdownlist id='maritalStatusId' [dataSource]='lstMaritalStatusId'
+                            formControlName="maritalStatusId" [showClearButton]="true"
+                            [(ngModel)]="model.maritalStatusId" [fields]='fields' [allowFiltering]='true'
+                            (filtering)='onFiltering($event,lstMaritalStatusId)'
+                            [ngClass]="{'highlight': model.maritalStatusId !== modelCompare.maritalStatusId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Thưởng trú tại việt nam -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Đối tượng cư trú]' | translate }}</label>
+                          <ejs-dropdownlist id='resident' [dataSource]='lstResident' formControlName="resident"
+                            [showClearButton]="true" [(ngModel)]="model.residentId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstResident)'
+                            [ngClass]="{'highlight': model.residentId !== modelCompare.residentId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <div class="e-float-input">
+                            <ejs-checkbox formControlName="isTechcombank" label="{{'[Đã có tài khoản Techcombank]' | translate }}" [(ngModel)]="model.isTechcombank">
+                            </ejs-checkbox>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
+                  <div class="group-box" formGroupName="homeAddress">
+                    <div class="card-head">
+                      <div class="icon-round info-icon">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      </div>
+                      <label class="title">{{'[Quê quán]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <!--Tỉnh/TP  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Tỉnh/TP]' | translate }}</label>
+                          <ejs-dropdownlist id='homeProvinceId' [dataSource]='lsthomeProvinceId'
+                            formControlName="homeProvinceId" [showClearButton]="true" [(ngModel)]="model.homeProvinceId"
+                            [fields]='fields' [allowFiltering]='true'
+                            (filtering)='onFiltering($event,lsthomeProvinceId)' (change)="changehomeProvince($event!)"
+                            [ngClass]="{'highlight': model.homeProvinceId !== modelCompare.homeProvinceId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Quận huyện  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Quận/Huyện]' | translate }}</label>
+                          <ejs-dropdownlist id='homeDistrictId' [dataSource]='lsthomeDistrictId'
+                            formControlName="homeDistrictId" [showClearButton]="true" [(ngModel)]="model.homeDistrictId"
+                            [fields]='fields' [allowFiltering]='true'
+                            (filtering)='onFiltering($event,lsthomeDistrictId)' (change)="changehomeDistrict($event!)"
+                            [ngClass]="{'highlight': model.homeDistrictId !== modelCompare.homeDistrictId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Xã/Phường  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Xã/Phường]' | translate }}</label>
+                          <ejs-dropdownlist id='homeWardId' [dataSource]='lsthomeWardId' formControlName="homeWardId"
+                            [showClearButton]="true" [(ngModel)]="model.homeWardId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lsthomeWardId)'
+                            [ngClass]="{'highlight': model.homeWardId !== modelCompare.homeWardId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số nhà, đường phố, thôn xóm]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="homeAddress"
+                            [(ngModel)]="model.homeAddress"
+                            [ngClass]="{'highlight': compareText(model.homeAddress?.toString(),modelCompare.homeAddress?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Địa chỉ -->
+                  <div class="group-box" formGroupName="address">
+                    <div class="card-head">
+                      <div class="icon-round info-icon">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      </div>
+                      <label class="title">{{'[Địa chỉ thường trú]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <!--Tỉnh/TP  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Tỉnh/TP]' | translate }}</label>
+                          <ejs-dropdownlist id='provinceId' [dataSource]='lstProvinceId' formControlName="provinceId"
+                            [showClearButton]="true" [(ngModel)]="model.provinceId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstProvinceId)'
+                            (change)="changeProvince($event!)"
+                            [ngClass]="{'highlight': model.provinceId !== modelCompare.provinceId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Quận huyện  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Quận/Huyện]' | translate }}</label>
+                          <ejs-dropdownlist id='districtId' [dataSource]='lstDistrictId' formControlName="districtId"
+                            [showClearButton]="true" [(ngModel)]="model.districtId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstDistrictId)'
+                            (change)="changeDistrict($event!)"
+                            [ngClass]="{'highlight': model.districtId !== modelCompare.districtId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Xã/Phường  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Xã/Phường]' | translate }}</label>
+                          <ejs-dropdownlist id='wardId' [dataSource]='lstWardId' formControlName="wardId"
+                            [showClearButton]="true" [(ngModel)]="model.wardId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstWardId)'
+                            [ngClass]="{'highlight': model.wardId !== modelCompare.wardId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số nhà, đường phố, thôn xóm]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="address" [(ngModel)]="model.address"
+                          [ngClass]="{'highlight': compareText(model.address?.toString(),modelCompare.address?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Địa chỉ hiện tại-->
+                  <div class="group-box" formGroupName="curAddress">
+                    <div class="card-head">
+                      <div class="icon-round info-icon">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      </div>
+                      <label class="title">{{'[Địa chỉ hiện tại]' | translate }}</label>
+                      <button class="btn-coppy" title="Sao chép địa chỉ thường trú" (click)="coppyAddress()"> <i
+                          class="fa fa-download" aria-hidden="true"></i></button>
+
+                    </div>
+                    <div class="row">
+                      <!--Tỉnh/TP  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Tỉnh/TP]' | translate }}</label>
+                          <ejs-dropdownlist id='curProvinceId' [dataSource]='lstCurProvinceId'
+                            formControlName="curProvinceId" [showClearButton]="true" [(ngModel)]="model.curProvinceId"
+                            [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstCurProvinceId)'
+                            (change)="changeCurProvince($event!)"
+                            [ngClass]="{'highlight': model.curProvinceId !== modelCompare.curProvinceId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Quận huyện  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Quận/Huyện]' | translate }}</label>
+                          <ejs-dropdownlist id='curDistrictId' [dataSource]='lstCurDistrictId'
+                            formControlName="curDistrictId" [showClearButton]="true" [(ngModel)]="model.curDistrictId"
+                            [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstCurDistrictId)'
+                            (change)="changeCurDistrict($event!)"
+                            [ngClass]="{'highlight': model.curDistrictId !== modelCompare.curDistrictId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Xã/Phường  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Xã/Phường]' | translate }}</label>
+                          <ejs-dropdownlist id='curWardId' [dataSource]='lstCurWardId' formControlName="curWardId"
+                            [showClearButton]="true" [(ngModel)]="model.curWardId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstCurWardId)'
+                            [ngClass]="{'highlight': model.curWardId !== modelCompare.curWardId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số nhà, đường phố, thôn xóm]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="curAddress"
+                            [(ngModel)]="model.curAddress"
+                            [ngClass]="{'highlight': compareText(model.curAddress?.toString(),modelCompare.curAddress?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Thông tin liên hệ -->
+                  <div class="group-box" formGroupName="contact">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Thông tin liên hệ]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <!-- Điện thoại di động-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Điện thoại cá nhân]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="mobilePhone"
+                            [(ngModel)]="model.mobilePhone" maxlength="50"
+                            [ngClass]="{'highlight': compareText(model.mobilePhone?.toString(),modelCompare.mobilePhone?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                      <!-- Email cá nhân-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Email cá nhân]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="email" [(ngModel)]="model.email"
+                          [ngClass]="{'highlight': compareText(model.email?.toString(),modelCompare.email?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                      <!-- Email công ty-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Email công ty]' | translate }}</label>
+                          <input type="text" class="form-control" formControlName="workEmail"
+                            [(ngModel)]="model.workEmail"
+                            [ngClass]="{'highlight': compareText(model.workEmail?.toString(),modelCompare.workEmail?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <!-- Người liên hệ khi cần-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <input type="text" class="form-control" formControlName="contactPer"
+                            [(ngModel)]="model.contactPer"
+                            [ngClass]="{'highlight': compareText(model.contactPer?.toString(),modelCompare.contactPer?.toString()) && modelCompare !== null}">
+                          <label class="e-float-text">{{'[Người liên hệ khi cần]' | translate }}</label>
+                        </div>
+                      </div>
+                      <!-- Số điện thoại người liên hệ-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <input type="text" class="form-control" formControlName="contactPerPhone"
+                            [(ngModel)]="model.contactPerPhone"
+                            [ngClass]="{'highlight': compareText(model.contactPerPhone?.toString(),modelCompare.contactPerPhone?.toString()) && modelCompare !== null}">
+                          <label class="e-float-text">{{'[Số điện thoại người liên hệ]' | translate }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"
+                  formGroupName="addinfo">
+                  <div class="group-box">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Hộ chiếu]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <!-- Hộ chiếu-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số hộ chiếu]' | translate }}</label>
+                          <input type="text" formControlName="passNo" class="form-control" [(ngModel)]="model.passNo"
+                          [ngClass]="{'highlight': compareText(model.passNo?.toString(),modelCompare.passNo?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                      <!--Ngày cấp -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày cấp]' | translate }}</label>
+                          <ejs-datepicker id="passDate" format="dd/MM/yyyy" [(ngModel)]="model.passDate"
+                            (keydown)="changeDate('passDate')" (blur)="changeDate('passDate')"
+                            formControlName="passDate" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.passDate !== modelCompare.passDate && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('passDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('passDate')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Ngày hết hạn -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <ejs-datepicker id="passExpire" format="dd/MM/yyyy" [(ngModel)]="model.passExpire"
+                            (keydown)="changeDate('passExpire')" (blur)="changeDate('passExpire')"
+                            formControlName="passExpire" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.passExpire !== modelCompare.passExpire && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <label class="e-float-text">{{'[Ngày hết hạn]' | translate }}</label>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('passExpire')!.hasError('incorrect') && !editForm.controls['addinfo'].get('passExpire')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!-- Nơi cấp-->
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Nơi cấp]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="passPlace"
+                            [(ngModel)]="model.passPlace"
+                            [ngClass]="{'highlight': compareText(model.passPlace?.toString(),modelCompare.passPlace?.toString()) && modelCompare !== null}">
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('passPlace')!.hasError('') && !editForm.controls['addinfo'].get('passPlace')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="group-box">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Số visa]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <!-- Visa-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Visa]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="visaNo" [(ngModel)]="model.visaNo"
+                          [ngClass]="{'highlight': compareText(model.visaNo?.toString(),modelCompare.visaNo?.toString()) && modelCompare !== null}">
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('visaNo')!.hasError('') && !editForm.controls['addinfo'].get('visaNo')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Ngày cấp -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày cấp]' | translate }}</label>
+                          <ejs-datepicker id="visaDate" format="dd/MM/yyyy" [(ngModel)]="model.visaDate"
+                            (keydown)="changeDate('visaDate')" (blur)="changeDate('visaDate')"
+                            formControlName="visaDate" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.visaDate !== modelCompare.visaDate && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('visaDate')!.hasError('') && !editForm.controls['addinfo'].get('visaDate')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('visaDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('visaDate')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Ngày hết hạn -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày hết hạn]' | translate }}</label>
+                          <ejs-datepicker id="visaExpire" format="dd/MM/yyyy" [(ngModel)]="model.visaExpire"
+                            (keydown)="changeDate('visaExpire')" (blur)="changeDate('visaExpire')"
+                            formControlName="visaExpire" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.visaExpire !== modelCompare.visaExpire && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('visaExpire')!.hasError('') && !editForm.controls['addinfo'].get('visaExpire')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('visaExpire')!.hasError('incorrect') && !editForm.controls['addinfo'].get('visaExpire')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!-- Nơi cấp-->
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Nơi cấp]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="visaPlace"
+                            [(ngModel)]="model.visaPlace"
+                            [ngClass]="{'highlight': compareText(model.visaPlace?.toString(),modelCompare.visaPlace?.toString()) && modelCompare !== null}">
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('visaPlace')!.hasError('') && !editForm.controls['addinfo'].get('visaPlace')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="group-box">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Giấy phép lao động]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <!-- Giấy phép lao động-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số giấy phép lao động]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="workPermit"
+                            [(ngModel)]="model.workPermit"
+                            [ngClass]="{'highlight': compareText(model.workPermit?.toString(),modelCompare.workPermit?.toString()) && modelCompare !== null}">
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workPermit')!.hasError('') && !editForm.controls['addinfo'].get('workPermit')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Ngày cấp -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày cấp]' | translate }}</label>
+                          <ejs-datepicker id="workPermitDate" format="dd/MM/yyyy" [(ngModel)]="model.workPermitDate"
+                            (keydown)="changeDate('workPermitDate')" (blur)="changeDate('workPermitDate')"
+                            formControlName="workPermitDate" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.workPermitDate !== modelCompare.workPermitDate && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workPermitDate')!.hasError('') && !editForm.controls['addinfo'].get('workPermitDate')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workPermitDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('workPermitDate')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Ngày hết hạn -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày hết hạn]' | translate }}</label>
+                          <ejs-datepicker id="workPermitExpire" format="dd/MM/yyyy" [(ngModel)]="model.workPermitExpire"
+                            (keydown)="changeDate('workPermitExpire')" (blur)="changeDate('workPermitExpire')"
+                            formControlName="workPermitExpire" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.workPermitExpire !== modelCompare.workPermitExpire && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workPermitExpire')!.hasError('') && !editForm.controls['addinfo'].get('workPermitExpire')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workPermitExpire')!.hasError('incorrect') && !editForm.controls['addinfo'].get('workPermitExpire')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!-- Nơi cấp-->
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Nơi cấp]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="workPermitPlace"
+                            [(ngModel)]="model.workPermitPlace"
+                            [ngClass]="{'highlight': compareText(model.workPermitPlace?.toString(),modelCompare.workPermitPlace?.toString()) && modelCompare !== null}">
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workPermitPlace')!.hasError('') && !editForm.controls['addinfo'].get('workPermitPlace')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="group-box">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Chứng chỉ hành nghề]' | translate }} </label>
+                    </div>
+                    <div class="row">
+                      <!-- Giấy phép lao động-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số Chứng chỉ hành nghề]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="workNo" [(ngModel)]="model.workNo"
+                          [ngClass]="{'highlight': compareText(model.workNo?.toString(),modelCompare.workNo?.toString()) && modelCompare !== null}">
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workNo')!.hasError('') && !editForm.controls['addinfo'].get('workNo')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Ngày cấp -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngày cấp]' | translate }}</label>
+                          <ejs-datepicker id="workDate" format="dd/MM/yyyy" [(ngModel)]="model.workDate"
+                            (keydown)="changeDate('workDate')" (blur)="changeDate('workDate')"
+                            formControlName="workDate" placeholder=".../.../..."
+                            [ngClass]="{'highlight': model.workDate !== modelCompare.workDate && modelCompare !== null}">
+                          </ejs-datepicker>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workDate')!.hasError('') && !editForm.controls['addinfo'].get('workDate')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['addinfo'].get('workDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('workDate')!.untouched">
+                            {{'[Sai định dạng]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Ngày hết hạn -->
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Phạm vi]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="workScope"
+                            [(ngModel)]="model.workScope"
+                            [ngClass]="{'highlight': compareText(model.workScope?.toString(),modelCompare.workScope?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                      <!-- Nơi cấp-->
+                      <div class="col-sm-12">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Nơi cấp]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="workPlace"
+                            [(ngModel)]="model.workPlace"
+                            [ngClass]="{'highlight': compareText(model.workPlace?.toString(),modelCompare.workPlace?.toString()) && modelCompare !== null}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="group-box" formGroupName="education">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Trình độ văn hóa]' | translate }}</label>
+                    </div>
+                    <div class="row">
+                      <!--Trường  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Trường]' | translate }}</label>
+                          <ejs-dropdownlist id='schoolId' [dataSource]='lstSchoolId' formControlName="schoolId"
+                            [showClearButton]="true" [(ngModel)]="model.schoolId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstSchoolId)'
+                            [ngClass]="{'highlight': model.schoolId !== modelCompare.schoolId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <!--Trình độ chuyên môn  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Chuyên ngành đào tạo]' | translate }}</label>
+                          <ejs-dropdownlist id='qualificationId' [dataSource]='lstQualificationId' formControlName="qualificationId"
+                            [showClearButton]="true" [(ngModel)]="model.qualificationId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstQualificationId)'
+                            [ngClass]="{'highlight': model.qualificationId !== modelCompare.qualificationId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+
+                        </div>
+                      </div>
+                      <!--HÌnh thức đào tạo  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Hình thức đào tạo]' | translate }}</label>
+                          <ejs-dropdownlist id='trainingFormId' [dataSource]='lstTrainingFormId'
+                            formControlName="trainingFormId" [showClearButton]="true" [(ngModel)]="model.trainingFormId"
+                            [fields]='fields' [allowFiltering]='true'
+                            (filtering)='onFiltering($event,lstTrainingFormId)'
+                            [ngClass]="{'highlight': model.trainingFormId !== modelCompare.trainingFormId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['education'].get('trainingFormId')!.hasError('') && !editForm.controls['education'].get('trainingFormId')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Trình độ học vấn  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Trình độ học vấn]' | translate }}</label>
+                          <ejs-dropdownlist id='learningLevelId' [dataSource]='lstLearningLevelId'
+                            formControlName="learningLevelId" [showClearButton]="true"
+                            [(ngModel)]="model.learningLevelId" [fields]='fields' [allowFiltering]='true'
+                            (filtering)='onFiltering($event,lstLearningLevelId)'
+                            [ngClass]="{'highlight': model.learningLevelId !== modelCompare.learningLevelId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['education'].get('learningLevelId')!.hasError('') && !editForm.controls['education'].get('learningLevelId')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!-- Điểm số -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Điểm số]' | translate }}</label>
+                          <ejs-numerictextbox format="N0" locale="en" name="languageMark" formControlName="languageMark"
+                            [(ngModel)]="model.languageMark" min="0" max="999999999"
+                            [ngClass]="{'highlight': model.languageMark !== modelCompare.languageMark && modelCompare !== null}">
+                          </ejs-numerictextbox>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['education'].get('languageMark')!.hasError('') && !editForm.controls['education'].get('languageMark')!.untouched">
+                            {{'[Bắt buộc nhập]' | translate }} </span>
+                        </div>
+                      </div>
+                      <!-- Ngoại ngữ-->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <input class="form-control" type="text" formControlName="language"
+                            [(ngModel)]="model.language"
+                            [ngClass]="{'highlight': compareText(model.language?.toString(),modelCompare.language?.toString()) && modelCompare !== null}">
+                          <span class="e-float-line"></span>
+                          <label class="e-float-text">{{'[Ngoại ngữ]' | translate }}</label>
+
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <input class="form-control" type="text" formControlName="year"
+                            [(ngModel)]="model.year"
+                            [ngClass]="{'highlight': compareText(model.year?.toString(),modelCompare.year?.toString()) && modelCompare !== null}">
+                          <span class="e-float-line"></span>
+                          <label class="e-float-text">{{'[Năm tốt nghiệp]' | translate }}</label>
+
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <input class="form-control" type="text" formControlName="certificateOther"
+                            [(ngModel)]="model.certificateOther"
+                            [ngClass]="{'highlight': compareText(model.certificateOther?.toString(),modelCompare.certificateOther?.toString()) && modelCompare !== null}">
+                          <span class="e-float-line"></span>
+                          <label class="e-float-text">{{'[Chứng chỉ khác]' | translate }}</label>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="group-box" formGroupName="user">
+                    <div class="card-head">
+                      <div class="icon-info v-icon"></div>
+                      <label class="title">{{'[Tài khoản]' | translate }}</label>
+                    </div>
+                    <div class="row">
+
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Số tài khoản]' | translate }}</label>
+                          <input class="form-control" type="text" formControlName="bankNo" [(ngModel)]="model.bankNo"
+                          [ngClass]="{'highlight': compareText(model.bankNo?.toString(),modelCompare.bankNo?.toString()) && modelCompare !== null}">
+                          <span class="input-error"
+                            *ngIf="editForm.controls['user'].get('bankNo')!.hasError('') && !editForm.controls['user'].get('bankNo')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Ngân
+                            hàng]' | translate }}</label>
+                          <ejs-dropdownlist id='bankId' [dataSource]='lstBankId' formControlName="bankId"
+                            [showClearButton]="true" [(ngModel)]="model.bankId" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstBankId)'
+                            [ngClass]="{'highlight': model.bankId !== modelCompare.bankId && modelCompare !== null}">
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['user'].get('bankId')!.hasError('') && !editForm.controls['user'].get('bankId')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                      <!--Chi nhánh  -->
+                      <div class="col-sm-4">
+                        <div class="form-group vertical">
+                          <label class="e-float-text">{{'[Chi nhánh ngân hàng]' | translate }}</label>
+                          <ejs-dropdownlist id='bankBranch' [dataSource]='lstBankBranchId' formControlName="bankBranch"
+                            [showClearButton]="true" [(ngModel)]="model.bankBranch" [fields]='fields'
+                            [allowFiltering]='true' (filtering)='onFiltering($event,lstBankBranchId)'>
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.controls['user'].get('bankBranch')!.hasError('') && !editForm.controls['user'].get('bankBranch')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONFIRM BACK MODAL-->
+<v2hrm-confirm-modal id="confirm-back-modal">
+  <div class="row full-width v2hrm-modal-header">{{'[Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?]'
+    | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-primary" (click)="confirmBack('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+<v2hrm-confirm-modal id="confirm-approved-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span>Bạn có muốn phê duyệt?</span>
+
+
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="e-float-input">
+         
+          <textarea class="form-control" type="text" placeholder="Lý do..." [(ngModel)]="reasonname" name="reasonname"></textarea> 
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="confirmApproved('ok')">{{'[Đồng ý]' | translate }}</button>
+        <button class="btn btn-default" (click)="confirmApproved('cancel')">{{'[Huỷ]' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</v2hrm-confirm-modal>
+
+<v2hrm-confirm-modal id="confirm-unapproved-modal">
+  <div class="row full-width v2hrm-modal-header">
+    <span>Bạn có muốn từ chối?</span>
+
+
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="e-float-input">
+          <textarea class="form-control" type="text" placeholder="Lý do..." [(ngModel)]="reasonname" name="reasonname"></textarea> 
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="confirmUnApproved('ok')">{{'[Đồng ý]' | translate }}</button>
+      <button class="btn btn-default" (click)="confirmUnApproved('cancel')">{{'[Huỷ]' | translate }}</button>
+      </div>
+      
+    </div>
+    
+  </div>
+</v2hrm-confirm-modal>

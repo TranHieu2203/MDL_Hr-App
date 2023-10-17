@@ -1,0 +1,59 @@
+cms-organize-dashboard {
+    .NodeTree1 > td,
+    .NodeJOB1 > td,
+    .NodeNhomDuAn1 > td {
+        overflow: hidden !important;    
+        padding: 5px 5px 5px !important;
+    }
+    .NodeTree1:hover,
+    .NodeJOB1:hover {
+        background-color: #c0e6f8 !important;
+    }
+    .NodeNhomDuAn {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/ftePlan.gif") !important;
+        background-repeat: no-repeat !important;
+        background-position: left !important;
+    }
+    
+    .NodeJOB {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/vcard.png") !important;
+        background-repeat: no-repeat !important;
+        background-position: left !important;
+    }
+    
+    .NodeTree {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/folder.gif") !important;
+        background-repeat: no-repeat !important; 
+        background-position: left !important;
+    }
+    .tab-content{
+        padding: 0px !important;
+    }
+    .NodeFolderContent {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/folder-content.gif") !important;
+        background-repeat: no-repeat !important;
+        background-position: left !important;
+    }
+    
+    .NodeFileContent {
+        padding-left: 20px !important;
+        background-color: transparent !important;
+        background-image: url("/assets/images/file-content.gif") !important;
+        background-repeat: no-repeat !important;
+        background-position: left !important;
+    }
+}
+.e-icons.e-none:before{
+    display: none!important;
+}
+#mytab{
+    margin-top: 50px!important;
+}

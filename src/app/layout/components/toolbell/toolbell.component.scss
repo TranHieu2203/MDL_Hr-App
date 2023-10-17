@@ -1,0 +1,133 @@
+$notificationAmount: #F37540;
+
+app-toolbell {
+  ::-webkit-scrollbar {
+    width: 1px;
+  }
+  .bell-group {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border-radius: 50%;
+    display: flex;
+    font-size: 30px;
+    color: #fff;
+    top: 0px;
+    position: absolute;
+    left: 0px;
+
+    .bell-icon {
+      margin: auto;
+      position: relative;     
+      width: 80%;
+      height: 80%;
+      font-size: 22px;
+    }
+    .notification-amount {
+      position: absolute;
+      top: 6%;
+      right: 12%;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Roboto";
+      font-size: 10px;
+      span {
+        position: relative;
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #F35857;
+        border-radius: 50%;
+        z-index: 0;
+        transform: scale(0);
+        animation-duration: 800ms;
+        animation-fill-mode: both;
+      }
+    }
+  }
+  .bell-group:hover {
+    cursor: pointer;
+  }
+  .accordion {
+    .title {
+      font-weight: bold;
+      font-size: 22px;
+      background: linear-gradient(270deg, #3d69f3 0%, #59a1ff 100%);
+      color: #fff;
+      text-align: center;
+      height: 50px;
+      padding-top: 10px;
+    }
+
+    position: fixed;
+    width: 360px;
+    height: 80vh;
+    top: 60px;
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    overflow-y: scroll;
+    font-weight: normal;
+    color: #0e223d;
+    transition: all 0.3s;
+  }
+  .hidden {
+    display: none;
+  }
+  ejs-accordion {
+    border: none !important;
+  }
+  .e-acrdn-header-content {
+    text-decoration: none !important;
+  }
+  .header {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    i {
+      font-size: 20px;
+    }
+  }
+  .content {
+    font-size: 12px;
+    overflow: hidden;
+  }
+  .item {
+    padding-left: 30px;
+  }
+  .emp {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    .link:hover{
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .notification-title {
+    margin-top: 10px; /* Khoảng cách từ phía trên */
+    margin-bottom: 10px; /* Khoảng cách từ phía dưới */
+    text-align: center;
+  }
+
+  
+  
+  
+  
+  
+  
+}

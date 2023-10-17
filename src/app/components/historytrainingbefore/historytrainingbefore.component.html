@@ -1,0 +1,63 @@
+<div class="list-grid">
+  <ejs-grid #overviewgridLstEmp id='overviewgridLstEmp'
+    [dataSource]='data'
+    (dataStateChange)="dataStateChange($event!)" rowHeight='35'
+    headerHeight='40' height='400px'
+    [allowPaging]='true' [pageSettings]='configs.pageSettings'
+    [enableHover]='true' 
+    [allowSorting]='true' allowResizing='true'
+    [locale]='configs.currentLang' [allowSelection]='true'
+    [showColumnChooser]='true'
+    [selectionSettings]='configs.selectionSettings'
+    [editSettings]='configs.editSettings'
+    [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+    <e-columns>
+      <!-- <e-column type='checkbox' [showInColumnChooser]='false'
+        [allowFiltering]='false' [allowSorting]='false' width='50'
+        textAlign="Center" [allowEditing]="false">
+      </e-column> -->
+      <e-column field='id' [showInColumnChooser]='false'
+        [visible]='false' headerText='ID' [isPrimaryKey]='true'
+        [allowEditing]="false">
+      </e-column>
+      <!--  -->
+      <e-column field='employeeCode' textAlign="Center" headerText="{{'[Mã NV]' | translate }}" headerTextAlign="Center"
+                      clipMode='EllipsisWithTooltip' width='120'></e-column>
+                    <e-column field='employeeName' textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'></e-column>
+                    
+                    <e-column field='yearGra' textAlign="Center" headerText="{{'[Năm đào tạo]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120'>
+                    </e-column>
+                    <e-column field='nameSchools' textAlign="Left" headerText="{{'[Đơn vị đào tạo]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='fromDate' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Từ tháng]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="126"></e-column>
+                    <e-column field='toDate' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Đến tháng]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="126"></e-column>
+                    <e-column field='certificateTypeName' textAlign="Left" headerText="{{'[Loại bằng cấp/chứng chỉ]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="190">
+                    </e-column>
+                    <e-column field='formTrainName' textAlign="Left" headerText="{{'[Hình thức đào tạo]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="215">
+                    </e-column>
+                    <e-column field='specializedTrainName' textAlign="Left" headerText="{{'[Chuyên ngành đào tạo]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="215">
+                    </e-column>
+                    <e-column field='resultTrain' textAlign="Left" headerText="{{'[Kết quả đào tạo]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="215">
+                    </e-column>
+                    <e-column field='effectiveDateFrom' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày hiệu lực chứng chỉ]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="126"></e-column>
+                    <e-column field='effectiveDateTo' headerTextAlign="Center" type="date"
+                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày hết hiệu lực chứng chỉ]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="126"></e-column>
+                      <e-column field='note' textAlign="Left" headerText="{{'[Ghi chú]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="215">
+                    </e-column>
+    </e-columns>
+  </ejs-grid>
+</div>

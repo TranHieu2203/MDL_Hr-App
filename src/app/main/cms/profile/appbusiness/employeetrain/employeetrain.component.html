@@ -1,0 +1,122 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Đào tạo]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i> <span class="brackcrum-active" href="">{{'[Hồ sơ đào tạo]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="overtime" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              
+              <div class="list-grid">
+                <form class="searchFrom" name="searchFrom" [formGroup]="searchFrom" novalidate style="padding-bottom: 10px;">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <label class="e-float-text" for="startDate">Từ ngày</label>
+                        <ejs-datepicker id="startDate" format="dd/MM/yyyy" [(ngModel)]="model.startDate" (keydown)="changeDate('startDate')" value="model.startDate"
+                        (blur)="changeDate('startDate')"
+                         formControlName="startDate"
+                        placeholder=".../.../...">
+                      </ejs-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <label class="e-float-text" for="endDate">Đến ngày</label>
+                        <ejs-datepicker id="endDate" format="dd/MM/yyyy" [(ngModel)]="model.endDate" (keydown)="changeDate('endDate')" value="model.endDate"
+                        (blur)="changeDate('endDate')"
+                         formControlName="endDate"
+                        placeholder=".../.../...">
+                      </ejs-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="e-float-input">
+                        <button ejs-button cssClass="e-info" (click)="getListData()"><i aria-hidden="true" class="fa fa-search"></i>  Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                  (dataStateChange)="dataStateChange($event!)" rowHeight='40' headerHeight='30'
+                  [height]='configs.height() - 140' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                  [enableHover]='true' [allowSorting]='true'
+                  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
+                  [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
+                  (rowSelecting)="setButtonStatus($event!)" (rowDeselecting)="setButtonStatus($event!)"
+                  [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]='true'
+                  (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  <e-columns>
+                    <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                      [allowSorting]='false' width='40' textAlign="Center" [allowEditing]="false">
+                    </e-column>
+                    <e-column field='ID' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                      [isPrimaryKey]='true' [allowEditing]="false">
+                    </e-column>
+                    <e-column field='EMPLOYEE_CODE' headerTextAlign="Center" textAlign="Center" headerText="{{'[Mã NV]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width='120'>
+                    </e-column>
+                    <e-column field='EMPLOYEE_NAME' textAlign="Left" headerText="{{'[Họ và tên]' | translate }}"
+                      clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='ORG_NAME' textAlign="Left" headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='POSITION_NAME' textAlign="Left" headerText="{{'[Chức vụ]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='COURSE_NAME' textAlign="Left" headerText="{{'[Khóa đào tạo]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='CLASS_NAME' textAlign="Left" headerText="{{'[Lớp đào tạo]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='FROM_DATE' textAlign="Center" headerTextAlign="Center" headerText="{{'[Tham gia từ ngày]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                    <e-column field='TO_DATE' textAlign="Center" headerTextAlign="Center" headerText="{{'[Đến ngày]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                    <e-column field='TIME_TRAIN' textAlign="Left" headerText="{{'[Thời lượng đào tạo (giờ)]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='RANK' textAlign="Left" headerText="{{'[Xếp loại]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='CERTIFICATE' textAlign="Left" headerText="{{'[Chứng chỉ đào tạo]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='CERTIFICATE_DATE' textAlign="Center" headerTextAlign="Center" headerText="{{'[Ngày cấp]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                    <e-column field='EFFECT_DATE' textAlign="Center" headerTextAlign="Center" headerText="{{'[Ngày hiệu lực]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                    <e-column field='EXPIRE_DATE' textAlign="Center" headerTextAlign="Center" headerText="{{'[Ngày hết hiệu lực]' | translate }}"
+                      clipMode='EllipsisWithTooltip' width="120">
+                    </e-column>
+                  </e-columns>
+                </ejs-grid>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+
+  </div>
+</div>

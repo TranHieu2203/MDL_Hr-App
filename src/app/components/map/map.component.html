@@ -1,0 +1,15 @@
+<!-- <input  type="text" class="form-control"
+  (keydown.enter)="$event.preventDefault()"
+  placeholder="Tìm kiếm địa điểm" autocorrect="off" autocapitalize="off"
+  spellcheck="off" type="text" #search> -->
+  
+<agm-map #AgmMap style="width: 100%;height: 100%;" [latitude]="model.center.lat"
+  [longitude]="model.center.lng" [zoom]="model.zoom" [disableDefaultUI]="false"
+  (mapReady)="onMapReady($event!)"
+  (mapClick)="mapClicked($event!)">
+  <agm-marker [latitude]="model.lat" [longitude]="model.long">
+  </agm-marker>
+  <agm-circle [latitude]="model.lat" [longitude]="model.long"
+    [radius]="model.radius">
+  </agm-circle>
+</agm-map>

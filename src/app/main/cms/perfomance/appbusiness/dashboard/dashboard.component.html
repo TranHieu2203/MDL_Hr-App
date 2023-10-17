@@ -1,0 +1,78 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Tuyển dụng]' | translate }} <i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/recruitment/business/dashboard'>{{'[Dashboard]' | translate
+              }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-content" style="background: white;">
+      <div class="dashboard-card">
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical-flex">
+              <label class="e-float-text" for="code">{{'[Mã nhân viên]' | translate }}</label>
+              <input [(ngModel)]="model.employeeCode" type="text" class="form-control" placeholder="Chọn nhân viên">
+              <div class="input-group-append">
+                <button class="btn btn-warning" type="button" (click)="choiseEmp()" style="height: 34px;width: 34px;border-radius: 0px;color:white">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical-flex">
+              <label class="e-float-text" for="code">{{'Vị trí so sánh' | translate }}</label>
+              <select id="selectIndex" class="form-control" (change)="onChange()" 
+              style="width:50%!important;line-height: 27px!important;height: 34px!important;" style="width:100%" placeholder="--Chọn vị trí so sánh--">
+                <option value="">--Chọn vị trí so sánh--</option>
+                <option value="Tech lead">Tech lead</option>
+                <option value="PM">Project Manager</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <ejs-chart id="dev" title="Biểu đồ năng lực Developer" [legendSettings]="legendSettings"  *ngIf="loadDev"
+                [tooltip]='tooltip' [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' (load)='load($event)'>
+                <e-series-collection>
+                  <e-series [dataSource]='dev' type='Radar' [marker]='marker' drawType='Area' xName='x' yName='y'
+                    name='Developer' opacity=0.75 width=2 border-color='transparent'>
+                  </e-series>
+                </e-series-collection>
+              </ejs-chart>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <ejs-chart id="techlead" title="Biểu đồ năng lực Technical Lead" [legendSettings]="legendSettings" *ngIf="loadTechnicalLead"
+                [tooltip]='tooltip' [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' (load)='load($event)'>
+                <e-series-collection>
+                  <e-series [dataSource]='techlead' type='Radar' [marker]='marker' drawType='Area' xName='x' yName='y' 
+                    name='Technical Lead' opacity=0.75 width=2 border-color='transparent'>
+                  </e-series>
+                  <e-series [dataSource]='dev' type='Radar' [marker]='marker' drawType='Area' xName='x' yName='y'
+                  name='Developer' opacity=0.75 width=2 border-color='transparent'>
+                </e-series>
+
+                </e-series-collection>
+              </ejs-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>

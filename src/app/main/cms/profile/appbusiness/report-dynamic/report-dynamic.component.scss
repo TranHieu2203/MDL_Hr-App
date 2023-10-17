@@ -1,0 +1,20 @@
+.e-group-container{
+    height: 290px;
+    overflow: auto;
+}
+.btn-save{margin-top: 21px;
+color: white;}
+.e-spreadsheet .e-open-dlg.e-dialog{
+    z-index: 9999!important;
+}
+
+.e-listview .e-list-item.e-active {
+    background-color: #f5f5f5!important;
+    color: rgba(0, 0, 0, 0.87)!important;
+}
+.e-list-item.e-active>.e-text-content {
+    .e-list-text {
+      color: unset!important;
+      font-weight: unset!important;
+    }
+  }

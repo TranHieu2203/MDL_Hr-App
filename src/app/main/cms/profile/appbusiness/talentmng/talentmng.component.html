@@ -1,0 +1,81 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Nhân tài]' | translate }}<i
+              class="fa fa-angle-right" aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/business/talentmng'>{{'[Hồ sơ nhân tài]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="talentmng" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+        (dataStateChange)="dataStateChange($event!)" rowHeight='37'
+        headerHeight='42' [height]='configs.height()'
+        [allowPaging]='true' [pageSettings]='configs.pageSettings'
+        [enableHover]='true' (recordDoubleClick)="viewRecord($event!)"
+        [allowSorting]='true' allowResizing='true'
+        [locale]='configs.currentLang' [allowSelection]='true'
+        [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption'
+        [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='60'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+          <e-column field='employeeCode' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Mã nhân viên]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='employeeName' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Tên nhân viên]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+            <e-column field='orgName' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Bộ phận]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='positionName' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Vị trí công việc]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          <e-column field='positionListName' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Các vị trí từng làm]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+            <e-column field='age' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Tuổi]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+            <e-column field='seniority' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Thâm niên]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+            <e-column field='learningLevelName' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Trình độ học vấn]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+            <e-column field='certificateName' headerTextAlign="Center" textAlign="Left"
+            headerText="{{'[Bằng cấp, chứng chỉ]' | translate }}" clipMode='EllipsisWithTooltip' width="120"></e-column>
+          
+          
+        </e-columns>
+      </ejs-grid>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa không ?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

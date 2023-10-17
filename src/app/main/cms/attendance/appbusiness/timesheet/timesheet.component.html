@@ -1,0 +1,139 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Công ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/profile/appbusiness/timesheet'>{{'[Bảng công]' | translate
+              }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="timesheet" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='270px' max='40%' [collapsible]='true'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <div class="pt-2">
+                <div class="">
+                  <form name="editForm" [formGroup]="editForm" novalidate>
+                    <div class="row ">
+                      <div class="col-sm-3">
+                        <div class="form-group vertical">
+                          <label class="e-float-text required" for="maxValue">{{'[Năm]' | translate }}</label>
+                          <ejs-dropdownlist id='yearId' [dataSource]='lstYear' formControlName="yearId"
+                            [(ngModel)]="model.yearId" [fields]='fields' (change)="changeYear($event!)">
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.get('yearId')!.hasError('required') && !editForm.get('yearId')!.untouched">
+                            {{'[Bắt buộc nhập]' | translate }}</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group vertical">
+                          <label class="e-float-text required" for="periodId">{{'[Kỳ lương]' | translate }}</label>
+                          <ejs-dropdownlist id='periodId' [dataSource]='lstPeriodId' formControlName="periodId"
+                            [(ngModel)]="model.periodId" [fields]='fields' (change)="changePeriod($event!)">
+                          </ejs-dropdownlist>
+                          <span class="input-error"
+                            *ngIf="editForm.get('periodId')!.hasError('required') && !editForm.get('periodId')!.untouched">
+                            {{'[Bắt buộc chọn]' | translate }}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-3" *ngIf="tab==21111">
+                        <div class="form-group vertical">
+                          <label class="e-float-text" for="periodId">{{'[Hiển thị]' | translate }}</label>
+                          <ejs-dropdownlist id='typeId' [dataSource]='lstType' formControlName="typeId"
+                            [(ngModel)]="model.typeId" [fields]='fields' (change)="changeType($event!)">
+                          </ejs-dropdownlist>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-sm-12 pt-2">
+                  <!-- tab menu -->
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                        aria-controls="home" aria-selected="true" (click)="changeTab(1)">{{'[Bảng công ngày]'
+                        | translate }}</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                        aria-controls="profile" aria-selected="false" (click)="changeTab(2)">{{'[Bảng công điều chỉnh]' | translate }}</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                        aria-controls="contact" aria-selected="false" (click)="changeTab(3)">{{'[Bảng công tháng]' |
+                        translate }}</a>
+                    </li>
+                    <div id="lockVisible">
+
+                    </div>
+                    <!-- 
+                    <ejs-switch onLabel="Mở" offLabel="Khóa" [(ngModel)]="model.isLock">
+                    </ejs-switch> -->
+
+                  </ul>
+
+                </div>
+               
+                <div class="tab-content col-sm-12" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <cms-attendance-timesheetroot>
+                    </cms-attendance-timesheetroot>
+                  </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <cms-attendance-timesheetstandard>
+                    </cms-attendance-timesheetstandard>
+                  </div>
+                  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <cms-attendance-timesheetmonthly>
+                    </cms-attendance-timesheetmonthly>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </e-pane>
+          <e-pane size='0px' [collapsible]='true'>
+            <ng-template #content>
+
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+
+
+<input  id="file" type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile($event!)' />
+<v2hrm-confirm-modal id="confirm-import-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Xác nhận Import]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmImport('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmImport('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>
+
+<!-- CONFIRM DELETE MODAL-->

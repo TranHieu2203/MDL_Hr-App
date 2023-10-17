@@ -1,0 +1,209 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Lương ]' | translate }}<i class="fa fa-angle-right"
+              aria-hidden="true"></i>{{'[Danh mục]' | translate }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/hrms/payroll/list/salarystructure'>{{'[Kết cấu bảng lương]' |
+              translate }}</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="salarystructor" [items$]="toolItems$"
+          (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="row">
+        <div class="col-sm-2 b-r">
+          <div>
+            <ejs-treeview #listTreeObj id="default" (nodeSelected)="userSelecting($event!)">
+            </ejs-treeview>
+          </div>
+        </div>
+        <div class="col-sm-10 p-l">
+          <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' rowHeight='35' headerHeight='40'
+            [height]='configs.height()' [allowPaging]='true' [allowSelection]='true'
+            [pageSettings]='configs.pageSettings' [enableHover]='true' [allowRowDragAndDrop]='true'
+            [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+            (rowDrop)="rowDrop($event!)" [allowFiltering]='true' [filterSettings]='configs.filterOption' [allowExcelExport]="true" (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' showColumnMenu='true'
+            [showColumnChooser]='true'>
+            <e-columns>
+              <e-column width="40" eaderTextAlign="Center" textAlign="Center" headerText="{{'[STT]' | translate }}"
+                clipMode="EllipsisWithTooltip">
+                <ng-template #template let-data>
+                  <span>{{ formatStt(data.index) }}</span>
+                </ng-template>
+              </e-column>
+
+              <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                [allowEditing]="false">
+              </e-column>
+
+              <e-column field='elementName' headerTextAlign="Left" textAlign="Left"
+                headerText="{{'[Phần tử lương]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+              <e-column [isPrimaryKey]='true' width="100" field='isVisible' textAlign="Center"
+                headerText="{{'[Hiển thị trong bảng lương]' | translate }}">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isVisible" (change)="check(data, 'isVisible',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <e-column [isPrimaryKey]='true' width="70" field='isCalculate' textAlign="Center"
+                headerText="{{'[Thiết lập công thức]' | translate }}">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isCalculate" (change)="check(data, 'isCalculate',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <e-column [isPrimaryKey]='true' width="70" field='isImport' textAlign="Center"
+                headerText="{{'[Dữ liệu Import]' | translate }}">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isImport" (change)="check(data, 'isImport',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <!-- <e-column field='orders' headerTextAlign="Center" textAlign="Center" headerText="{{'[Thứ tự" width="80">
+              </e-column> -->
+            </e-columns>
+          </ejs-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ejs-dialog id="animationDialog" [header]='dialogHeader' [isModal]='true' #defaultDialog [visible]='false'
+  [animationSettings]='animationSettings' [showCloseIcon]='true' target='.app-container' [width]="900">
+  <ng-template #content>
+    <div class="card">
+      <app-common-tools name="bank-edit" [items$]="toolItemsEdit$"
+        (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info v-icon"></div>
+            <label class="title">{{'[Thông tin]' | translate }} </label>
+          </div>
+          <!--  -->
+          <div class="row">
+            <!-- Bang luong -->
+            <div class="col-sm-6">
+              <div class="form-group  vertical">
+                <label class="e-float-text required" for="salaryTypeId">{{'[Bảng lương]' | translate }}</label>
+                <ejs-dropdownlist id='salaryTypeId' [dataSource]='lstSalaryTypeId' formControlName="salaryTypeId"
+                  [showClearButton]="true" [(ngModel)]="model.salaryTypeId" [fields]='fields' [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstSalaryTypeId)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('salaryTypeId')!.hasError('required') && !editForm.get('salaryTypeId')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!-- Nhom phan tu luong -->
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="groupId">{{'[Nhóm phần tử lương]' | translate }}</label>
+                <ejs-dropdownlist id='groupId' [dataSource]='lstGroupId' formControlName="groupId"
+                  [showClearButton]="true" [(ngModel)]="model.groupId" [fields]='fields' [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstGroupId)' (change)='changeGroup($event!)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('groupId')!.hasError('required') && !editForm.get('groupId')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+            <!-- Phan tu luong -->
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="elementId">{{'[Phần tử lương]' | translate }}</label>
+                <ejs-dropdownlist id='elementId' [dataSource]='lstElementId' formControlName="elementId"
+                  [showClearButton]="true" [(ngModel)]="model.elementId" [fields]='fields' [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstElementId)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('elementId')!.hasError('required') && !editForm.get('elementId')!.untouched">
+                  {{'[Bắt buộc chọn]' | translate }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Thu tu -->
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text" for="orders">{{'[Thứ tự hiển thị]' | translate }}</label>
+                <ejs-numerictextbox format="N0" locale="en" name="orders" formControlName="orders"
+                  [(ngModel)]="model.orders" min="1" max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <ejs-checkbox formControlName="isVisible" label="{{'[Hiển thị trong bảng lương]' | translate }}"
+                  [(ngModel)]="model.isVisible">
+                </ejs-checkbox>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <ejs-checkbox formControlName="isImport" label="{{'[Dữ liệu Import]' | translate }}"
+                  [(ngModel)]="model.isImport">
+                </ejs-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <ejs-checkbox formControlName="isCalculate" label="{{'[Thiết lập công thức]' | translate }}"
+                  [(ngModel)]="model.isCalculate">
+                </ejs-checkbox>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <ejs-checkbox formControlName="isSum" label="{{'[Tính tổng theo điều kiện]' | translate }}"
+                  [(ngModel)]="model.isSum">
+                </ejs-checkbox>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <ejs-checkbox formControlName="isChange"
+                  label="{{'[Công thức Theo thay đổi lương trong tháng]' | translate }}" [(ngModel)]="model.isChange">
+                </ejs-checkbox>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+  </ng-template>
+</ejs-dialog>
+
+<v2hrm-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width v2hrm-modal-header">
+    {{'[Bạn có chắc chắn muốn xóa dữ liệu?]' | translate }}
+  </div>
+  <div class="row full-width v2hrm-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">{{'[Đồng ý]' | translate }}</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">{{'[Huỷ]' | translate }}</button>
+  </div>
+</v2hrm-confirm-modal>

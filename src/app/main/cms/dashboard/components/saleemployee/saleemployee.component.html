@@ -1,0 +1,135 @@
+<!-- Widget Công việc chung-->
+<div class="col-sm-6 dash-widget" *ngIf="showHideWidget.work_general === true">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Công việc chung (3)]' | translate }}
+            <span class="btn-remove-widget" (click)="closeWidget('work_general')"><i class="fa fa-close"></i></span>
+        </div>
+        <div class="dash-card-content dash-card-content-list full-width">
+            <div class="row full-width dash-list-search">
+                <div class="col-sm-9">
+                    <input  [(ngModel)]="searchWorkGeneral" [ngModelOptions]="{standalone: true}"
+                        placeholder="Nhập thông tin tìm kiếm" (keypress)="searchWorkGeneralEnterFunc($event!)">
+                    <span class="btn-search" (click)="searchWorkGeneralFunc()"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+            <div class="row full-width dash-list-content">
+                <div class="row full-width dash-list-item" *ngFor="let item of lstWorkGeneral">
+                    <div class="col-sm-3">
+                        <div class="full-width dash-border">{{item.work_date}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="full-width dash-border">{{item.work_name}}</div>
+                    </div>
+                    <div class="col-sm-3 dash-status"
+                        [ngClass]="{'dash-success': item.status_id === 1, 'dash-warning': item.status_id === 2, 'dash-error': item.status_id === 3, 'dash-primary': item.status_id === 4}">
+                        <i class="fa fa-circle"></i> {{item.status_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Widget Tình trạng đơn hàng -->
+<div class="col-sm-6  dash-widget" *ngIf="showHideWidget.order_status === true">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+           {{'[Tình trạng đơn hàng]' | translate }} 
+        </div>
+        <div class="dash-card-content dash-card-content-tick full-width">
+            <div class="row full-width">
+                <div class="col-sm-7">
+                    <div class="row full-width  dash-order-status" *ngFor="let order_item of lstOrderStatuses"
+                        [ngClass]="order_item.tick_color">
+                        <span class="order-label-2">{{order_item.name}}</span>
+                        <ng5-slider [(value)]="defaultMinValue" [(highValue)]="order_item.process_value"
+                            [options]="order_item.options">
+                        </ng5-slider>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="row full-width order-summary-2 text-center">
+                        <p class="order-label full-width">{{'[Đơn bán hàng]' | translate }}</p>
+                        <p class="order-value full-width">{{objOrder.order_count}}</p>
+                        <p class="order-label full-width">{{'[Tổng giá trị]' | translate }}</p>
+                        <p class="order-value full-width">{{objOrder.order_value | number}} VNĐ</p>
+                    </div>
+                    <div class="row full-width order-summary-2 text-center">
+                        <p class="order-label full-width">{{'[Đã hoàn thành]' | translate }}</p>
+                        <p class="order-value full-width">{{objOrder.finish_order}}</p>
+                        <p class="order-label full-width">{{'[Tổng giá trị]' | translate }}</p>
+                        <p class="order-value full-width">{{objOrder.finish_order_value | number}} VNĐ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Widget Đơn đặt hàng/Báo giá mới nhất-->
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Đơn bán hàng/Báo giá mới nhất]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-view full-width">
+            <div class="row full-width b-b">
+                <div class="row full-width m-b-15 m-t-15">
+                    <div class="col-sm-6">{{'[Tạo báo giá]' | translate }}</div>
+                    <div class="col-sm-3">{{'[Trạng thái]' | translate }}</div>
+                    <div class="col-sm-3"><b>{{newest_quote.status}}</b></div>
+                </div>
+                <div class="row full-width m-b-15">
+                    <div class="col-sm-6">{{'[Số lượng sản phẩm: ]' | translate }}<b>{{newest_quote.quantity}}</b></div>
+                    <div class="col-sm-6"><b>{{newest_quote.name}}</b></div>
+                </div>
+                <div class="row full-width dash-view-detail">
+                    <button class="btn btn-primary" (click)="viewNewestQuote(newest_quote)">{{'[Xem chi tiết]' | translate }}</button>
+                </div>
+            </div>
+
+            <div class="row full-width b-b">
+                <div class="row full-width m-b-15 m-t-15">
+                    <div class="col-sm-6">{{'[Đơn bán hàng: ]' | translate }}<b>{{newest_order.order_code}}</b></div>
+                    <div class="col-sm-3">{{'[Trạng thái]' | translate }}</div>
+                    <div class="col-sm-3"><b>{{newest_order.status}}</b></div>
+                </div>
+                <div class="row full-width m-b-15">
+                    <div class="col-sm-6">{{'[Số lượng: ]' | translate }}<b>{{newest_order.quantity}}</b></div>
+                    <div class="col-sm-6"><b>{{newest_order.name}}</b></div>
+                </div>
+                <div class="row full-width dash-view-detail">
+                    <button class="btn btn-primary" (click)="viewNewestOrder(newest_order)">{{'[Xem chi tiết]' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6 dash-widget">
+    <div class="row full-width dash-card dash-card-normal">
+        <div class="dash-card-header full-width">
+            {{'[Hợp đồng bán hàng mới nhất]' | translate }}
+        </div>
+        <div class="dash-card-content dash-card-content-view full-width">
+            <div class="row full-width b-b" *ngFor="let item of lstContracts">
+                <div class="row full-width m-b-15 m-t-15">
+                    <div class="col-sm-6">{{'[Hợp đồng bán hàng: ]' | translate }}<b>{{item.order_code}}</b></div>
+                    <div class="col-sm-3">{{'[Trạng thái]' | translate }}</div>
+                    <div class="col-sm-3"><b>{{item.status}}</b></div>
+                </div>
+                <div class="row full-width m-b-15">
+                    <div class="col-sm-6">{{'[Số lượng: ]' | translate }}<b>{{item.quantity}}</b></div>
+                    <div class="col-sm-6"><b>{{item.name}}</b></div>
+                </div>
+                <div class="row full-width dash-view-detail">
+                    <button class="btn btn-primary" (click)="viewNewestOrder(item)">Xem chi tiết</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

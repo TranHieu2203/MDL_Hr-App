@@ -1,0 +1,71 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-home" aria-hidden="true"></i>{{'[Hệ thống]' | translate }} <i
+              class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/hrms/system/settingreport'>{{'[Thiết lập mẫu báo cáo]' | translate }}</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <!-- <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div> -->
+        <app-common-tools name="settingreport" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--  -->
+    <!-- spliter -->
+
+    <div class="app-content">
+      <ejs-splitter #horizontal width='100%' (keypress)="keypress($event!)">
+        <e-panes>
+          <e-pane size='20%'>
+            <ng-template #content>
+              <ejs-treeview #treeView (nodeSelected)="nodeSelecting($event!)"
+                [fields]='field'>
+              </ejs-treeview>
+            </ng-template>
+          </e-pane>
+          <e-pane size='60%' [resizable]='false'>
+            <ng-template #content>
+              <!-- <ejs-documenteditorcontainer
+                serviceUrl="https://ej2services.syncfusion.com/production/web-services/api/documenteditor/"
+                style="display:block;height:600px" [enableToolbar]=true>
+              </ejs-documenteditorcontainer> -->
+              <!-- <ejs-richtexteditor #rteTool [fontFamily]='fontFamily'
+                [toolbarSettings]='tools' height="100%">
+              </ejs-richtexteditor> -->
+
+              <ckeditor [(ngModel)]="model.text" name="myckeditor" 
+                  debounce="500" editorUrl="../../../../../../../assets/ckeditor/ckeditor.js">
+                </ckeditor>
+            </ng-template>
+          </e-pane>
+          <e-pane size='20%'>
+            <ng-template #content>
+              <div class="list-element" *ngFor="let item of model.elements">
+                <p id="{{item.code}}" draggable="true"
+                  (dragstart)="drag($event!)">
+                  {{item.name}}
+                </p>
+              </div>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
