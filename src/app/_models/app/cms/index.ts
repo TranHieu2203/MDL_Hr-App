@@ -11,4 +11,5 @@ export * from "./organize/applist/index";
 export * from "./capacity/applist/index";
 export * from "./capacity/appbusiness/index";
 export * from "./recruitment/appbusiness/index";
+export * from "./recruitment/applist/index";
 
