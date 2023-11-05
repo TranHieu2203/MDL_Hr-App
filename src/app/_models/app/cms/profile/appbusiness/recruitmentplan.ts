@@ -3,54 +3,50 @@ export class RecruitmentPlan {
   employeeCode?: string; //mã nhân viên 
   employeeId?: number; //Id Nhân viên
   employeeName?: string;
-  positionId?: number |null; //chức danh
+  positionId?: number | null; //chức danh
   positionName?: any;
   orgId?: number;
   orgName?: string;
-  orgConId?: number;
-  orgConName?: string;
-  positionConcurentId?: number |null;
-  positionConName?: string;
-  orgParentName?: string;
-  orgConParentName?: string;
-  decisionNo?: string;
-  effectDate?: Date;
+  isKh?: boolean;
+  sendDate?: Date;
+  reasonId?: number;
+  reasonName?: string;
+  hienCo?: number;
+  dinhBien?: number;
+  tangGiam?: number;
+  reasonDetail?: string;
+  hocVanId?: number;
+  hocVanName?: string;
+  tuoiFrom?: number;
+  tuoiTo?: number;
+  chuyenMonId?: number;
+  chuyenMonName?: string;
+
+  kyNang?: string;
+  ngoaiNgu?: string;
+  trinhDoNnId?: number;
+  trinhDoNnName?: string;
+  diemNgoaiNgu?: number;
   expireDate?: Date;
-  endDateAllow?: Date;
-  startDateAllow?: Date;
-  moneyAllow?: number;
-  isAllow?: boolean;
-  isNewEmp?: boolean;
-  signId?: number; //Người ký
-  signName?: string; //Tên người ký
-  signTitle?: string;
-  signDate?: Date; //Ngày ký
+  soNamKn?: number;
+  tinHocId?: number;
+  tinHocName?: string;
+  soLuong?: number;
+  moTa?: string;
+  nvChinh?: string;
+  ycKinhNghiem?: string;
+  ycKhac?: string;
   note?: string;
+  bdTuyenDate?: Date;
+
+  ktDate?: Date;
+  tgghDate?: Date;
   statusId?: number;
-  reasonId?:number;
-  hienco?:number;
-  dinhbien?:number;
-  tanggiam?:number;
-  reasonDetail?:string;
-  hocvanId?:number;
-  tuoiFrom?:number;
-  tuoiTo?:number;
-  kynang?:string;
-  diemNgoaiNgu?:number;
-  sonamKn?:number;
-  soluong?:number;
-  chuyenmonId?:number;
-  ngoainguId?:number;
-  tdNgoaiNguId?:number;
-  tinhocId?:number;
-  mota?:string;
-  nvchinh?:string;
-  yckinhnghiem?:string;
-  yckhac?:string;
-  bdtuyenDate?: Date;
-  giahan?:Date;
-  nguondtId?: number;
-  donviId?: number;
-  chiphi?:number;
-  total?:number;
+  statusName?: string;
+  nguonDtId?: number;
+  nguonDtName?: string;
+  donViId?: number;
+  donViName?: string;
+  chiPhi?: number;
+  total?: number;
 }
