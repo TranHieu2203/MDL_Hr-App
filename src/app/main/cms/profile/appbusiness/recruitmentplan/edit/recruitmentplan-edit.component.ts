@@ -83,6 +83,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
   lstdonviId: any = [];
   disable: any;
   checked: number = 0;
+    emptyArray: any = [];
   /**
    * Constructor
    *
@@ -366,6 +367,13 @@ export class RecruitmentPlanEditComponent implements OnInit {
       }
       x.unsubscribe();
     });
+  }
+  addNguon() {
+    if (this.flagState$.value == "view") {
+      return;
+    }
+    this.emptyArray.nguonDtId =this.model.nguonDtId
+    this.emptyArray.chiPhi = this.model.chiPhi
   }
   changePosition(e: any) {
     if (e.e) {

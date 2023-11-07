@@ -374,7 +374,7 @@
               <label class="title">{{'[Thông tin đăng tuyển]' | translate }}</label>
             </div>
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text" for="nguonDtId">{{'[Nguồn đăng tuyển]' | translate }}</label>
                   <ejs-dropdownlist id='nguonDtId' [dataSource]='lstnguondtId' formControlName="nguonDtId"
@@ -383,7 +383,7 @@
                   </ejs-dropdownlist>
                 </div>
               </div>
-              <div class="col-sm-3">
+              <!-- <div class="col-sm-3">
                 <div class="form-group vertical">
                   <label class="e-float-text" for="donViId">{{'[Đơn vị đăng tuyển]' | translate }}</label>
                   <ejs-dropdownlist id='donViId' [dataSource]='lstdonviId' formControlName="donViId"
@@ -400,8 +400,8 @@
                   </ejs-numerictextbox>
 
                 </div>
-              </div>
-              <div class="col-sm-3">
+              </div> -->
+              <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text " for="total">{{'[Tổng chi phí]' | translate }}</label>
                   <ejs-numerictextbox format="N0" locale="en" name="total" formControlName="total"
@@ -415,10 +415,10 @@
             <div class="mb-3 mt-3">
               <div class="row">
                 <div class="col-md-6">
-                  <button class="btn btn-info" type="button">{{'[Thêm]' | translate }}</button>
+                  <button class="btn btn-info" type="button">{{'[Thêm]' | translate }} (click)="addNguon()"</button>
                 </div>
                 <div class="col-md-6">
-                  <button class="btn btn-danger ml-3 pull-right" type="button">{{'[Xoá]' | translate }}</button>
+                  <button class="btn btn-danger ml-3 pull-right" type="button">{{'[Xoá]' | translate }} (click)="removeEmp()"</button>
 
                 </div>
               </div>
