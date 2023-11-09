@@ -3,7 +3,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from "@angular/core";
-import { Subject, BehaviorSubject } from "rxjs";
+import { Subject, BehaviorSubject, empty } from "rxjs";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 // Service Translate
@@ -84,6 +84,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
   disable: any;
   checked: number = 0;
     emptyArray: any = [];
+    data: any = [];
   /**
    * Constructor
    *
@@ -221,14 +222,16 @@ export class RecruitmentPlanEditComponent implements OnInit {
       this.getlstqualificationId(),
       this.getListLanguage(),
       this.getListComputer(),
-      this.getlstreasonId()
+      this.getlstreasonId(),
+      this.getlstnguonId()
     ]).then((res: any) => {
       this.lstStatusId = res[1];
       this.lsthocvanId = res[2];
       this.lstchuyenmonId = res[3];
       this.lsttdNgoaiNguId = res[4];
       this.lsttinhocId = res[5],
-        this.lstreasonId = res[6]
+        this.lstreasonId = res[6],
+        this.lstnguondtId = res[7]
       if (this.paramId) {
         this.model = _.cloneDeep(_.omit(res[0],["positionId"]));
         this.loadDatalazy(res[0]);
@@ -303,6 +306,13 @@ export class RecruitmentPlanEditComponent implements OnInit {
       });
     });
   }
+  getlstnguonId() {
+    return new Promise((resolve) => {
+      this._coreService.Get("hr/otherlist/GetListNguonTd").subscribe((res: any) => {
+        resolve(res.data);
+      });
+    });
+  }
   loadDatalazy(model: RecruitmentPlan) {
     this.getPosition(model.orgId, model.employeeId)
       .then((res: any) => {
@@ -372,8 +382,23 @@ export class RecruitmentPlanEditComponent implements OnInit {
     if (this.flagState$.value == "view") {
       return;
     }
+    console.log("vào không")
     this.emptyArray.nguonDtId =this.model.nguonDtId
     this.emptyArray.chiPhi = this.model.chiPhi
+    this.data.push({
+      nguonDtId: this.model.nguonDtId,
+      chiPhi: this.model.chiPhi
+    });
+    console.log(this.data)
+
+  }
+  removeEmp() {
+    if (this.flagState$.value == "view") {
+      return;
+    }
+    this.emptyArray.nguonDtId =this.model.nguonDtId
+    this.emptyArray.chiPhi = this.model.chiPhi
+  
   }
   changePosition(e: any) {
     if (e.e) {

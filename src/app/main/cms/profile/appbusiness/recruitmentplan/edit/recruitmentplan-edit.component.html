@@ -383,29 +383,12 @@
                   </ejs-dropdownlist>
                 </div>
               </div>
-              <!-- <div class="col-sm-3">
-                <div class="form-group vertical">
-                  <label class="e-float-text" for="donViId">{{'[Đơn vị đăng tuyển]' | translate }}</label>
-                  <ejs-dropdownlist id='donViId' [dataSource]='lstdonviId' formControlName="donViId"
-                    [showClearButton]="true" [(ngModel)]="model.donViId" [fields]='fields' [allowFiltering]='true'
-                    (filtering)='onFiltering($event,lstdonviId)'>
-                  </ejs-dropdownlist>
-                </div>
-              </div>
-              <div class="col-sm-3">
+              
+              <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text " for="chiPhi">{{'[Chi phí]' | translate }}</label>
                   <ejs-numerictextbox format="N0" locale="en" name="chiPhi" formControlName="chiPhi"
                     [(ngModel)]="model.chiPhi" min="0" max="999999999">
-                  </ejs-numerictextbox>
-
-                </div>
-              </div> -->
-              <div class="col-sm-4">
-                <div class="form-group vertical">
-                  <label class="e-float-text " for="total">{{'[Tổng chi phí]' | translate }}</label>
-                  <ejs-numerictextbox format="N0" locale="en" name="total" formControlName="total"
-                    [(ngModel)]="model.total" min="0" max="999999999">
                   </ejs-numerictextbox>
 
                 </div>
@@ -415,10 +398,10 @@
             <div class="mb-3 mt-3">
               <div class="row">
                 <div class="col-md-6">
-                  <button class="btn btn-info" type="button">{{'[Thêm]' | translate }} (click)="addNguon()"</button>
+                  <button class="btn btn-info" type="button" (click)="addNguon()">{{'[Thêm]' | translate }} </button>
                 </div>
                 <div class="col-md-6">
-                  <button class="btn btn-danger ml-3 pull-right" type="button">{{'[Xoá]' | translate }} (click)="removeEmp()"</button>
+                  <button class="btn btn-danger ml-3 pull-right" type="button" (click)="removeEmp()">{{'[Xoá]' | translate }} </button>
 
                 </div>
               </div>
@@ -430,7 +413,7 @@
                 [allowPaging]='true' [pageSettings]='configs.pageSettings' [enableHover]='true' [allowSorting]='true'
                 allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [showColumnChooser]='true'
                 [selectionSettings]='configs.selectionSettings' [editSettings]='configs.editSettings'
-                [allowFiltering]='true' [filterSettings]='configs.filterOption'>
+                [allowFiltering]='true' [filterSettings]='configs.filterOption' [dataSource]='data'>
                 <e-columns>
                   <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
                     [allowSorting]='false' width='60' textAlign="Center" [allowEditing]="false">
@@ -438,9 +421,9 @@
                   <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
                     [isPrimaryKey]='true' [allowEditing]="false">
                   </e-column>
-                  <e-column field='code' headerTextAlign="Center" textAlign="Left"
+                  <e-column field='nguonDtId' headerTextAlign="Center" textAlign="Left"
                     headerText="{{'[Tên nguồn đăng tuyển]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
-                  <e-column field='name' headerTextAlign="Center" textAlign="Left"
+                  <e-column field='chiPhi' headerTextAlign="Center" textAlign="Left"
                     headerText="{{'[Chi phí]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
                 </e-columns>
               </ejs-grid>
