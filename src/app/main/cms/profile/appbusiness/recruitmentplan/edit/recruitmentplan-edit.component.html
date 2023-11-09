@@ -34,8 +34,7 @@
               <div class="col-sm-4">
                 <div class="form-group vertical-flex">
                   <label class="e-float-text required" for="orgId">{{'[Phòng ban]' | translate }}</label>
-                  <input formControlName="orgId" [(ngModel)]="model.orgName" type="text" class="form-control"
-                    readonly>
+                  <input formControlName="orgId" [(ngModel)]="model.orgName" type="text" class="form-control" readonly>
                   <div class="input-group-append">
                     <button class="btn btn-search" type="button" (click)="choiseOrg()"></button>
                   </div>
@@ -55,9 +54,8 @@
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text required">{{'[Vị trí công việc]' | translate }}</label>
-                  <ejs-dropdownlist id='positionId' [dataSource]='lstPositionId'
-                    formControlName="positionId" [showClearButton]="true"
-                    [(ngModel)]="model.positionId" [fields]='fields' [allowFiltering]='true'
+                  <ejs-dropdownlist id='positionId' [dataSource]='lstPositionId' formControlName="positionId"
+                    [showClearButton]="true" [(ngModel)]="model.positionId" [fields]='fields' [allowFiltering]='true'
                     (filtering)='onFiltering($event,lstPositionId)' (change)='changePosition($event!)'
                     popupWidth='800px' [headerTemplate]='headerTemplate' [itemTemplate]='itemTemplate'>
                     <ng-template #itemTemplate="" let-data="">
@@ -336,8 +334,8 @@
                 <div class="form-group vertical">
                   <label class="e-float-text " for="ngayhachtoan">{{'[Ngày kết thúc tuyển dụng dự kiến]' | translate
                     }}</label>
-                  <ejs-datepicker id="ktDate" format="dd/MM/yyyy" [(ngModel)]="model.ktDate"
-                    formControlName="ktDate" placeholder=".../.../...">
+                  <ejs-datepicker id="ktDate" format="dd/MM/yyyy" [(ngModel)]="model.ktDate" formControlName="ktDate"
+                    placeholder=".../.../...">
                   </ejs-datepicker>
 
                 </div>
@@ -345,8 +343,8 @@
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text " for="ngayhachtoan">{{'[Thời gian gia hạn]' | translate }}</label>
-                  <ejs-datepicker id="tgghDate" format="dd/MM/yyyy" [(ngModel)]="model.tgghDate" formControlName="tgghDate"
-                    placeholder=".../.../...">
+                  <ejs-datepicker id="tgghDate" format="dd/MM/yyyy" [(ngModel)]="model.tgghDate"
+                    formControlName="tgghDate" placeholder=".../.../...">
                   </ejs-datepicker>
 
                 </div>
@@ -379,11 +377,11 @@
                   <label class="e-float-text" for="nguonDtId">{{'[Nguồn đăng tuyển]' | translate }}</label>
                   <ejs-dropdownlist id='nguonDtId' [dataSource]='lstnguondtId' formControlName="nguonDtId"
                     [showClearButton]="true" [(ngModel)]="model.nguonDtId" [fields]='fields' [allowFiltering]='true'
-                    (filtering)='onFiltering($event,lstnguondtId)'>
+                    (filtering)='onFiltering($event,lstnguondtId)' (change)='changeNguon($event!)'>
                   </ejs-dropdownlist>
                 </div>
               </div>
-              
+
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text " for="chiPhi">{{'[Chi phí]' | translate }}</label>
@@ -400,10 +398,10 @@
                 <div class="col-md-6">
                   <button class="btn btn-info" type="button" (click)="addNguon()">{{'[Thêm]' | translate }} </button>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <button class="btn btn-danger ml-3 pull-right" type="button" (click)="removeEmp()">{{'[Xoá]' | translate }} </button>
 
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -421,10 +419,16 @@
                   <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
                     [isPrimaryKey]='true' [allowEditing]="false">
                   </e-column>
-                  <e-column field='nguonDtId' headerTextAlign="Center" textAlign="Left"
+                  <e-column field='nguonDtName' headerTextAlign="Center" textAlign="Left"
                     headerText="{{'[Tên nguồn đăng tuyển]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
                   <e-column field='chiPhi' headerTextAlign="Center" textAlign="Left"
-                    headerText="{{'[Chi phí]' | translate }}" clipMode='EllipsisWithTooltip'></e-column>
+                    headerText="{{'[Chi phí]' | translate }}" clipMode='EllipsisWithTooltip' type='number'
+                    format='N0'></e-column>
+                  <e-column headerText='Actions'>
+                    <ng-template #template let-data>
+                      <button (click)="Remove(data.id)">Xóa</button>
+                    </ng-template>
+                  </e-column>
                 </e-columns>
               </ejs-grid>
             </div>
