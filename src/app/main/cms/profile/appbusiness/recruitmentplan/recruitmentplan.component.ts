@@ -180,7 +180,7 @@ export class RecruitmentPlanComponent implements OnInit, OnDestroy {
         value: this.nodeSelected,
       });
     }
-    this._coreService.execute(this.state, "hr/recruitmentplan/GetAll", extraParams);
+    this._coreService.execute(this.state, "hr/plan/GetAll", extraParams);
   };
   GetEmp = (e: any) => {
     this.flagStatusEmp = e.checked;
@@ -202,7 +202,7 @@ export class RecruitmentPlanComponent implements OnInit, OnDestroy {
         value: this.nodeSelected,
       });
     }
-    this._coreService.execute(this.state, "hr/recruitmentplan/GetAll", extraParams);
+    this._coreService.execute(this.state, "hr/plan/GetAll", extraParams);
   }
   // Số thứ tự
   formatStt = (index: string) => {

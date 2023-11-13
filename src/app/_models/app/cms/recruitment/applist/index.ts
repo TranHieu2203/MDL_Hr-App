@@ -1,5 +1,6 @@
 export * from "./criteria";
 export * from "./groupcriteria";
+export * from "./evaluation";
 // export * from "./timestructure";
 // export * from "./shift";
 
