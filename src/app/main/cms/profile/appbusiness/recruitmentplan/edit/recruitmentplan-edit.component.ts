@@ -1,9 +1,10 @@
 import {
   Component,
   OnInit,
+  ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { Subject, BehaviorSubject } from "rxjs";
+import { Subject, BehaviorSubject, empty } from "rxjs";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
 // Service Translate
@@ -23,6 +24,7 @@ import {
   FilterService,
   VirtualScrollService,
 } from "@syncfusion/ej2-angular-grids";
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { ToolbarItem, ToolbarInterface } from "src/app/_models/index";
 
 import { CoreService } from "src/app/_services/core.service";
@@ -39,6 +41,7 @@ import { FieldSettingsModel } from "@syncfusion/ej2-dropdowns";
 import * as moment from "moment";
 const $ = require("jquery");
 import { RecruitmentPlan } from "src/app/_models/app/cms";
+import { exit } from "process";
 setCulture("en");
 
 @Component({
@@ -52,6 +55,8 @@ export class RecruitmentPlanEditComponent implements OnInit {
   toolItems$ = new BehaviorSubject<any[]>([
 
   ])
+  @ViewChild("overviewgrid", { static: true })
+  public grid!: GridComponent;
   // Varriable Language
   flagState$ = new BehaviorSubject<string>('')
   // flag show popup toolbar Back
@@ -84,6 +89,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
   disable: any;
   checked: number = 0;
     emptyArray: any = [];
+    data: any = [];
   /**
    * Constructor
    *
@@ -221,14 +227,16 @@ export class RecruitmentPlanEditComponent implements OnInit {
       this.getlstqualificationId(),
       this.getListLanguage(),
       this.getListComputer(),
-      this.getlstreasonId()
+      this.getlstreasonId(),
+      this.getlstnguonId()
     ]).then((res: any) => {
       this.lstStatusId = res[1];
       this.lsthocvanId = res[2];
       this.lstchuyenmonId = res[3];
       this.lsttdNgoaiNguId = res[4];
       this.lsttinhocId = res[5],
-        this.lstreasonId = res[6]
+        this.lstreasonId = res[6],
+        this.lstnguondtId = res[7]
       if (this.paramId) {
         this.model = _.cloneDeep(_.omit(res[0],["positionId"]));
         this.loadDatalazy(res[0]);
@@ -303,14 +311,24 @@ export class RecruitmentPlanEditComponent implements OnInit {
       });
     });
   }
+  getlstnguonId() {
+    return new Promise((resolve) => {
+      this._coreService.Get("hr/otherlist/GetListNguonTd").subscribe((res: any) => {
+        resolve(res.data);
+      });
+    });
+  }
   loadDatalazy(model: RecruitmentPlan) {
     this.getPosition(model.orgId, model.employeeId)
       .then((res: any) => {
         this.lstPositionId = res;
       })
-      .then((x) => {
+      .then((_x) => {
         this.model.positionId = model.positionId;
       });
+      if(model.nguonDt){
+        this.data = model.nguonDt;
+      }
   }
 
   choiseDecision() {
@@ -368,12 +386,66 @@ export class RecruitmentPlanEditComponent implements OnInit {
       x.unsubscribe();
     });
   }
+  changeNguon(e: any) {
+    if (e.e) {
+      
+      const foundItem = this.lstnguondtId.find((item: { id: any; }) => item.id === e.itemData.id);
+      this.model.nguonDtName = foundItem.name;
+    }
+  }
   addNguon() {
     if (this.flagState$.value == "view") {
       return;
-    }
+    };
+    
+    let hasError = false;
+
     this.emptyArray.nguonDtId =this.model.nguonDtId
     this.emptyArray.chiPhi = this.model.chiPhi
+    if(this.data.length >0 ){
+      this.data.forEach((_item1: { id: number | undefined; }) => {
+        console.log(_item1.id,this.model.nguonDtId)
+        if(_item1.id == this.model.nguonDtId){
+          console.log("Không vào đây à")
+          this.notification.warning("Đã tồn tại nguồn đăng tuyển");
+          hasError = true;
+          return;
+        }
+      });
+    }
+    if (hasError) {
+      return; // Nếu có lỗi, thoát khỏi hàm addNguon()
+    }
+    this.data.push({
+      id: this.model.nguonDtId,
+      nguonDtName: this.model.nguonDtName,
+      chiPhi: this.model.chiPhi
+    });
+    this.model.nguonDtName = undefined;
+    this.model.chiPhi = undefined;
+    this.model.nguonDt = this.data;
+    this.grid.refresh();
+
+
+  }
+  // removeEmp() {
+  //   if (this.flagState$.value == "view") {
+  //     return;
+  //   }
+  //   this.data.splice(1, 1);
+
+  //   this.grid.refresh();
+  
+  // }
+  Remove(idToRemove: number) {
+    // Sử dụng phương thức filter để xóa phần tử từ mảng
+    if (this.flagState$.value == "view") {
+          return;
+         }
+    this.data = this.data.filter((item: { id: number; }) => item.id !== idToRemove);
+    this.model.nguonDt = this.data;
+    // Cập nhật grid
+    this.grid.refresh();
   }
   changePosition(e: any) {
     if (e.e) {
@@ -455,7 +527,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
             this.router.navigate(["/hrms/profile/business/recruitmentplan"]);
           }
         },
-        (error: any) => {
+        (_error: any) => {
           this.notification.addError();
         }
       );
@@ -469,7 +541,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
             this.router.navigate(["/hrms/profile/business/recruitmentplan"]);
           }
         },
-        (error: any) => {
+        (_error: any) => {
           this.notification.editError();
         }
       );

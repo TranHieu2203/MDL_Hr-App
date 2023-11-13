@@ -66,9 +66,9 @@ export class InternalBlogEditComponent implements OnInit {
 
   // Khai báo biến
   backgroundTheme!: string;
-  lstthemeId: any =[];
+  lstthemeId: any = [];
   paramId = "";
-  linkImgChange: string ="/assets/images/them/change-theme.png";
+  linkImgChange: string = "/assets/images/them/change-theme.png";
   model: Blog = new Blog();
   modelTemp: Blog = new Blog();
   editForm!: FormGroup;
@@ -76,8 +76,8 @@ export class InternalBlogEditComponent implements OnInit {
   public fields: FieldSettingsModel = { value: "_id", text: "title" };
   public fields1: FieldSettingsModel = { value: "id", text: "name" };
   // Khai báo data
-  public lstTheme: any[] = [ ];
-  public lstThemeOrigin: any[] = [ ]
+  public lstTheme: any[] = [];
+  public lstThemeOrigin: any[] = []
   // Toolbar Item
   public toolbar!: ToolbarInterface[];
 
@@ -131,7 +131,7 @@ export class InternalBlogEditComponent implements OnInit {
     this._tlaTranslationLoaderService.loadTranslations(vietnam, english);
 
     this.editForm = this._formBuilder.group({
-      themeId: ["", [Validators.required]],
+      themeId: [""],
       create_by: [
         "",
         [
@@ -144,9 +144,9 @@ export class InternalBlogEditComponent implements OnInit {
       meta_description: [""],
       orders: [""],
       content: [""],
-      imgUrl:[""],
-      videoUrl:[""],
-      videoUrlTemp:[""]
+      imgUrl: [""],
+      videoUrl: [""],
+      videoUrlTemp: [""]
     });
 
     // Set the private defaults
@@ -176,76 +176,67 @@ export class InternalBlogEditComponent implements OnInit {
     })
 
     if (this.flagState$.value === "view") {
-      this.editForm.disable(); 
+      this.editForm.disable();
     }
-    
+
     let modelInt: any;
     async.waterfall([
-      (cb: any)=>{
-        if(this.paramId)
-        {
+      (cb: any) => {
+        if (this.paramId) {
           this._coreService.Get("hr/BlogInternal/Get?id=" + this.paramId).subscribe((res: any) => {
-            if(res.statusCode =="200")
-              {
-                modelInt = res.data;
-                return cb();
-              }
-              else
-              {
-                this.notification.warning(res.message);
-                return cb();
-              }
+            if (res.statusCode == "200") {
+              modelInt = res.data;
+              return cb();
+            }
+            else {
+              this.notification.warning(res.message);
+              return cb();
+            }
           })
         }
-        else  return cb();
+        else return cb();
       },
-      (cb1: any)=>{
+      (cb1: any) => {
         this._coreService.Get("hr/OtherList/TitleNews").subscribe((res: any) => {
-          if(res.statusCode =="200")
-            {
-              this.lstthemeId = res.data
-            }
-            else
-            {
-              this.notification.warning(res.message);
-            }
-            return cb1();
+          if (res.statusCode == "200") {
+            this.lstthemeId = res.data
+          }
+          else {
+            this.notification.warning(res.message);
+          }
+          return cb1();
         });
       }
 
-    ],(error: any, result: any)=>{
+    ], (error: any, result: any) => {
       // this.lstTheme = this.lstTheme.splice(0,8);
-      if(this.flagState$.value != "new")
-      {
+      if (this.flagState$.value != "new") {
         this.model = modelInt;
-        var url = this.globals.apiUrlFileManager.toString().replace("api/","") + this.model.imgUrl;
-        document.getElementById("preview")!.style.backgroundImage = "url('" +  url +"'";
-        var videoUrl = this.globals.apiUrlFileManager.toString().replace("api/","") + this.model.videoUrl;
+        var url = this.globals.apiUrlFileManager.toString().replace("api/", "") + this.model.imgUrl;
+        document.getElementById("preview")!.style.backgroundImage = "url('" + url + "'";
+        var videoUrl = this.globals.apiUrlFileManager.toString().replace("api/", "") + this.model.videoUrl;
         // document.getElementById("preview1")!.style.backgroundImage = "url('" +  videoUrl +"'";
         this.model.videoUrlTemp = videoUrl;
-     //   this.rteTool.value = this.model.content;
+        //   this.rteTool.value = this.model.content;
         // let finditem = this.lstThemeOrigin.find(x => x.id == this.model.themeId);
         // if(finditem)
         // {
         //   this. ChangeTheme(finditem)
         // }
       }
-      else
-      {
+      else {
         // let item = this.lstTheme[0];
         // document.getElementById("backgroundTitle")!.style.backgroundImage = "url('" + item.imgUrl + "')"; 
         // document.getElementById("textPreview")!.style.color = item.color;
       }
     })
   }
-  ChangeIcon(){
-    if(this.linkImgChange == "/assets/images/them/change-theme.png")
-    {
+  ChangeIcon() {
+    if (this.linkImgChange == "/assets/images/them/change-theme.png") {
       this.linkImgChange = "/assets/images/them/back.png";
       this.flagTheme = true;
     }
-    else
-    {
+    else {
       this.linkImgChange = "/assets/images/them/change-theme.png";
       this.flagTheme = false;
     }
@@ -256,18 +247,17 @@ export class InternalBlogEditComponent implements OnInit {
   ChooseBackground1() {
     document.getElementById("file1")!.click();
   }
-  
-  ChangeTheme(item: any){
-    document.getElementById("backgroundTitle")!.style.backgroundImage = "url('" + item.imgUrl + "')"; 
+
+  ChangeTheme(item: any) {
+    document.getElementById("backgroundTitle")!.style.backgroundImage = "url('" + item.imgUrl + "')";
     document.getElementById("textPreview")!.style.color = item.color;
     this.model.themeId = item.id;
-    if( this.flagPopupTheme)
-    {
+    if (this.flagPopupTheme) {
       this.modalService.close("many-theme");
       this.flagPopupTheme = false;
     }
   }
-  ManyTheme = ()=>{
+  ManyTheme = () => {
     this.modalService.open("many-theme");
     this.flagPopupTheme = true;
   }
@@ -296,42 +286,42 @@ export class InternalBlogEditComponent implements OnInit {
       }
     }, 200);
   }
- 
+
   uploadImg(files: FileList | null) {
     setTimeout(() => {
       if (files!.length > 0) {
         let data = new FormData();
         data.append("files", "profile");
         data.append("files", files![0]);
-          this._coreService.uploadFileV2Hrm(data, Consts.profile,"portalimage").subscribe((res: any) => {
-            var url = this.globals.apiUrlFileManager.toString().replace("api/","") + res.data;
-            var url1 = res.data;
-            this.model.imgUrl = url1;
-            document.getElementById("preview")!.style.backgroundImage = "url('" +  url +"'";
-            let x: any = document.getElementById("portalimage");
-            x.value = null;
+        this._coreService.uploadFileV2Hrm(data, Consts.profile, "portalimage").subscribe((res: any) => {
+          var url = this.globals.apiUrlFileManager.toString().replace("api/", "") + res.data;
+          var url1 = res.data;
+          this.model.imgUrl = url1;
+          document.getElementById("preview")!.style.backgroundImage = "url('" + url + "'";
+          let x: any = document.getElementById("portalimage");
+          x.value = null;
         });
       }
     }, 200);
   }
 
   uploadVideo(files: FileList | null) {
-    
-      if (files!.length > 0) {
-        let data1 = new FormData();
-        data1.append("files", "profile");
-        data1.append("files", files![0]);
-          this._coreService.uploadFileV2Hrm(data1, Consts.profile,"portalvideo").subscribe((res: any) => {
-            var url = this.globals.apiUrlFileManager.toString().replace("api/","") + res.data;
-            var url1 = res.data;
-            this.model.videoUrl = url1;
-            // document.getElementById("preview1")!.style.backgroundImage = "url('" +  url +"'";
-            this.model.videoUrlTemp = url;
-            let x: any = document.getElementById("portalvideo");
-            x.value = null;
-        });
-      }
-    
+
+    if (files!.length > 0) {
+      let data1 = new FormData();
+      data1.append("files", "profile");
+      data1.append("files", files![0]);
+      this._coreService.uploadFileV2Hrm(data1, Consts.profile, "portalvideo").subscribe((res: any) => {
+        var url = this.globals.apiUrlFileManager.toString().replace("api/", "") + res.data;
+        var url1 = res.data;
+        this.model.videoUrl = url1;
+        // document.getElementById("preview1")!.style.backgroundImage = "url('" +  url +"'";
+        this.model.videoUrlTemp = url;
+        let x: any = document.getElementById("portalvideo");
+        x.value = null;
+      });
+    }
+
   }
 
   // Event Click Toolbar
@@ -359,7 +349,7 @@ export class InternalBlogEditComponent implements OnInit {
         this.flagState$.next("edit");
         this.flagePopup = true;
         this.editForm.enable();
-        break;      
+        break;
       default:
         break;
     }
@@ -367,7 +357,7 @@ export class InternalBlogEditComponent implements OnInit {
   // lưu data open popup
   saveData = () => {
     if (!this.editForm.valid) {
-      this.notification.warning("Form chưa hợp lệ !");
+      // this.notification.warning("Form chưa hợp lệ !");
       this.editForm.markAllAsTouched();
       return;
     }

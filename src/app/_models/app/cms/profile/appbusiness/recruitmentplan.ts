@@ -49,4 +49,5 @@ export class RecruitmentPlan {
   donViName?: string;
   chiPhi?: number;
   total?: number;
+  nguonDt?: [];
 }

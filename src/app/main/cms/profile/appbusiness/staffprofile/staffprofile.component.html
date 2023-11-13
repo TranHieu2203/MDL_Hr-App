@@ -81,7 +81,7 @@
                   (excelQueryCellInfo)='configs.exportQueryCellInfo($event)'
                   (excelHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'
                   (pdfQueryCellInfo)='configs.exportQueryCellInfo($event)'
-                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)'>
+                  (pdfHeaderQueryCellInfo)='configs.exportQueryCellInfo($event)' [frozenColumns]='4'>
                   <e-columns>
                     <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
                       [allowSorting]='false' width='50' textAlign="Center" [allowEditing]="false">
@@ -123,7 +123,7 @@
                       headerText="{{'[Ngày vào công ty]' | translate }}" clipMode='EllipsisWithTooltip'
                       width='115'></e-column>
 
-                    <e-column field='birthDate' headerTextAlign="Center"  [allowFiltering]="false" textAlign="Center"
+                    <e-column field='birthDate' headerTextAlign="Center" [allowFiltering]="false" textAlign="Center"
                       headerText="{{'[Ngày sinh]' | translate }}" clipMode='EllipsisWithTooltip' width='115'></e-column>
                     <!--<e-column field='birthDate' headerTextAlign="Center" textAlign="Center" headerText="{{'[Ngày sinh]' | translate }}"
                       clipMode='EllipsisWithTooltip' width='180'></e-column>-->
@@ -142,7 +142,7 @@
                     <e-column field='idNo' headerTextAlign="Left" textAlign="Left"
                       headerText="{{'[CMND]' | translate }}" clipMode='EllipsisWithTooltip' width='127'>
                     </e-column>
-                    <e-column field='idDate' headerTextAlign="Left"  textAlign="Center"
+                    <e-column field='idDate' headerTextAlign="Left" textAlign="Center"
                       headerText="{{'[Ngày cấp]' | translate }}" clipMode='EllipsisWithTooltip' [allowFiltering]="false"
                       width='110'></e-column>
                     <e-column field='idPlace' headerTextAlign="Left" textAlign="Left"
