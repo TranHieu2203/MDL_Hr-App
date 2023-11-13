@@ -449,13 +449,14 @@ export class RcRequestEditComponent implements OnInit {
   }
   onFileChange(files: FileList | null) {
     setTimeout(() => {
+      console.log("ass");
       if (files!.length > 0) {
         let data = new FormData();
         // for (let i = 0; i < files!.length; i++) {
         //   data.append("files", files![i]);
         // }
         data.append("files", "recruitment");
-        data.append("files", files![0]);
+        /*data.append("files", files![0]);
           this._coreService.uploadFileToGroupV2Hrm(data, Consts.recruitment,"dexuattuyendung",this.model.code?.toString()).subscribe((res: any) => {
             var url =  res.data;
             this.file = url;
@@ -463,7 +464,7 @@ export class RcRequestEditComponent implements OnInit {
             this.model.fileAttach = arr[arr.length-1]
             // let x: any = document.getElementById("file");
             // x.value = null;
-        });
+        });*/
       }
     }, 200);
   }
