@@ -347,12 +347,14 @@ export class ContractInforComponent implements OnInit, OnDestroy {
         ToolbarItem.DELETE,
         ToolbarItem.EXPORT_EXCEL,
         ToolbarItem.PRINT,
+        ToolbarItem.PRINT_JD_POSITION
         ]);
       } else {
         this.toolItems$.next([ToolbarItem.ADD,
         ToolbarItem.EXPORT_EXCEL,
         ToolbarItem.PRINT,
         ToolbarItem.SYNC,
+        ToolbarItem.PRINT_JD_POSITION
         ]);
       }
     }
@@ -379,14 +381,16 @@ export class ContractInforComponent implements OnInit, OnDestroy {
             ToolbarItem.ADD,
             ToolbarItem.DELETE,
             ToolbarItem.EXPORT_EXCEL,
-            ToolbarItem.PRINT]);
+            ToolbarItem.PRINT,
+            ToolbarItem.PRINT_JD_POSITION]);
         }
         else {
           this.toolItems$.next([
             ToolbarItem.ADD,
             ToolbarItem.EXPORT_EXCEL,
             ToolbarItem.PRINT,
-            ToolbarItem.SYNC,]);
+            ToolbarItem.SYNC,
+            ToolbarItem.PRINT_JD_POSITION]);
         }
 
       }
