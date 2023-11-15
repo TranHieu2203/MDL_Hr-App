@@ -31,4 +31,10 @@ export const OrganizeBusinessRoutes: Routes = [
     loadChildren: () => import("./rcrequest/rcrequest.module").then(m => m.RcRequestModule),
     //canActivate: [TenantPermisstionGuard]
   },
+  {
+    path: "campaign",
+    //loadChildren: "./staffprofile/staffprofile.module#StaffProfileModule",
+    loadChildren: () => import("./campaign/campaign.module").then(m => m.CampaignModule),
+    //canActivate: [TenantPermisstionGuard]
+  },
 ];

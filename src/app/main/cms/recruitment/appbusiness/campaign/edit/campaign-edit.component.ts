@@ -211,19 +211,19 @@ export class CampaignEditComponent implements OnInit {
     Promise.all([
       this.getById(),
       this.getStatus(),
-      this.GetListLearningLevel(),
-      this.getlstqualificationId(),
-      this.getListLanguage(),
-      this.getListComputer(),
-      this.getlstreasonId(),
+      this.GetListPlan(),
+      this.getHanTuyenDung(),
+      this.getHinhThuc(),
+      this.getNoiLamViec(),
+      this.getMau(),
       this.getlstnguonId()
     ]).then((res: any) => {
-      this.lstStatusId = res[1];
-      this.lsthocvanId = res[2];
-      this.lstchuyenmonId = res[3];
-      this.lsttdNgoaiNguId = res[4];
-      this.lsttinhocId = res[5],
-        this.lstreasonId = res[6],
+      this.lststatus = res[1];
+      this.lstplanId = res[2];
+      this.lstdeadlineId = res[3];
+      this.lsthinhthucId = res[4];
+      this.lstplaceId = res[5],
+        this.lstmauId = res[6],
         this.lstnguondtId = res[7]
       if (this.paramId) {
         this.model = _.cloneDeep(_.omit(res[0],["positionId"]));
@@ -245,56 +245,54 @@ export class CampaignEditComponent implements OnInit {
       }
     });
   }
+  GetListPlan() {
+    //đề xuất tuyển dụng
+    return new Promise((resolve) => {
+      this._coreService
+        .Get("hr/plan/GetList")
+        .subscribe((res: any) => {
+          resolve(res.data);
+        });
+    });
+  }
+
+
   getStatus() {
     return new Promise((resolve) => {
-      this._coreService.Get("hr/otherlist/STATUSAPPROVE")
+      this._coreService.Get("hr/otherlist/GetListRecruitStatus")
         .subscribe((res: any) => {
           resolve(res.data);
         });
     })
   }
-  GetListLearningLevel() {
-    //trình độ học vấn
+  getHanTuyenDung() {
+    return new Promise((resolve) => {
+      this._coreService.Get("hr/otherlist/GetListRecruitDeadline")
+        .subscribe((res: any) => {
+          resolve(res.data);
+        });
+    })
+  }
+  getHinhThuc() {
+
     return new Promise((resolve) => {
       this._coreService
-        .Get("hr/otherlist/GetListLearningLevel")
+        .Get("hr/otherlist/GetListRecruitType")
         .subscribe((res: any) => {
           resolve(res.data);
         });
     });
   }
-  getlstqualificationId() {
+  getNoiLamViec() {
     return new Promise((resolve) => {
-      this._coreService.Get("hr/otherlist/SPECIALIZED_TRAIN").subscribe((res: any) => {
+      this._coreService.Get("hr/otherlist/PLACEWORK").subscribe((res: any) => {
         resolve(res.data);
       });
     });
   }
-  getListLanguage() {
+  getMau() {
     return new Promise((resolve) => {
-      this._coreService
-        .Get("hr/otherlist/GetOtherListByType?code=LANGUAGE_LEVEL")
-        .subscribe((res: any) => {
-
-          resolve(res.data);
-        });
-    });
-  }
-
-
-  getListComputer() {
-    return new Promise((resolve) => {
-      this._coreService
-        .Get("hr/otherlist/GetOtherListByType?code=RC_COMPUTER_LEVEL")
-        .subscribe((res: any) => {
-
-          resolve(res.data);
-        });
-    });
-  }
-  getlstreasonId() {
-    return new Promise((resolve) => {
-      this._coreService.Get("hr/otherlist/GetListRecruitReason").subscribe((res: any) => {
+      this._coreService.Get("hr/evaluation/getlist").subscribe((res: any) => {
         resolve(res.data);
       });
     });

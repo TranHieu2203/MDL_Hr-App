@@ -377,9 +377,8 @@ export class EvaluationComponent implements OnInit {
 
           this.modelTemp = res.data;
           this.model = _.cloneDeep(this.modelTemp);
-          if (this.model.criteriaGroupId != undefined) { 
-            this.getlstCriteria(this.model.criteriaGroupId); 
-          }
+          this.model = _.cloneDeep(_.omit(res.data, ["criteriaId"]));
+          this.loadDatalazy(res.data)
 
           this.dialogHeader = "Sửa " + this.model.name;
 
@@ -388,6 +387,21 @@ export class EvaluationComponent implements OnInit {
     }
 
   }
+  loadDatalazy(model: Evaluation) {
+    if (model && model.criteriaGroupId) {
+      this.getlstCriteria(model.criteriaGroupId)
+        .then((res: any) => {
+          this.lstCriteria = res;
+        })
+        .then((x) => {
+          this.model.criteriaGroupId = model.criteriaGroupId;
+          this.model.criteriaId = model.criteriaId;
+        });
+    }
+    
+  }
+
+
   getlstgroupCriteria() {
 
     // Lấy dữ liệu 
@@ -402,20 +416,25 @@ export class EvaluationComponent implements OnInit {
   }
   getlstCriteria(id: number) {
 
-    // Lấy dữ liệu 
-
-    this._coreService
-      .Get("hr/evaluation/GetCriteriaList?criteriaGroupId=" + id)
-      .subscribe((res: any) => {
-        this.lstCriteria = res.data;
+      return new Promise((resolve) => {
+        if (id) {
+          this._coreService
+          .Get("hr/evaluation/GetCriteriaList?criteriaGroupId=" + id)
+            .subscribe((res: any) => {
+              resolve(res.data);
+            });
+        } else {
+          resolve(false);
+        }
       });
-
 
   }
   changeGroup(e: any) {
     if (e.e) {
       this.lstCriteria = [];
-      this.getlstCriteria(e.itemData.id);
+      this.getlstCriteria(e.itemData.id).then((res: any) => {
+        this.lstCriteria = res;
+      });
     }
   }
   /**
