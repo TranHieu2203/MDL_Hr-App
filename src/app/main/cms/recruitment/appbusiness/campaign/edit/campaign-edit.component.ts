@@ -40,18 +40,18 @@ import { Query, Predicate } from "@syncfusion/ej2-data";
 import { FieldSettingsModel } from "@syncfusion/ej2-dropdowns";
 import * as moment from "moment";
 const $ = require("jquery");
-import { RecruitmentPlan } from "src/app/_models/app/cms";
+import { Campaign } from "src/app/_models/app/cms";
 import { exit } from "process";
 setCulture("en");
 
 @Component({
-  selector: "cms-profile-recruitmentplan-edit",
-  templateUrl: "./recruitmentplan-edit.component.html",
-  styleUrls: ["./recruitmentplan-edit.component.scss"],
+  selector: "cms-profile-campaign-edit",
+  templateUrl: "./campaign-edit.component.html",
+  styleUrls: ["./campaign-edit.component.scss"],
   providers: [FilterService, VirtualScrollService],
   encapsulation: ViewEncapsulation.None,
 })
-export class RecruitmentPlanEditComponent implements OnInit {
+export class CampaignEditComponent implements OnInit {
   toolItems$ = new BehaviorSubject<any[]>([
 
   ])
@@ -63,7 +63,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
   flagePopup = true;
   paramId = "";
 
-  model: RecruitmentPlan = new RecruitmentPlan();
+  model: Campaign = new Campaign();
   languages: any;
   selectedLanguage: any;
   editForm!: FormGroup;
@@ -86,6 +86,14 @@ export class RecruitmentPlanEditComponent implements OnInit {
   lsttinhocId: any = [];
   lstnguondtId: any = [];
   lstdonviId: any = [];
+
+
+  lstplanId: any = [];
+  lststatus: any = [];
+  lstdeadlineId: any = [];
+  lsthinhthucId: any = [];
+  lstplaceId: any = [];
+  lstmauId: any = [];
   disable: any;
   checked: number = 0;
     emptyArray: any = [];
@@ -135,55 +143,34 @@ export class RecruitmentPlanEditComponent implements OnInit {
     this._tlaTranslationLoaderService.loadTranslations(vietnam, english);
 
     this.editForm = this._formBuilder.group({
-      code: [[""], [Validators.required]],
-      name: [[""], [Validators.required]],
-      employeeCode: [{ value: "", disabled: true }, [Validators.required]],
+
+      ptName: [{ value: "", disabled: true }, [Validators.required]],
       employeeName: [{ value: "", disable: this.disable }, []],
       //unit: [""], //Đơn vị
-      positionId: ["", [Validators.required]], //Chức danh
-      orgId: ["", [Validators.required]],
-      isKh: [[""], []],
-      sendDate: [[""], []],
-      reasonId: [[""], [Validators.required]],
+      positionId: ["", []], //Chức danh
+      code: ["", []] ,
+      name: ["", []],
+      planId: ["", []],
+      status: ["", []],
+      deadlineId:["", []],
 
-      hienCo: [[""], []],
-      dinhBien: [[""], []],
-      tangGiam: [[""], []],
-      reasonDetail: [[""], []],
-      hocVanId: [[""], []],
+      chiPhiDk: ["", []],
+      orgId: ["", []],
 
-      tuoiFrom: [[""], []],
-      tuoiTo: [[""], []],
-      chuyenMonId: [[""], []],
+      chucVu: ["", []],
+      hinhthucId: ["", []],
 
+      placeId:["", []],
 
-      kyNang: [[""], []],
-      ngoaiNgu: [[""], []],
-      trinhDoNnId: [[""], []],
-
-      diemNgoaiNgu: [[""], []],
-      expireDate: [[""], []],
-      soNamKn: [[""], []],
-      tinHocId: [[""], []],
-
-      soLuong: [[""], []],
-      moTa: [[""], []],
-      nvChinh: [[""], []],
-      ycKinhNghiem: [[""], []],
-      ycKhac: [[""], []],
-      note: [[""], []],
-      bdTuyenDate: [[""], []],
-
-      ktDate: [[""], []],
-      tgghDate: [[""], []],
-      statusId: [[""], []],
-
-      nguonDtId: [[""], []],
-
-      donViId: [[""], []],
-
-      chiPhi: [[""], []],
-      total: [[""], []],
+      salaryFrom: ["", []],
+      salaryTo: ["", []],
+      jd:["", []],
+      mauId: ["", []],
+      endDateTT:["", []],
+      endDate:["", []],
+      soLuongTuyen:["", []],
+      soLuongHienCo:["", []],
+      soLuongDinhBien:["", []]
     });
 
     // Set the private defaults
@@ -205,14 +192,14 @@ export class RecruitmentPlanEditComponent implements OnInit {
       let toolbarList: any[] = [];
       if (x === "view") {
         toolbarList = [ToolbarItem.BACK, ToolbarItem.EDIT];
-         this.editForm.disable();
+        // this.editForm.disable();
       }
       if (x === "new") {
         toolbarList = [ToolbarItem.BACK, ToolbarItem.SAVE];
       }
       if (x === "edit") {
         toolbarList = [ToolbarItem.BACK, ToolbarItem.SAVE];
-        this.editForm.enable();
+
       }
       this.toolItems$.next(toolbarList)
     })
@@ -319,8 +306,8 @@ export class RecruitmentPlanEditComponent implements OnInit {
       });
     });
   }
-  loadDatalazy(model: RecruitmentPlan) {
-    this.getPosition(model.orgId, model.employeeId)
+  loadDatalazy(model: Campaign) {
+    this.getPosition(model.orgId, 0)
       .then((res: any) => {
         this.lstPositionId = res;
       })
@@ -332,19 +319,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
       }
   }
 
-  choiseDecision() {
-    if (this.flagState$.value == "view") {
-      return;
-    }
-    if (this.model.employeeId) {
-      let param = {
-        employeeId: this.model.employeeId
-      };
-
-    } else {
-      this.notification.warning("Chọn nhân viên");
-    }
-  }
+ 
   choiseEmp() {
     if (this.flagState$.value == "view") {
       return;
@@ -355,13 +330,12 @@ export class RecruitmentPlanEditComponent implements OnInit {
     this.modalService.open("cms-app-modalsemp", param);
     const x = this.modalService.employee.subscribe((res: any) => {
       //
-      this.model.employeeId = res.employeeId;
-      this.model.employeeCode = res.employeeCode;
-      this.model.employeeName = res.employeeName;
-      this.model.positionName = res.positionName;
-      this.model.orgName = res.orgName;
-      this.model.orgId = res.orgId;
-      this.model.positionId = res.positionId;
+      this.model.ptId = res.employeeId;
+      this.model.ptName = res.employeeCode;
+      // this.model.positionName = res.positionName;
+      // this.model.orgName = res.orgName;
+      // this.model.orgId = res.orgId;
+      // this.model.positionId = res.positionId;
       x.unsubscribe();
     });
   }
@@ -379,11 +353,11 @@ export class RecruitmentPlanEditComponent implements OnInit {
       this.model.orgName = res.NAME;
       this.model.positionId = undefined;
       this.lstPositionId = [];
-      if (this.model.orgId != null) {
-        this.getPosition(this.model.orgId, this.model.employeeId!).then((res: any) => {
-          this.lstPositionId = res;
-        });
-      }
+      // if (this.model.orgId != null) {
+      //   this.getPosition(this.model.orgId, this.model.employeeId!).then((res: any) => {
+      //     this.lstPositionId = res;
+      //   });
+      // }
       x.unsubscribe();
     });
   }
@@ -485,7 +459,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
           this.modalService.open("confirm-back-modal");
         }
         if (this.flagePopup === true) {
-          this.router.navigate(["hrms/profile/business/recruitmentplan"]);
+          this.router.navigate(["hrms/recruitment/business/campaign"]);
         }
         break;
       case ToolbarItem.ADD:
@@ -494,7 +468,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
         this.saveData();
         break;
       case ToolbarItem.EDIT:
-        if (this.model.statusId == 2 && !this.globals.isAdmin) {
+        if (this.model.status == 2 && !this.globals.isAdmin) {
           this.notification.warning("notify.APPROVED");
           return;
         }
@@ -525,7 +499,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
             this.notification.checkErrorMessage(res.message);
           } else {
             this.notification.addSuccess();
-            this.router.navigate(["/hrms/profile/business/recruitmentplan"]);
+            this.router.navigate(["/hrms/recruitment/business/campaign"]);
           }
         },
         (_error: any) => {
@@ -539,7 +513,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
             this.notification.checkErrorMessage(res.message);
           } else {
             this.notification.editSuccess();
-            this.router.navigate(["/hrms/profile/business/recruitmentplan"]);
+            this.router.navigate(["/hrms/recruitment/business/campaign"]);
           }
         },
         (_error: any) => {
@@ -614,7 +588,7 @@ export class RecruitmentPlanEditComponent implements OnInit {
       this.modalService.close("confirm-back-modal");
     } else {
       this.modalService.close("confirm-back-modal");
-      this.router.navigate(["/hrms/profile/business/recruitmentplan"]);
+      this.router.navigate(["/hrms/recruitment/business/campaign"]);
     }
   };
   // filter type

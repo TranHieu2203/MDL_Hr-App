@@ -1,5 +1,7 @@
 export class RecruitmentPlan {
   id?: number;
+  code?:string;
+  name?:string;
   employeeCode?: string; //mã nhân viên 
   employeeId?: number; //Id Nhân viên
   employeeName?: string;

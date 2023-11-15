@@ -28,7 +28,32 @@
               <div class="icon-info v-icon"></div>
               <label class="title">{{'[Thông tin]' | translate }}</label>
             </div>
+            <div class = "row">
+              <div class="col-sm-4">
+                <div class="form-group vertical-flex">
+                  <label class="e-float-text required" for="code">{{'[Mã]' | translate }}</label>
+                  <input formControlName="code" [(ngModel)]="model.code" type="text" class="form-control"
+                    >
+                  <span class="input-error"
+                    *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
+              </div>
+              <!-- họ và tên -->
+              <div class="col-sm-4">
+                <div class="form-group vertical">
+                  <label class="e-float-text required " for="name">{{'[Tên]' | translate }}</label>
+                  <input type="text" class="form-control" formControlName="name" [(ngModel)]="model.name"
+                    >
+                  <span class="input-error"
+                    *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                    {{'[Bắt buộc chọn]' | translate }}
+                  </span>
+                </div>
 
+              </div>  
+            </div>
             <div class="row">
               <!-- Phòng ban -->
               <div class="col-sm-4">
