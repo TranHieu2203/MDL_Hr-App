@@ -8,7 +8,8 @@
           <div class="brackcrum">
             <i class="fa fa-sitemap" aria-hidden="true"></i>{{'[Tuyển dụng]' | translate }} <i
               class="fa fa-angle-double-right" aria-hidden="true"></i>{{'[Nghiệp vụ]' | translate }}
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="brackcrum-active">{{'[Chiến dịch tuyển dụng]' | translate }}</span>
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="brackcrum-active">{{'[Chiến dịch
+              tuyển dụng]' | translate }}</span>
           </div>
         </div>
         <!-- toolbar -->
@@ -27,12 +28,11 @@
               <div class="icon-info v-icon"></div>
               <label class="title">{{'[Thông tin]' | translate }}</label>
             </div>
-            <div class = "row">
+            <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical-flex">
                   <label class="e-float-text required" for="code">{{'[Mã chiến dịch]' | translate }}</label>
-                  <input formControlName="code" [(ngModel)]="model.code" type="text" class="form-control"
-                    >
+                  <input formControlName="code" [(ngModel)]="model.code" type="text" class="form-control">
                   <span class="input-error"
                     *ngIf="editForm.get('code')!.hasError('required') && !editForm.get('code')!.untouched">
                     {{'[Bắt buộc chọn]' | translate }}
@@ -42,8 +42,7 @@
               <div class="col-sm-4">
                 <div class="form-group vertical-flex">
                   <label class="e-float-text required" for="name">{{'[Tên chiến dịch]' | translate }}</label>
-                  <input formControlName="name" [(ngModel)]="model.name" type="text" class="form-control"
-                    >
+                  <input formControlName="name" [(ngModel)]="model.name" type="text" class="form-control">
                   <span class="input-error"
                     *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
                     {{'[Bắt buộc chọn]' | translate }}
@@ -51,7 +50,7 @@
                 </div>
               </div>
             </div>
-            <div class = "row">
+            <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text required" for="planId">{{'[Đề xuất tuyển dụng]' | translate }}</label>
@@ -79,7 +78,7 @@
                 </div>
               </div>
             </div>
-            <div class = "row">
+            <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text required" for="deadlineId">{{'[Hạn tuyển dụng]' | translate }}</label>
@@ -97,8 +96,8 @@
                 <div class="form-group vertical">
                   <label class="e-float-text " for="ngayhachtoan">{{'[Ngày kết thúc]' | translate
                     }}</label>
-                  <ejs-datepicker id="endDateTT" format="dd/MM/yyyy" [(ngModel)]="model.endDateTT" formControlName="endDateTT"
-                    placeholder=".../.../..." readonly="true">
+                  <ejs-datepicker id="endDateTT" format="dd/MM/yyyy" [(ngModel)]="model.endDateTT"
+                    formControlName="endDateTT" placeholder=".../.../..." readonly="true">
                   </ejs-datepicker>
 
                 </div>
@@ -114,7 +113,7 @@
                 </div>
               </div>
             </div>
-            <div class = "row">
+            <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text " for="soLuongTuyen">{{'[Số lượng tuyển]' | translate }}</label>
@@ -143,7 +142,7 @@
                 </div>
               </div>
             </div>
-            <div class = "row">
+            <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text " for="chiPhiDk">{{'[Chi phí dự kiến]' | translate }}</label>
@@ -156,8 +155,7 @@
               <div class="col-sm-4">
                 <div class="form-group vertical-flex">
                   <label class="e-float-text required" for="ptName">{{'[Người phụ trách]' | translate }}</label>
-                  <input formControlName="ptName" [(ngModel)]="model.ptName" type="text" class="form-control"
-                    readonly>
+                  <input formControlName="ptName" [(ngModel)]="model.ptName" type="text" class="form-control" readonly>
                   <div class="input-group-append">
                     <button class="btn btn-search" type="button" (click)="choiseEmp()"></button>
                   </div>
@@ -167,9 +165,9 @@
                   </span>
                 </div>
               </div>
-              
+
             </div>
-            <div class = "row">
+            <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical-flex">
                   <label class="e-float-text required" for="orgId">{{'[Phòng ban tuyển dụng]' | translate }}</label>
@@ -219,15 +217,14 @@
               <div class="col-sm-4">
                 <div class="form-group vertical-flex">
                   <label class="e-float-text " for="chucVu">{{'[Chức vụ]' | translate }}</label>
-                  <input formControlName="chucVu" [(ngModel)]="model.chucVu" type="text" class="form-control"
-                    readonly>
-                  
+                  <input formControlName="chucVu" [(ngModel)]="model.chucVu" type="text" class="form-control" readonly>
+
                 </div>
               </div>
             </div>
             <div class="row">
-       
-              
+
+
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text required" for="hinhthucId">{{'[Hình thức]' | translate }}</label>
@@ -254,11 +251,11 @@
                   </span>
                 </div>
               </div>
-             
 
-              
+
+
             </div>
-            <div class = "row">
+            <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text " for="salaryFrom">{{'[Chi phí dự kiến từ]' | translate }}</label>
@@ -280,19 +277,28 @@
               <div class="col-sm-4">
                 <div class="form-group vertical">
                   <label class="e-float-text" for="mauId">{{'[Mẫu đánh giá]' | translate }}</label>
-                  <ejs-dropdownlist id='mauId' [dataSource]='lstmauId' formControlName="mauId"
-                    [showClearButton]="true" [(ngModel)]="model.mauId" [fields]='fields' [allowFiltering]='true'
+                  <ejs-dropdownlist id='mauId' [dataSource]='lstmauId' formControlName="mauId" [showClearButton]="true"
+                    [(ngModel)]="model.mauId" [fields]='fields' [allowFiltering]='true'
                     (filtering)='onFiltering($event,lstmauId)'>
                   </ejs-dropdownlist>
-                 
+
                 </div>
               </div>
             </div>
-            
-            <div class="card-head">
-              <div class="icon-info v-icon"></div>
-              <label class="title">{{'[Thông tin đăng tuyển]' | translate }}</label>
+
+            <div class="row">
+              <div class="col-sm-12 pt-3">
+                <div class="form-group vertical">
+                  <label class="e-float-text">{{'[Nội dung]' | translate }}</label>
+                  <ckeditor [(ngModel)]="model.jd" name="myckeditor" required formControlName="jd" debounce="500"
+                    editorUrl="../../../../../../../assets/ckeditor/ckeditor.js">
+                  </ckeditor>
+                </div>
+              </div>
             </div>
+            <div style="margin-top: 50px;"></div>
+
+            
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group vertical">
