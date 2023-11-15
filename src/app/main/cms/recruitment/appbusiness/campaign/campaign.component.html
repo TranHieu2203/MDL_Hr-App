@@ -60,16 +60,17 @@
                     <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
                       [isPrimaryKey]='true' [allowEditing]="false">
                     </e-column>
-                    
+                    <e-column field='code' textAlign="Left" headerText="{{'[Mã chiến dịch]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
+                    <e-column field='name' textAlign="Left" headerText="{{'[Tên chiến dịch]' | translate }}" clipMode='EllipsisWithTooltip'>
+                    </e-column>
                     <e-column field='orgName' textAlign="Left" headerText="{{'[Phòng ban]' | translate }}" clipMode='EllipsisWithTooltip'>
                     </e-column>
                     <e-column field='positionName' textAlign="Left" headerText="{{'[Vị trí công việc]' | translate }}"
                       clipMode='EllipsisWithTooltip' width="176"></e-column>
-                    <e-column field='reasonName' textAlign="Left" headerText="{{'[Lý do tuyển dụng]' | translate }}"
+                    <e-column field='planName' textAlign="Left" headerText="{{'[Đề xuất tuyển dụng]' | translate }}"
                       clipMode='EllipsisWithTooltip' width="176"></e-column>
-                    <e-column field='sendDate' headerTextAlign="Center" type="date"
-                      [format]="{ type: 'date', format: 'dd/MM/yyyy' }" [allowFiltering]="false" textAlign="Center" headerText="{{'[Ngày gửi yêu cầu]' | translate }}"
-                      clipMode='EllipsisWithTooltip' width="126"></e-column>
+                    
                     
                   </e-columns>
                 </ejs-grid>

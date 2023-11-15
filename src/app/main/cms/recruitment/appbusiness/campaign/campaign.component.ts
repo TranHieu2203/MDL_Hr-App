@@ -180,7 +180,7 @@ export class CampaignComponent implements OnInit, OnDestroy {
         value: this.nodeSelected,
       });
     }
-    this._coreService.execute(this.state, "hr/plan/GetAll", extraParams);
+    this._coreService.execute(this.state, "hr/campaign/GetAll", extraParams);
   };
   GetEmp = (e: any) => {
     this.flagStatusEmp = e.checked;
@@ -202,7 +202,7 @@ export class CampaignComponent implements OnInit, OnDestroy {
         value: this.nodeSelected,
       });
     }
-    this._coreService.execute(this.state, "hr/plan/GetAll", extraParams);
+    this._coreService.execute(this.state, "hr/campaign/GetAll", extraParams);
   }
   // Số thứ tự
   formatStt = (index: string) => {

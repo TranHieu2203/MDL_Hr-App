@@ -144,23 +144,22 @@ export class CampaignEditComponent implements OnInit {
 
     this.editForm = this._formBuilder.group({
 
-      ptName: [{ value: "", disabled: true }, [Validators.required]],
-      employeeName: [{ value: "", disable: this.disable }, []],
+      ptName: ["", [Validators.required]],
       //unit: [""], //Đơn vị
-      positionId: ["", []], //Chức danh
-      code: ["", []] ,
-      name: ["", []],
-      planId: ["", []],
-      status: ["", []],
-      deadlineId:["", []],
+      positionId: ["", [Validators.required]], //Chức danh
+      code: ["", [Validators.required]] ,
+      name: ["", [Validators.required]],
+      planId: ["", [Validators.required]],
+      status: ["", [Validators.required]],
+      deadlineId:["", [Validators.required]],
 
       chiPhiDk: ["", []],
-      orgId: ["", []],
+      orgId: ["", [Validators.required]],
 
       chucVu: ["", []],
-      hinhthucId: ["", []],
+      hinhthucId: ["", [Validators.required]],
 
-      placeId:["", []],
+      placeId:["", [Validators.required]],
 
       salaryFrom: ["", []],
       salaryTo: ["", []],
@@ -170,7 +169,9 @@ export class CampaignEditComponent implements OnInit {
       endDate:["", []],
       soLuongTuyen:["", []],
       soLuongHienCo:["", []],
-      soLuongDinhBien:["", []]
+      soLuongDinhBien:["", []],
+      nguonDtId:["", []],
+      chiPhi :["", []],
     });
 
     // Set the private defaults
@@ -192,14 +193,14 @@ export class CampaignEditComponent implements OnInit {
       let toolbarList: any[] = [];
       if (x === "view") {
         toolbarList = [ToolbarItem.BACK, ToolbarItem.EDIT];
-        // this.editForm.disable();
+         this.editForm.disable();
       }
       if (x === "new") {
         toolbarList = [ToolbarItem.BACK, ToolbarItem.SAVE];
       }
       if (x === "edit") {
         toolbarList = [ToolbarItem.BACK, ToolbarItem.SAVE];
-
+        this.editForm.enable();
       }
       this.toolItems$.next(toolbarList)
     })
@@ -236,7 +237,7 @@ export class CampaignEditComponent implements OnInit {
     return new Promise((resolve) => {
       if (this.paramId) {
         this._coreService
-          .Get("hr/plan/get?id=" + this.paramId)
+          .Get("hr/campaign/get?id=" + this.paramId)
           .subscribe((res: any) => {
             resolve(res.data);
           });
@@ -312,6 +313,18 @@ export class CampaignEditComponent implements OnInit {
       .then((_x) => {
         this.model.positionId = model.positionId;
       });
+      if (model && model.planId) {
+        this.GetListPlan()
+          .then((res: any) => {
+            this.lstplanId = res;
+          })
+          .then((x) => {
+            const selectedPlan = this.lstplanId.find((plan: { id: any; }) => plan.id === model.planId);
+            this.model.endDateTT = selectedPlan.expireDate;
+            this.model.soLuongHienCo = selectedPlan.soLuongHienCo;
+            this.model.soLuongDinhBien = selectedPlan.soLuongDinhBien;
+          });
+      }
       if(model.nguonDt){
         this.data = model.nguonDt;
       }
@@ -329,7 +342,7 @@ export class CampaignEditComponent implements OnInit {
     const x = this.modalService.employee.subscribe((res: any) => {
       //
       this.model.ptId = res.employeeId;
-      this.model.ptName = res.employeeCode;
+      this.model.ptName = res.employeeName;
       // this.model.positionName = res.positionName;
       // this.model.orgName = res.orgName;
       // this.model.orgId = res.orgId;
@@ -351,11 +364,11 @@ export class CampaignEditComponent implements OnInit {
       this.model.orgName = res.NAME;
       this.model.positionId = undefined;
       this.lstPositionId = [];
-      // if (this.model.orgId != null) {
-      //   this.getPosition(this.model.orgId, this.model.employeeId!).then((res: any) => {
-      //     this.lstPositionId = res;
-      //   });
-      // }
+      if (this.model.orgId != null) {
+        this.getPosition(this.model.orgId, 0).then((res: any) => {
+          this.lstPositionId = res;
+        });
+      }
       x.unsubscribe();
     });
   }
@@ -401,6 +414,22 @@ export class CampaignEditComponent implements OnInit {
 
 
   }
+  changePlanId(e: any) {
+    if (e.e) {
+      const selectedPlan = this.lstplanId.find((plan: { id: any; }) => plan.id === e.itemData.id);
+      if( selectedPlan.expireDate!= null){
+        this.model.deadlineId = 21804;
+      }
+      else{
+        this.model.deadlineId = 21805;
+      }
+      this.model.endDateTT = selectedPlan.expireDate;
+      this.model.endDate =  selectedPlan.expireDate;
+      this.model.soLuongTuyen = selectedPlan.soLuongTuyen;
+      this.model.soLuongHienCo = selectedPlan.soLuongHienCo;
+      this.model.soLuongDinhBien = selectedPlan.soLuongDinhBien;
+    }
+  }
   // removeEmp() {
   //   if (this.flagState$.value == "view") {
   //     return;
@@ -425,7 +454,7 @@ export class CampaignEditComponent implements OnInit {
       let item = _.find(this.lstPositionId, { id: Number(e.itemData.id) });
 
       this.model.positionName = item.name;
-      // this.model.directManagerName = "";
+       this.model.chucVu = item.titleName;
       // this.model.directManagerTitleName = "";
       //this.lstStaffRank = [];
       //this.getDirectManager(item.id).then((res: any) => {
@@ -491,7 +520,7 @@ export class CampaignEditComponent implements OnInit {
     
 
     if (this.flagState$.value === "new") {
-      this._coreService.Post("hr/plan/add", param).subscribe(
+      this._coreService.Post("hr/campaign/add", param).subscribe(
         (res: any) => {
           if (res.statusCode == 400) {
             this.notification.checkErrorMessage(res.message);
@@ -505,7 +534,7 @@ export class CampaignEditComponent implements OnInit {
         }
       );
     } else {
-      this._coreService.Post("hr/plan/Update", param).subscribe(
+      this._coreService.Post("hr/campaign/Update", param).subscribe(
         (res: any) => {
           if (res.statusCode == 400) {
             this.notification.checkErrorMessage(res.message);
@@ -522,21 +551,13 @@ export class CampaignEditComponent implements OnInit {
   };
   convertModel(param: any) {
     let model = _.cloneDeep(param);
-    model.sendDate = param.sendDate
-      ? moment(param.sendDate).format("YYYY-MM-DD")
+    model.endDate = param.endDate
+      ? moment(param.endDate).format("YYYY-MM-DD")
       : null;
-    model.expireDate = param.expireDate
-      ? moment(param.expireDate).format("YYYY-MM-DD")
+    model.endDateTT = param.endDateTT
+      ? moment(param.endDateTT).format("YYYY-MM-DD")
       : null;
-    model.bdTuyenDate = param.bdTuyenDate
-      ? moment(param.bdTuyenDate).format("YYYY-MM-DD")
-      : null;
-      model.ktDate = param.ktDate
-      ? moment(param.ktDate).format("YYYY-MM-DD")
-      : null;
-      model.tgghDate = param.tgghDate
-      ? moment(param.tgghDate).format("YYYY-MM-DD")
-      : null;
+    
     return model;
 
   }
