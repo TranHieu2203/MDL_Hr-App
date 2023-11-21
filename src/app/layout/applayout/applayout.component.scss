@@ -12,20 +12,48 @@ $specialWidth: 280px;
     // width: $specialWidth;
     // height: 100vh;
     flex-direction: column;
-    transition: all 0.3s ease;
+    transition: transform 450ms ease, width 450ms ease;
 }
 
 .main {
     // width: calc(100vh - 280px);
-    /* float: right; */
     padding-left: $specialWidth;
-    transition: all 0.3s ease;
     background-color: #f8f9fb;
     height: 100vh;
+    transition: transform 450ms ease, width 450ms ease;
 
 }
 
 app-common-tools {
     position: absolute;
     right: $specialWidth;
+}
+
+.setcompact.is-compact .left-slider-bar{
+    width: 54px;
+}
+.setcompact.is-compact .left-slider-bar:hover{
+    width: 280px;
+}
+.setcompact.is-compact .main{padding-left: 54px;}
+.header-logo-small{display: none;}
+.setcompact.is-compact .header-logo-large{display: none;}
+.setcompact.is-compact .header-logo-small{display: contents;}
+.setcompact.is-compact .app-slider-header{overflow: hidden;}
+.btn-toogle-siderbar{
+    margin-left: auto;
+    padding: 16px;
+    cursor: pointer;
+}
+.btn-toogle-siderbar i{
+    font-size: 23px;
+    color: #fff;
+}
+.app-slider-header{display: flex; width:280px;}
+.e-treeview .e-list-text{
+    line-height: 25px;
+    min-height: 25px;
+}
+.e-treeview .e-fullrow{
+    height: 25px;
 }

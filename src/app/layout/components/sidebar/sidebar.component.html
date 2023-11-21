@@ -1,17 +1,19 @@
 <div class="app-sidebar-menu">
     <div class="app-slider-header">
-        <a routerLink="/hrms/dashboard"><i class="">
+        <a routerLink="/hrms/dashboard" class="header-logo-large"><i class="">
                 <img class="app-sidebar-logo-img" src="{{urlLogo}}" alt=''
                     style=" width:180px;   padding: 15px 0px 10px 15px;" />
             </i>
 
         </a>
-        <a class="btn" style="right:40px;margin-top:10px" (click)="toggleSidebar()">
-            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M3.33301 5.5H16.6663V7.16667H3.33301V5.5ZM3.33301 9.66667H16.6663V11.3333H3.33301V9.66667ZM3.33301 13.8333H16.6663V15.5H3.33301V13.8333Z"
-                    fill="#707C8C"></path>
-            </svg>
+        <a routerLink="/hrms/dashboard" class="header-logo-small"><i class="">
+            <img class="app-sidebar-logo-img" src="{{urlLogoSmall}}" alt=''
+                style="width:40px;   padding: 15px 0px 10px 15px;" />
+        </i>
+
+        </a>
+        <a class="btn-toogle-siderbar" (click)="toggleSidebar()">
+            <i class="fa fa-align-justify" aria-hidden="true"></i>
         </a>
     </div>
 

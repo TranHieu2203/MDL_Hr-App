@@ -23,6 +23,7 @@ export class SidebarComponent {
   listItem: any;
   isLoad: boolean = true;
   urlLogo = "../../../assets/images/logo-header.jpg"
+  urlLogoSmall = "../../../assets/images/logo-small.png"
   permission: any;
 
   /**
@@ -159,10 +160,6 @@ export class SidebarComponent {
     // localStorage.getItem("curentModule");
   }
   toggleSidebar() {
-    $(".app-sidebar").toggleClass("siderbar-hide")
-    $(".main").toggleClass("main-no-siderbar")
-    $(".header-right").toggleClass("header-no-siderbar")
-    $(".main-toolbar").toggleClass("main-toolbar-no-siderbar")
-    $("app-common-tools").toggleClass("app-common-tools-no-siderbar")
+    $(".setcompact").toggleClass("is-compact")
   }
 }

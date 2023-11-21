@@ -910,10 +910,16 @@ body.v2hrm-modal-open {
       font-size: 14px;
       line-height: 18px;
       color: rgb(86, 95, 107);
-      margin-bottom: 8px;
       font-weight: 600;
-      position: absolute;
-      top: 15px;
+      -moz-transform: translate(0%, 0%);
+      -ms-transform: translate(0%, 0%);
+      -o-transform: translate(0%, 0%);
+      -webkit-transform: translate(0%, 0%);
+      box-sizing: border-box;
+       transform: translate(0%, 0%);
+     transform: none;
+     position: unset;
+     padding-left: 0px;
     }
 
     .form-control {
@@ -1449,15 +1455,18 @@ app-layout {
     }
 
     a.e-link.e-numericitem.e-spacing.e-currentitem.e-active {
-      background-color: variables.$primary !important;
+      background-color: #0f1a34!important;
       border: none;
+      color:#fff;
     }
 
     a.e-link.e-numericitem.e-spacing:not(.e-active) {
       background-color: unset !important;
       color: unset !important;
     }
-
+    .e-pager .e-numericitem.e-currentitem {
+      padding: 16px 17px 11px 16px;
+  }
   }
 }
 
