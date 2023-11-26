@@ -23,7 +23,7 @@
       <div class="">
         <div class="row">
           <div id="img-card">
-            <div class="group-box" style="overflow: auto;height: calc(100vh - 109px);">
+            <div class="group-box" style="overflow: auto;height: calc(100vh - 109px); border:0px;padding:0px;">
               <ejs-tooltip content='' target="#target">
                 <div id="target" onclick="javascript:document.getElementById('avatar').click();">
                   <img *ngIf="!model.avatar"
@@ -35,32 +35,21 @@
               <input style="font-size: 13px;" #file type="file" id="avatar" accept="image/*" data-max-size="5120"
                 [disabled]="flagState$.value === 'view'" (change)="uploadAvatar(file.files)" style="display: none;" />
               <div class="emp-info">
-                <div>
-                  <b>
-                    <label class="fullname"><a class="link-history"
-                        (click)="ViewHistory('profile')">{{model.fullname}}</a></label>
-                  </b>
+                <div class="text-center">
+                  <h2 class="mb-0 text-bold cursor-pointer" (click)="ViewHistory('profile')">{{model.fullname}}</h2>
+			    		    <span style="font-size: 13px;" class="text-muted">{{model.positionName}}</span>                
 
-                </div>
-                <div>
-                  <p>{{model.positionName}}</p>
                 </div>
                 <hr>
-                <div>
-                  <p class="email"><i class="fa fa-envelope-o" style="color: #737373;"></i><span
-                      style="color: #1d9bf0; padding-left: 10px;">{{model.workEmail}}</span>
-                  </p>
+                <div class="process-info">
+                  <label> <i class="fa fa-envelope-o" aria-hidden="true"></i> Email <span class="text-bold;text-primary;">{{model.workEmail}}</span></label>
                 </div>
-                <div>
-                  <p><i class="fa fa-phone" style="color: #737373;"></i>
-                    <span style="color: #1d9bf0; padding-left: 10px;">{{model.mobilePhone}}</span>
-                  </p>
+                <div class="process-info">
+                  <label> <i class="fa fa-phone" aria-hidden="true"></i> Phone <span class="text-bold;text-primary;">{{model.mobilePhone}}</span></label>
                 </div>
-                <p class="pos"><i class="fa fa-map-marker" style="color: #737373;"></i><span
-                    style="color: #1d9bf0; padding-left: 11px;">{{model.orgName}}</span>
-                </p>
-
-
+                <div class="process-info">
+                  <label> <i class="fa fa-map-marker" aria-hidden="true"> </i> Phòng Ban <span class="text-bold text-primary">{{model.orgName}}</span></label>
+                </div>
               </div>
               <hr>
               <div class="working-area" *ngIf="flagState$.value != 'new'">
@@ -176,9 +165,10 @@
                     <div class="row">
                       <div class="col-sm-4">
                         <div class="form-group vertical">
-                          <label class="e-float-text required">{{'[Mã nhân viên]' | translate }}</label>
                           <input type="text" class="form-control" formControlName="code" [(ngModel)]="model.code"
-                            (ngModelChange)="changeCode()" [readonly]="true">
+                            (ngModelChange)="changeCode()" placeholder="{{'[Mã nhân viên]' | translate }}" [readonly]="true">
+                            
+                          <label class="e-float-text required">{{'[Mã nhân viên]' | translate }}</label>
                           <span class="input-error"
                             *ngIf="editForm.controls['currentinfor'].get('code')!.hasError('required') && !editForm.controls['currentinfor'].get('code')!.untouched">
                             {{'[Bắt buộc nhập]' | translate }} </span>

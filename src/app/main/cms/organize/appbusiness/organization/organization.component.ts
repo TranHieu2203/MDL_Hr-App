@@ -185,7 +185,7 @@ export class OrganizationComponent implements OnInit {
     this.getLstTypeId();
     this.loadDataFromLocal();
     this.loadTreeView();
-    this.editForm.disable();
+    //this.editForm.disable();
   }
 
   getById(id: any) {

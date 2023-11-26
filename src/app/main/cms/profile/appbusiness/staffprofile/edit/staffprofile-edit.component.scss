@@ -4,7 +4,7 @@ cms-profile-staffprofile-edit {
 
   }
   .img-avatar{
-    width: 90%;
+    width: 160px;
     border-radius: 50%;
     }
   .process-active{
@@ -16,10 +16,11 @@ cms-profile-staffprofile-edit {
 }
   .process{
     cursor: pointer;
-    padding: 7px 0px 0px 0px;
+    padding: 8px 15px;
   }
+  .process label a i{margin-right:7px;}
+  .process:hover{background: #ddd;color:#000 !important;}
   .working-area{
-    padding-left: 10px;
     overflow: auto;
   }
   .image {
@@ -64,20 +65,20 @@ cms-profile-staffprofile-edit {
 
  .emp-info {
    text-align: left; 
-   padding: 20px 10px 0px 10px;
+   padding: 20px 0px 0px 0px;
     p {
       margin-right: 10px;
       color: #4B4B4D;
       font-size: 14px;
     }
  }
+
  .link-history{
   color: #737373;
   font-size: 14px;
 }
  .link-history:hover{
   cursor: pointer;
-  text-decoration: underline;
   }
   .btn-coppy{
     border: none;
@@ -96,7 +97,7 @@ input.form-control[type=file]{
 }
 .img-avatar {
   width: 100px; /* Điều chỉnh kích thước theo mong muốn */
-  height: 210px;
+  height: 160px;
   border-radius: 50%; /* Làm tròn viền để tạo hình tròn */
   border: 2px solid #fff; /* Viền mảnh khảm bao quanh hình ảnh */
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); /* Đổ bóng cho hình ảnh */
@@ -107,4 +108,14 @@ input.form-control[type=file]{
 .img-avatar:hover {
   transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
   border-color: #3498db; /* Màu viền thay đổi khi hover */
+}
+
+.process-info {
+  padding: 10px 15px;
+  font-size: 14px;
+  position: relative;
+}
+.process-info span{
+  position: absolute;
+  right: 15px;
 }

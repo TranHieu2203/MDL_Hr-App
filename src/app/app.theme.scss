@@ -813,7 +813,9 @@ body.v2hrm-modal-open {
     }
 
     .group-box {
-      border: 1px solid rgba(0, 0, 0, 0.125);
+      box-shadow: 0px 1px 3px 0px rgba(54, 74, 99, 0.15);
+      -ms-box-shadow: 0px 1px 3px 0px rgba(54, 74, 99, 0.15);
+      -moz-box-shadow: 0px 1px 3px 0px rgba(54, 74, 99, 0.15);
       border-radius: 0.25rem;
       padding: 5px 15px 15px 15px;
       margin-top: 30px;
@@ -867,7 +869,7 @@ body.v2hrm-modal-open {
     .btn-search {
       background-color: #e9ecef;
       background-image: url("/assets/images/search.svg");
-      width: 40px;
+      width: 34px;
       height: 34px;
       background-repeat: no-repeat;
       background-position: center;
@@ -906,21 +908,7 @@ body.v2hrm-modal-open {
       height: 34px;
     }
 
-    label.e-float-text {
-      font-size: 14px;
-      line-height: 18px;
-      color: rgb(86, 95, 107);
-      font-weight: 600;
-      -moz-transform: translate(0%, 0%);
-      -ms-transform: translate(0%, 0%);
-      -o-transform: translate(0%, 0%);
-      -webkit-transform: translate(0%, 0%);
-      box-sizing: border-box;
-       transform: translate(0%, 0%);
-     transform: none;
-     position: unset;
-     padding-left: 0px;
-    }
+    
 
     .form-control {
       color: #4B4B4D;
@@ -1050,7 +1038,7 @@ table {
 // fix position nav tion tree view
 .e-treeview .e-icon-collapsible,
 .e-treeview .e-icon-expandable {
-  margin: 2px 0px 0 -24px;
+  margin: 6px 0px 0 -21px;
 }
 
 .e-grid {
@@ -1606,3 +1594,10 @@ cms-app-org {
 .e-dlg-overlay {
   z-index: unset !important;
 }
+
+.e-treeview .e-icon-collapsible::before, .e-treeview .e-icon-expandable::before{
+  font-size: 12px;
+}
+.treeviewdiv{padding-left:0px;}
+.e-treeview .e-fullrow{border:0px;}
+.e-scrollbar .e-movablescrollbar {max-height: 5px !important;}
