@@ -25,8 +25,8 @@ $specialWidth: 280px;
 }
 
 app-common-tools {
-    position: absolute;
-    right: $specialWidth;
+    position: fixed;
+    right: 12px;
 }
 
 .setcompact.is-compact .left-slider-bar{
@@ -53,4 +53,8 @@ app-common-tools {
 .e-treeview .e-list-text{
     line-height: 25px;
     min-height: 25px;
+}
+
+form .row>*{
+    margin-top:1.3em;
 }

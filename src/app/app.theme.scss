@@ -810,6 +810,10 @@ body.v2hrm-modal-open {
     //
     input.form-control {
       height: 34px !important;
+      border-radius: 5px;
+      -ms-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -o-border-radius: 5px;
     }
 
     .group-box {
@@ -882,7 +886,7 @@ body.v2hrm-modal-open {
     }
 
     .vertical-flex {
-      margin-top: 30px;
+      margin-top: 25px;
       position: relative;
       display: flex;
 
@@ -912,7 +916,7 @@ body.v2hrm-modal-open {
 
     .form-control {
       color: #4B4B4D;
-      font-size: 15px;
+      font-size: 13px;
     }
 
     // css form inline
@@ -992,7 +996,7 @@ table {
 }
 
 .e-treeview .e-list-item.e-active>.e-fullrow {
-  background-color: #fff;
+  background-color: #fff !important;
   border: none;
 }
 
@@ -1147,7 +1151,7 @@ ejs-splitter {
 .e-input-group.e-disabled,
 .e-input-group.e-control-wrapper.e-disabled {
   font-family: "v2hrm-font" !important;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 input.e-input,
@@ -1155,7 +1159,7 @@ textarea.e-input,
 .e-input-group,
 .e-input-group.e-control-wrapper {
   font-family: "v2hrm-font" !important;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .ttbg {
@@ -1601,4 +1605,7 @@ cms-app-org {
 .treeviewdiv{padding-left:0px;}
 .e-treeview .e-fullrow{border:0px;}
 .e-scrollbar .e-movablescrollbar {max-height: 5px !important;}
-label.e-float-text {top: -9px !important;padding-left: 0 !important;}
+label.e-float-text {top: -1rem !important;padding-left: 0 !important; color: #000;}
+input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-input-group input.e-input, .e-input-group.e-control-wrapper input.e-input{height:32px;}
+.e-input-group.e-input-focus:not(.e-success):not(.e-warning):not(.e-error), .e-input-group.e-control-wrapper.e-input-focus:not(.e-success):not(.e-warning):not(.e-error){box-shadow:inherit;}
+.e-input:focus:not(.e-success):not(.e-warning):not(.e-error), .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input{box-shadow:inherit;}
