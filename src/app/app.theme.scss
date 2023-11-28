@@ -882,7 +882,7 @@ body.v2hrm-modal-open {
     }
 
     .vertical-flex {
-      margin-top: 25px;
+      margin-top: 30px;
       position: relative;
       display: flex;
 
@@ -1601,3 +1601,4 @@ cms-app-org {
 .treeviewdiv{padding-left:0px;}
 .e-treeview .e-fullrow{border:0px;}
 .e-scrollbar .e-movablescrollbar {max-height: 5px !important;}
+label.e-float-text {top: -9px !important;padding-left: 0 !important;}
