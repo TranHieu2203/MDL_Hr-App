@@ -147,8 +147,7 @@ export class AppComponent implements OnInit, OnDestroy {
         //this.redirectNotFound();
       }
 
-
-      this.navigation = JSON.parse(localStorage.getItem('navigation ')!);
+      this.navigation = JSON.parse(localStorage.getItem('navigation')!);
 
       // Register the navigation to the service
       this._navigationService.register("main", this.navigation);
