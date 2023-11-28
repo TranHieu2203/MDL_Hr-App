@@ -67,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.authService.isAuthenticate();
       this.setTimeout();
       // this.userInactive.subscribe(() => this._router.navigateByUrl('/auth/login'));
-  
+
       this._router.events.subscribe((event: any) => {
         switch (event) {
           case event instanceof NavigationStart: {
@@ -148,7 +148,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
 
 
-      this.navigation = JSON.parse(localStorage.getItem('navigation')!);
+      this.navigation = JSON.parse(localStorage.getItem('navigation ')!);
 
       // Register the navigation to the service
       this._navigationService.register("main", this.navigation);
@@ -181,7 +181,7 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    * On init
    */
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   /**
    * On destroy
