@@ -136,6 +136,21 @@ export class SidebarComponent {
     this.curentType = "item";
     localStorage.setItem("curentItem", itemId);
   }
+  radomFa() {
+    let icon = "";
+    $.ajax({
+      url: 'https://fontawesome.bootstrapcheatsheets.com/',
+      success: function (data: string) {
+        let faTags = $(data).find('.fa-class');
+        let rnd: number = Math.floor((Math.random() * 10000));
+        while (rnd > faTags.length)
+          rnd = Math.floor((Math.random() * 10000));
+        icon = faTags[rnd - 1].innerHTML.replace(".", "")
+      }
+    });
+    return icon;
+
+  }
   menuBack() {
     this.listItem = null;
     if (this.curentType === "item") {
