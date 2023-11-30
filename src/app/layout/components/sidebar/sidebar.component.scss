@@ -29,10 +29,11 @@ $specialWidth: 280px;
     }
 }
 
-.curent-text {
+.curent-text {    
     font-weight: bold;
-    color: variables.$primary-background-text;
-    padding-left: 10px;
+    color: #9D9B9B;
+    padding-left: 0px;
+    font-size: 14px;
 }
 
 .app-slider-header {
@@ -86,7 +87,7 @@ $specialWidth: 280px;
                 padding: 18px 20px;
 
                 .sidebar-icon {
-                    margin-right: 15px;
+                    margin-right: 20px;
                     line-height: 16px;
                 }
 
@@ -139,6 +140,16 @@ $specialWidth: 280px;
         width: 10px;
         height: 10px;
         content: "";
+
+    }
+    .back-menu-button{
+        padding: 12px 20px;
+        cursor: pointer;
+        i{
+            font-size: 14px;
+            color: #9D9B9B;
+            margin-right: 20px;
+        }
 
     }
 }

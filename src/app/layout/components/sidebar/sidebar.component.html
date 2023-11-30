@@ -18,8 +18,8 @@
     </div>
 
     <ul class="app-sidebar">
-        <div class="btn" (click)="menuBack()" aria-disabled="true" *ngIf="curentType&&curentType!=='module'">
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="curent-text">{{curentText}}</span>
+        <div class="back-menu-button" (click)="menuBack()" aria-disabled="true" *ngIf="curentType&&curentType!=='module'">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="curent-text"> {{curentText}}</span>
         </div>
         <li class="app-sidebar-item level-1" *ngFor="let item of listModule"
             [ngStyle]="{display: !curentType||(curentType&&curentType=='module') ? 'block' : 'none'}">
