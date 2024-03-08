@@ -1,0 +1,14 @@
+mdl-employee {
+    .mat-form-field {
+        width: 100%;
+    }
+
+    .mat-placeholder-required {
+        color: red !important;
+    }
+
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button,
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+        background-color: #eee;
+    }
+}

@@ -4,7 +4,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@syncfusion/*": ["./src/@syncfusion/*"]
+      "@syncfusion/*": ["./src/@syncfusion/*"],
+      "@mdl-layout/*":["./src/mdl-framework/layout/*"],
+      "@mdl-component/*":["./src/mdl-framework/component/*"]
+
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
