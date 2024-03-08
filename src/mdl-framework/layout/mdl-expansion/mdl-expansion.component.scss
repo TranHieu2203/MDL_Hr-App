@@ -1,0 +1,15 @@
+@import "../../variables";
+
+mdl-expansion {
+    .title-icon {
+        padding-right: $mdl-padding;
+    }
+
+    .mdl-card {
+        margin: $mdl-margin;
+    }
+
+    .mat-content {
+        border-bottom: 1px solid #eee;
+    }
+}

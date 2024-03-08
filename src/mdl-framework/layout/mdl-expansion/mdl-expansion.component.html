@@ -1,0 +1,18 @@
+<div class="mdl-card">
+  <mat-expansion-panel [expanded]="expanded" [disabled]="disabled">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <img *ngIf="image" src="title-icon {{image}}" width="80px" />
+        <i *ngIf="icon" class='title-icon {{icon}}' aria-hidden="true"></i>
+        {{ header }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ description }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-content>
+
+    </ng-content>
+    <!-- Your content here -->
+  </mat-expansion-panel>
+</div>

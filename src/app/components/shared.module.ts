@@ -72,13 +72,14 @@ import { HistoryWorkingBeforeComponent } from "./historyworkingbefore/historywor
 import { HistoryTrainingBeforeComponent } from "./historytrainingbefore/historytrainingbefore.component";
 import { MapMultiMarkerComponent } from "./mapmultimarker/mapmultimarker.component";
 import { ModalsPositionComponent } from "./modalsposition/modalsposition.component";
+import { FormControlPipe } from "@mdl-component/pipe/formControl.pipe";
 //import { CommonToolsComponent } from './common-tools/common-tools.component';
 @NgModule({
   imports: [
     TranslateModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     ModalModule,
     // Syncfusion Module
     DropDownListAllModule,
@@ -138,7 +139,7 @@ import { ModalsPositionComponent } from "./modalsposition/modalsposition.compone
     HistoryInschangeComponent,
     HistoryWorkingBeforeComponent,
     HistoryTrainingBeforeComponent,
-    ModalsPositionComponent
+    ModalsPositionComponent,
     //CommonToolsComponent,
   ],
   exports: [
@@ -202,4 +203,4 @@ import { ModalsPositionComponent } from "./modalsposition/modalsposition.compone
     HistoryTrainingBeforeComponent,
   ],
 })
-export class TlaSharedModule {}
+export class TlaSharedModule { }

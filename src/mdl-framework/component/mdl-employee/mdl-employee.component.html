@@ -1,0 +1,13 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ label || 'Employee Name' }}</mat-label>
+  <input matInput [formControl]="formControl" [placeholder]="placeholder" [(ngModel)]="innerValue"
+    [attr.disabled]="disabled" [readonly]="readonly" [required]="required" (input)="onInputChange($event)">
+  <mat-icon matPrefix>person</mat-icon>
+  <button [disabled]="disabled" mat-button matSuffix mat-icon-button aria-label="Search">
+    <mat-icon>search</mat-icon>
+  </button>
+
+  <mat-error *ngIf="required && formControl?.hasError('required')">
+    {{ requiredMessage }}
+  </mat-error>
+</mat-form-field>

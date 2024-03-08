@@ -340,12 +340,10 @@ $modal-transition: transform 0.4s ease;
 $nav-tabs-border-color: #ebedf2;
 $nav-tabs-link-bg: #f6f8fa;
 $nav-tabs-link-color: #000000;
-$nav-tabs-link-hover-border-color: $nav-tabs-border-color $nav-tabs-border-color
-  $nav-tabs-border-color;
+$nav-tabs-link-hover-border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-border-color;
 $nav-tabs-link-active-color: $body-color;
 $nav-tabs-link-active-bg: $white;
-$nav-tabs-link-active-border-color: $nav-tabs-border-color
-  $nav-tabs-border-color $nav-tabs-link-active-bg;
+$nav-tabs-link-active-border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-link-active-bg;
 $nav-pills-custom-bg: #fcfcfd;
 ////////   TABS VARIABLES /////////
 
@@ -365,3 +363,8 @@ $page-title-color: $body-color;
 /// 
 /// 
 
+
+
+// margin
+
+$mdl-margin: 10px

@@ -1,0 +1,11 @@
+@import "../../variables";
+
+mdl-card {
+    .title-icon {
+        padding-right: $mdl-padding;
+    }
+
+    .mdl-card {
+        margin: $mdl-margin;
+    }
+}

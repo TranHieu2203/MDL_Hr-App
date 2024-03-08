@@ -125,13 +125,13 @@ export class ContractInforEditComponent implements OnInit {
 
     this.editForm = this._formBuilder.group({
       code: [{ value: "", disabled: true }, [Validators.required]],
-      fullname: [{ value: "", disable: this.disable }, []],
+      fullname: [{ value: "", disable: true }, []],
       //unit: [""], //Đơn vị
       positionId: [{ value: "", disable: this.disable }, []], //chức danh
       orgId: ["", []],
       orgParentName: ["", []],
       contractId: ["", [Validators.required]], //Loại hợp đồng
-      contractNo: ["", []],
+      contractNo: ["", [Validators.required]],
       startDate: ["", [Validators.required]],
       expireDate: ["", []],
 
@@ -177,14 +177,20 @@ export class ContractInforEditComponent implements OnInit {
     this.disable = true;
   }
 
+  onCustomChange(event: any) {
+    console.log('event', event)
+    console.log('evesnt', this.model.employeeName)
+
+  }
+
   changeContractType(e: any) {
-    
+
 
     if (e.e) {
       if (this.model.startDate) {
         var item = _.find(this.lstContractId, { id: e.itemData.id });
         if (item.month != null) {
-          
+
           this.model.expireDate = moment(this.model.startDate).add(item.month, 'month').add(-1, 'days').toDate();
         } else {
           this.model.expireDate = undefined;
@@ -198,10 +204,10 @@ export class ContractInforEditComponent implements OnInit {
   ChangeDateStart = () => {
     if (this.flagState$.value == "view") {
       return;
-    }    if (this.model.contractTypeId && this.checked == 0) {
+    } if (this.model.contractTypeId && this.checked == 0) {
       var item = _.find(this.lstContractId, { id: this.model.contractTypeId });
       if (item.month != null) {
-       
+
         this.model.expireDate = moment(this.model.startDate).add(item.month, 'month').add(-1, 'days').toDate();
       } else {
         this.model.expireDate = undefined;
@@ -269,7 +275,7 @@ export class ContractInforEditComponent implements OnInit {
         this.model = _.cloneDeep(res[0]);
 
 
-        
+
         if (this.model.statusId == 1) {
           if (this.flagState$.value == Consts.edit) {
             this.toolItems$.next([ToolbarItem.BACK, ToolbarItem.SAVE])
@@ -313,11 +319,11 @@ export class ContractInforEditComponent implements OnInit {
       this.notification.warning("Chọn nhân viên");
     }
   }
-  changePeriodMonth(){
+  changePeriodMonth() {
     if (this.flagState$.value == "view") {
       return;
     }
-    if(this.model.periodMonth != undefined && this.model.startDate != undefined){
+    if (this.model.periodMonth != undefined && this.model.startDate != undefined) {
       const expireDate = new Date(this.model.startDate);
       expireDate.setMonth(expireDate.getMonth() + this.model.periodMonth);
       // this.model.expireDate = expireDate;
@@ -445,6 +451,7 @@ export class ContractInforEditComponent implements OnInit {
   };
   // lưu data open popup
   saveData = () => {
+    console.log(this.editForm.value)
     if (!this.editForm.valid) {
       this.notification.warning("Form chưa hợp lệ !");
       this.editForm.markAllAsTouched();
@@ -452,16 +459,16 @@ export class ContractInforEditComponent implements OnInit {
     }
     this.model.salBasic = this.modelSalary.salBasic;
     this.model.salPercent = this.modelSalary.salPercent;
-    if(this.model.periodMonth != null || this.model.periodMonth != undefined){
-      if(this.model.periodMonth <= 0){
+    if (this.model.periodMonth != null || this.model.periodMonth != undefined) {
+      if (this.model.periodMonth <= 0) {
         this.notification.warning("Thời hạn hợp đồng phải lớn hơn 0");
         return;
       }
     }
     let param = this.convertModel(this.model);
-    
-    if (this.model.expireDate == null || this.model.expireDate == undefined || param.expireDate == "Invalid date" ) {
-      
+
+    if (this.model.expireDate == null || this.model.expireDate == undefined || param.expireDate == "Invalid date") {
+
       if (this.model.contractTypeId != 2090) {
         this.notification.warning("Bạn phải nhập ngày kết thúc");
         return;
@@ -473,7 +480,7 @@ export class ContractInforEditComponent implements OnInit {
         return;
       }
     }
-    
+
     if (this.flagState$.value === "new") {
       this._coreService.Post("hr/contract/add", param).subscribe(
         (res: any) => {
@@ -509,7 +516,7 @@ export class ContractInforEditComponent implements OnInit {
     model.startDate = param.startDate
       ? moment(param.startDate).format("YYYY-MM-DD")
       : null;
-      model.expireDate = model.expireDate
+    model.expireDate = model.expireDate
       ? moment(model.expireDate).format("YYYY-MM-DD")
       : null;
     model.signDate = param.signDate

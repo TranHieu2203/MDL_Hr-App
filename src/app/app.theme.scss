@@ -912,7 +912,7 @@ body.v2hrm-modal-open {
       height: 34px;
     }
 
-    
+
 
     .form-control {
       color: #4B4B4D;
@@ -922,9 +922,6 @@ body.v2hrm-modal-open {
     // css form inline
   }
 
-  input.ng-invalid.ng-touched {
-    border: 1px solid red;
-  }
 
   .list-grid {
 
@@ -1447,18 +1444,19 @@ app-layout {
     }
 
     a.e-link.e-numericitem.e-spacing.e-currentitem.e-active {
-      background-color: #0f1a34!important;
+      background-color: #0f1a34 !important;
       border: none;
-      color:#fff;
+      color: #fff;
     }
 
     a.e-link.e-numericitem.e-spacing:not(.e-active) {
       background-color: unset !important;
       color: unset !important;
     }
+
     .e-pager .e-numericitem.e-currentitem {
       padding: 16px 17px 11px 16px;
-  }
+    }
   }
 }
 
@@ -1599,13 +1597,48 @@ cms-app-org {
   z-index: unset !important;
 }
 
-.e-treeview .e-icon-collapsible::before, .e-treeview .e-icon-expandable::before{
+.e-treeview .e-icon-collapsible::before,
+.e-treeview .e-icon-expandable::before {
   font-size: 12px;
 }
-.treeviewdiv{padding-left:0px;}
-.e-treeview .e-fullrow{border:0px;}
-.e-scrollbar .e-movablescrollbar {max-height: 5px !important;}
-label.e-float-text {top: -1rem !important;padding-left: 0 !important; color: #000;}
-input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-input-group input.e-input, .e-input-group.e-control-wrapper input.e-input{height:32px;}
-.e-input-group.e-input-focus:not(.e-success):not(.e-warning):not(.e-error), .e-input-group.e-control-wrapper.e-input-focus:not(.e-success):not(.e-warning):not(.e-error){box-shadow:inherit;}
-.e-input:focus:not(.e-success):not(.e-warning):not(.e-error), .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input{box-shadow:inherit;}
+
+.treeviewdiv {
+  padding-left: 0px;
+}
+
+.e-treeview .e-fullrow {
+  border: 0px;
+}
+
+.e-scrollbar .e-movablescrollbar {
+  max-height: 5px !important;
+}
+
+label.e-float-text {
+  top: -1rem !important;
+  padding-left: 0 !important;
+  color: #000;
+}
+
+input.e-input,
+.e-input-group input,
+.e-input-group.e-control-wrapper input,
+.e-input-group input.e-input,
+.e-input-group.e-control-wrapper input.e-input {
+  height: 32px;
+}
+
+.e-input-group.e-input-focus:not(.e-success):not(.e-warning):not(.e-error),
+.e-input-group.e-control-wrapper.e-input-focus:not(.e-success):not(.e-warning):not(.e-error) {
+  box-shadow: inherit;
+}
+
+.e-input:focus:not(.e-success):not(.e-warning):not(.e-error),
+.e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus,
+.e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus,
+.e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus,
+.e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus,
+.e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input,
+.e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input {
+  box-shadow: inherit;
+}
